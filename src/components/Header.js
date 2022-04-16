@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { CSS } from 'styled-components';
+import styled from 'styled-components';
 import {MdFavoriteBorder,MdSend,MdAddCircleOutline} from 'react-icons/md';
 
 
