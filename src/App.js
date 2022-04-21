@@ -7,9 +7,18 @@ const App = () => {
   return (
     <div className="App">
       <h1>Welcome to React Router!</h1>
+      <ul>
+        <li>
+          <Link to="/">홈</Link>
+        </li>
+        <li>
+          <Link to="/about">소개</Link>
+        </li>
+      </ul>
+      <hr></hr>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="about" element={<About />} />
+        <Route path="/" exact={true} element={<Home />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   );
