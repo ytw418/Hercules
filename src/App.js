@@ -1,7 +1,8 @@
 import React from 'react';
-import { Routes, Route, Link } from "react-router-dom";
-import About from './About';
-import Home from './Home';
+import { Routes, Route, Link,useParams } from "react-router-dom";
+import About from './pages/About';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 const App = () => {
   return (
@@ -14,11 +15,15 @@ const App = () => {
         <li>
           <Link to="/about">소개</Link>
         </li>
+        <li>
+          <Link to="/Profiles/gildong">프로필</Link>
+        </li>
       </ul>
       <hr></hr>
       <Routes>
-        <Route path="/" exact={true} element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/Profiles/:username"  element={<Profile />} />
       </Routes>
     </div>
   );
