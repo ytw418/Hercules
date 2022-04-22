@@ -19,3 +19,4 @@ const goHome = () => {
     </div>
   );
 }
+export default HistorySample;
