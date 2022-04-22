@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route,Routes,NavLink  } from 'react-router-dom';
+import { Route,Routes,NavLink  } from 'react-router-dom';
 import Profile from './Profile';
 import WithRouterSample from './WithRouterSample'
 

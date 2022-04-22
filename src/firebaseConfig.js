@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 import firebase from "firebase/compat/app";
+import 'firebase/auth';
 
 
 // 사용할 파이어베이스 서비스 주석을 해제합니다
@@ -43,3 +44,6 @@ if (!firebase.apps.length) {
 }
 
 export const firebase_db = firebase.database()
+export const firebaseInstance = firebase; 
+export const authService = firebase.auth();
+

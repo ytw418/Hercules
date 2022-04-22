@@ -1,4 +1,4 @@
-import React,{ memo } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import {MdFavoriteBorder,MdSend,MdAddCircleOutline} from 'react-icons/md';
 

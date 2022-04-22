@@ -1,13 +1,8 @@
-import React,{memo} from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components';
 import {MdSearch,MdHome,MdAccountCircle,MdShoppingCart} from 'react-icons/md';
-import { Routes, Route, Link,useLocation } from "react-router-dom";
+import {Link } from "react-router-dom";
 
-
-import About from '../pages/About';
-import Home from '../pages/Home';
-import Profiles from '../pages/Profiles';
-import HistorySample from '../pages/HistorySample'
 
 const BottomTebBlock =  styled.div`
 display:flex;
