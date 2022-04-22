@@ -58,12 +58,10 @@ margin-left: 12px;
 }
 `;
 
-const header = ()=>{
-   console.log("헤더 랜더링");
-}
+
 
 function Header() {
-   header();
+   console.log("헤더 랜더링");
    return (
       <>
          <HeaderBlocknone></HeaderBlocknone>
@@ -74,7 +72,6 @@ function Header() {
                <HeaderLike><MdFavoriteBorder></MdFavoriteBorder></HeaderLike>
                <Headerchat><MdSend></MdSend></Headerchat>
             </HeaderRigthZone>
-
          </HeaderBlock>
       </>
    )

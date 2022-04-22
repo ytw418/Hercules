@@ -9,7 +9,7 @@ import Header from './components/Header';
 import MainBlock from './components/MainBlock';
 
 const App = () => {
-  const { pathname } = useLocation(); // 추가
+  
   return (
     <>
     <MainBlock>
@@ -19,7 +19,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/Profiles/*"  element={<Profiles />} />
         <Route path="/HistorySample"  element={<HistorySample />} />
-        <Route path='/*' element={ <h1>이 페이지는 존재하지 않습니다. - {pathname}</h1> }/>
+        <Route path='/*' element={ <h1>이 페이지는 존재하지 않습니다. - </h1> }/>
       </Routes>
     <BottomTeb></BottomTeb>
     </MainBlock>
@@ -27,4 +27,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default React.memo(App);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{memo} from 'react'
 import styled, { css } from 'styled-components';
 import {MdSearch,MdHome,MdAccountCircle,MdShoppingCart} from 'react-icons/md';
 import { Routes, Route, Link,useLocation } from "react-router-dom";
@@ -9,7 +9,7 @@ import Home from '../pages/Home';
 import Profiles from '../pages/Profiles';
 import HistorySample from '../pages/HistorySample'
 
-const BottomTebBlock = styled.div`
+const BottomTebBlock =  styled.div`
 display:flex;
 background:#fff;
 width: 100%;
@@ -40,19 +40,17 @@ color:#000;
 
 
 function BottomTeb() {
-   const { pathname } = useLocation(); // 추가
+   console.log("BottomTeb 랜더링")
    return (
       <>
-
       <BottomTebBlock>
          <Text><Link to="/"><MdHome></MdHome></Link></Text>
          <Text><Link to="/about"><MdSearch></MdSearch></Link></Text>
          <Text><Link to="/Profiles"><MdShoppingCart/></Link></Text>
          <Text><Link to="/HistorySample"><MdAccountCircle/></Link></Text>
       </BottomTebBlock>
-
           </>
    )
 }
 
-export default BottomTeb;
+export default React.memo(BottomTeb);
