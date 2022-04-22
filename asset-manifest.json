@@ -1,15 +1,17 @@
 {
   "files": {
-    "main.css": "/Reactstagram/static/css/main.0b4e74b4.css",
-    "main.js": "/Reactstagram/static/js/main.5e2be2d2.js",
+    "main.css": "/Reactstagram/static/css/main.38be36b0.css",
+    "main.js": "/Reactstagram/static/js/main.b35a7f46.js",
     "static/js/787.28cb0dcd.chunk.js": "/Reactstagram/static/js/787.28cb0dcd.chunk.js",
+    "static/media/kagong1.jpg": "/Reactstagram/static/media/kagong1.2b8e4d71cc9c0cf8ff95.jpg",
+    "static/media/kawai.jpg": "/Reactstagram/static/media/kawai.5f127e8b2b5874caa30f.jpg",
     "index.html": "/Reactstagram/index.html",
-    "main.0b4e74b4.css.map": "/Reactstagram/static/css/main.0b4e74b4.css.map",
-    "main.5e2be2d2.js.map": "/Reactstagram/static/js/main.5e2be2d2.js.map",
+    "main.38be36b0.css.map": "/Reactstagram/static/css/main.38be36b0.css.map",
+    "main.b35a7f46.js.map": "/Reactstagram/static/js/main.b35a7f46.js.map",
     "787.28cb0dcd.chunk.js.map": "/Reactstagram/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b4e74b4.css",
-    "static/js/main.5e2be2d2.js"
+    "static/css/main.38be36b0.css",
+    "static/js/main.b35a7f46.js"
   ]
 }
