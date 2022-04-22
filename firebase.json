@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "build",
     "site": "reactstagram-83256",
     "ignore": [
       "firebase.json",

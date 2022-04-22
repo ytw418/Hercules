@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { authService } from '../firebaseConfig';
+import { authService,firebaseInstance } from '../firebaseConfig';
 
 
 function HistorySample() {
@@ -31,6 +31,18 @@ function HistorySample() {
 
    const toggleAccount = () => setNewAccount((prev) => !prev);
 
+
+   const onGoggleClick = async(event) => {
+      const {target: {name}} = event;
+      let provider; 
+      if (name === 'google') { 
+         provider = new firebaseInstance.auth.GoogleAuthProvider(); 
+      }
+         const data = await authService.signInWithPopup(provider); console.log(data); 
+      }
+
+
+
    return (
       <>
          <div>
@@ -42,6 +54,9 @@ function HistorySample() {
             </form>
             <span onClick={toggleAccount}>{newAccount ? "Login" : "Craete Account"}</span>
          </div>
+            <button onClick={onGoggleClick} name='google'>구글로그인</button>
+
+            
       </>);
 
 
