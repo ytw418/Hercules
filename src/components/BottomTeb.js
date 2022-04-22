@@ -44,7 +44,7 @@ function BottomTeb() {
    return (
       <>
       <BottomTebBlock>
-         <Text><Link to="/"><MdHome></MdHome></Link></Text>
+         <Text><Link to="/Reactstagram"><MdHome></MdHome></Link></Text>
          <Text><Link to="/about"><MdSearch></MdSearch></Link></Text>
          <Text><Link to="/Profiles"><MdShoppingCart/></Link></Text>
          <Text><Link to="/HistorySample"><MdAccountCircle/></Link></Text>

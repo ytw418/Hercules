@@ -15,7 +15,7 @@ const App = () => {
     <MainBlock>
     <Header></Header>
     <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/Reactstagram" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/Profiles/*"  element={<Profiles />} />
         <Route path="/HistorySample"  element={<HistorySample />} />

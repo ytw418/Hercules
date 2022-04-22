@@ -4,6 +4,7 @@ import {MdFavoriteBorder,MdSend,MdAddCircleOutline} from 'react-icons/md';
 
 
 const HeaderBlock = styled.header`
+   z-index: 9999;
    padding: 0 15px 0 15px;
    background: #fff;
    border-bottom: 1px #d8d7d7 solid;
