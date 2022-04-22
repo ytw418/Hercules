@@ -1,6 +1,13 @@
 import React from 'react'
 import styled, { css } from 'styled-components';
 import {MdSearch,MdHome,MdAccountCircle,MdShoppingCart} from 'react-icons/md';
+import { Routes, Route, Link,useLocation } from "react-router-dom";
+
+
+import About from '../pages/About';
+import Home from '../pages/Home';
+import Profiles from '../pages/Profiles';
+import HistorySample from '../pages/HistorySample'
 
 const BottomTebBlock = styled.div`
 display:flex;
@@ -33,13 +40,18 @@ color:#000;
 
 
 function BottomTeb() {
+   const { pathname } = useLocation(); // 추가
    return (
+      <>
+
       <BottomTebBlock>
-         <Text><MdHome></MdHome></Text>
-         <Text><MdSearch></MdSearch></Text>
-         <Text><MdShoppingCart/></Text>
-         <Text><MdAccountCircle/></Text>
+         <Text><Link to="/"><MdHome></MdHome></Link></Text>
+         <Text><Link to="/about"><MdSearch></MdSearch></Link></Text>
+         <Text><Link to="/Profiles"><MdShoppingCart/></Link></Text>
+         <Text><Link to="/HistorySample"><MdAccountCircle/></Link></Text>
       </BottomTebBlock>
+
+          </>
    )
 }
 

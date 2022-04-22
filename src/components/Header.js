@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ memo } from 'react'
 import styled from 'styled-components';
 import {MdFavoriteBorder,MdSend,MdAddCircleOutline} from 'react-icons/md';
 
@@ -58,9 +58,12 @@ margin-left: 12px;
 }
 `;
 
-
+const header = ()=>{
+   console.log("헤더 랜더링");
+}
 
 function Header() {
+   header();
    return (
       <>
          <HeaderBlocknone></HeaderBlocknone>
@@ -77,4 +80,4 @@ function Header() {
    )
 }
 
-export default Header
+export default React.memo(Header);
