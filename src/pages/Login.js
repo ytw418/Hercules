@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { authService,firebaseInstance } from '../firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-function HistorySample() {
+function Login({setReady,ready}) {
+
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [newAccount, setNewAccount] = useState(true);
@@ -22,8 +23,11 @@ function HistorySample() {
          if (newAccount) {
             /// 새로운 유저 생성 
             data = await authService.createUserWithEmailAndPassword(email, password);
+            alert("회원가입 성공");
          } else { // 회원가입 한 유저가 로그인시 이벤트
             data = await authService.signInWithEmailAndPassword(email, password);
+            setReady(!ready);
+            alert("로그인 성공");
          } console.log(data);
       } catch (error) {
          console.log(error)
@@ -72,10 +76,9 @@ function HistorySample() {
             <span onClick={toggleAccount}>{newAccount ? "Login" : "Craete Account"}</span>
          </div>
             <button onClick={onGoggleClick} name='google'>구글로그인</button>
-
             
       </>);
 
 
 }
-export default HistorySample;
+export default Login;
