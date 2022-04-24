@@ -1,7 +1,12 @@
-import React from 'react'
+import React,{useState,Component, useEffect} from 'react'
 import styled from 'styled-components';
+import CardContent from '@material-ui/core/CardContent'
+import Card from '@material-ui/core/Card'
 import froflieimg from '../imgs/kawai.jpg'
 import kagong1 from '../imgs/kagong1.jpg'
+//const databaseURL = 'https://reactstagram-13fac-default-rtdb.firebaseio.com';
+import {firebase_db} from "../firebaseConfig"
+import PropTypes from 'prop-types';
 
 const PostBlock = styled.div`
   width: 100%;
@@ -40,17 +45,35 @@ margin:0px;
 padding: 5px;
 `;
 function Post() {
+   const [tip,setTip]=useState([]);
+   useEffect(()=>{
+      firebase_db.ref('/').once('value').then((snapshot) => {
+         console.log("메인페이지 파이어베이스 조회 성공")
+         setTip(snapshot.val());
+      },[])
+   },[]);
+   
    return (
-      <PostBlock>
-         <FroflieZone>
-         <FroflieImg src={froflieimg}></FroflieImg>
-         <FroflieName>테리어몬</FroflieName>
-         </FroflieZone>
-         <PostImg src={kagong1}></PostImg>
-         <PostText>좋아요 100개</PostText>
-         <PostText>#카공 #리액트</PostText>
-         <PostText>리액트 공부 재밌다</PostText>
-      </PostBlock>
+      <div>
+      {tip.posts && (
+         tip.posts.map((post,index)=>(
+            <PostBlock key={index}>
+               <PostText>{post.user_id}</PostText>
+               <PostImg src={post.post_picture}/>
+               <PostText key={index}>좋아요 {post.post_like}</PostText>
+               <PostText>
+                  {Object.keys(post.post_hashtag).map(function(v){
+                     return(<div>#{v}</div>)
+                  })}
+                  {Object.keys(post.post_feed).map(function(v){
+                     return(<div>{v} {post.post_feed[v]}</div>)
+                  })}
+               </PostText>
+            </PostBlock>
+         ))
+      )}
+      </div>
+      
    )
 }
 

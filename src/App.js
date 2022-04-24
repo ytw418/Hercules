@@ -14,7 +14,7 @@ import { useState } from "react";
 
 const App = () => {
 
-  const [ready,setReady] = useState(true);
+  const [ready,setReady] = useState(false);
   console.log(ready)
 
   return ready ? <Login setReady={setReady} ready={ready}/> :( 
