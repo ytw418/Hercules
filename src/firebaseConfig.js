@@ -25,6 +25,7 @@ import "firebase/compat/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyC1JA0cu6yrzwxBnRDqW3jAj4AMylXJhQ0",
   authDomain: "reactstagram-13fac.firebaseapp.com",
+  databaseURL:"https://reactstagram-13fac-default-rtdb.firebaseio.com/",
   projectId: "reactstagram-13fac",
   storageBucket: "reactstagram-13fac.appspot.com",
   messagingSenderId: "637417332800",
