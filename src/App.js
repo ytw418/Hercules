@@ -15,7 +15,7 @@ import { TodoProvider } from './ContextApi';
 
 const App = () => {
 
-  const [ready,setReady] = useState(true);
+  const [ready,setReady] = useState(false);
   console.log(ready)
 
   return ready ?  <TodoProvider><Login setReady={setReady} ready={ready}/></TodoProvider> :( 
