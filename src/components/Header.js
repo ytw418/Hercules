@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
 import {MdFavoriteBorder,MdSend,MdAddCircleOutline} from 'react-icons/md';
-
+import { Collapse } from 'bootstrap';
+import {Navigate} from 'react-router-dom'
 
 const HeaderBlock = styled.header`
    z-index: 9999;
@@ -59,7 +60,9 @@ margin-left: 12px;
 }
 `;
 
-
+const ClickEventUpload = () =>{
+   window.location.href="/Upload"
+}
 
 function Header() {
    console.log("헤더 랜더링");
@@ -69,7 +72,7 @@ function Header() {
          <HeaderBlock>
             <HeaderTitle>Reactstagram</HeaderTitle>
             <HeaderRigthZone>
-               <HeaderAdd><MdAddCircleOutline></MdAddCircleOutline></HeaderAdd>
+               <HeaderAdd><MdAddCircleOutline onClick={ClickEventUpload}></MdAddCircleOutline></HeaderAdd>
                <HeaderLike><MdFavoriteBorder></MdFavoriteBorder></HeaderLike>
                <Headerchat><MdSend></MdSend></Headerchat>
             </HeaderRigthZone>

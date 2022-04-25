@@ -10,9 +10,8 @@ import BottomTeb from './components/BottomTeb'
 import Header from './components/Header';
 import MainBlock from './components/MainBlock';
 import { useState } from "react";
+import Upload from "./pages/Upload"
 import { TodoProvider } from './ContextApi';
-
-
 
 const App = () => {
 
@@ -27,6 +26,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/Profiles/*"  element={<Profiles />} />
+        <Route path="/Upload" element={<Upload/>}/>
         <Route path="/MyPage"  element={<MyPage />} />
         <Route path="/ProfileEdit"  element={<ProfileEdit />} />
         <Route path='/*' element={ <h1>이 페이지는 존재하지 않습니다. - </h1> }/>
