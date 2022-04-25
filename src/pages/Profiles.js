@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Route,Routes,NavLink  } from 'react-router-dom';
 import Profile from './Profile';
-import WithRouterSample from './WithRouterSample'
+import WithRouterSample from './MyPage'
 import { useData } from '../ContextApi';
 import axios from "axios"
 import {firebase_db} from "../firebaseConfig"
