@@ -78,7 +78,7 @@ function Post() {
                      return(<div>{v} {post.post_feed[v]}</div>)
                   }))}
                </PostText> */}
-               
+          
             </PostBlock>
          ))
       )}

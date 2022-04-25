@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import { authService,firebaseInstance } from '../firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {useSetData} from '../ContextApi'
+import {useSetUID} from '../ContextApi'
 function Login({setReady,ready}) {
-   const setData = useSetData();
+   const setuid = useSetUID();
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [newAccount, setNewAccount] = useState(true);
@@ -27,10 +27,11 @@ function Login({setReady,ready}) {
          } else { // 회원가입 한 유저가 로그인시 이벤트
             data = await authService.signInWithEmailAndPassword(email, password);
             setReady(!ready);
-            setData(data);
+            setuid(data.user._delegate.uid);
+            
             alert("로그인 성공");
             
-         } console.log(data);
+         } console.log(data.user._delegate.uid);
       } catch (error) {
          console.log(error)
       }

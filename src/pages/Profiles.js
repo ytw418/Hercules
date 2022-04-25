@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { Route,Routes,NavLink  } from 'react-router-dom';
 import Profile from './Profile';
 import WithRouterSample from './MyPage'
-import { useData } from '../ContextApi';
+
 import axios from "axios"
 import {firebase_db} from "../firebaseConfig"
 import { useEffect } from 'react';
 
 const Profiles = () => {
-  const userdata = useData();
-  console.log(userdata);
+
   const [state,setState] = useState('asdasd');
 
   useEffect(()=>{
@@ -17,7 +16,7 @@ const Profiles = () => {
           console.log("메인페이지 파이어베이스 조회 성공")
           let tip = snapshot.val();
           console.log(tip);
-          setState(tip);
+          
           
         
   },[])
