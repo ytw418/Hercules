@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
 
+
+
 // 프로필에서 사용 할 데이터
 const profileData = {
   velopert: {

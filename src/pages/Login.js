@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import { authService,firebaseInstance } from '../firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
+import {useSetData} from '../ContextApi'
 function Login({setReady,ready}) {
-
+   const setData = useSetData();
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [newAccount, setNewAccount] = useState(true);
@@ -22,12 +22,14 @@ function Login({setReady,ready}) {
          let data; 
          if (newAccount) {
             /// 새로운 유저 생성 
-            data = await authService.createUserWithEmailAndPassword(email, password);
+            await authService.createUserWithEmailAndPassword(email, password);
             alert("회원가입 성공");
          } else { // 회원가입 한 유저가 로그인시 이벤트
             data = await authService.signInWithEmailAndPassword(email, password);
             setReady(!ready);
+            setData(data);
             alert("로그인 성공");
+            
          } console.log(data);
       } catch (error) {
          console.log(error)

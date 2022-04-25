@@ -9,6 +9,7 @@ import BottomTeb from './components/BottomTeb'
 import Header from './components/Header';
 import MainBlock from './components/MainBlock';
 import { useState } from "react";
+import { TodoProvider } from './ContextApi';
 
 
 
@@ -17,8 +18,8 @@ const App = () => {
   const [ready,setReady] = useState(true);
   console.log(ready)
 
-  return ready ? <Login setReady={setReady} ready={ready}/> :( 
-    <>
+  return ready ?  <TodoProvider><Login setReady={setReady} ready={ready}/></TodoProvider> :( 
+    <TodoProvider>
     <MainBlock>
     <Header></Header>
     <Routes>
@@ -30,7 +31,7 @@ const App = () => {
     </Routes>
     <BottomTeb></BottomTeb>
     </MainBlock>
-    </>
+    </TodoProvider>
   );
 };
 
