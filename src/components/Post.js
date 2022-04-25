@@ -52,19 +52,19 @@ function Post() {
    return (
       <div>
       {tip.posts && (
-         tip.posts.map((post,index)=>(
-            <PostBlock key={index}>
+         tip.posts.map((post)=>(
+            <PostBlock key={post.index}>
                <PostText>{post.user_id}</PostText>
                <PostImg src={post.post_picture}/>
-               <PostText key={index}>좋아요 {post.post_like}</PostText>
-               <PostText>
+               <PostText >좋아요 {post.post_like}</PostText>
+               {/* <PostText>
                   {Object.keys(post.post_hashtag).map(function(v){
                      return(<div>#{v}</div>)
                   })}
                   {Object.keys(post.post_feed).map(function(v){
                      return(<div>{v} {post.post_feed[v]}</div>)
                   })}
-               </PostText>
+               </PostText> */}
             </PostBlock>
          ))
       )}
