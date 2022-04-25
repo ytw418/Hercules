@@ -42,7 +42,7 @@ function BottomTeb() {
          <Text><Link to="/"><MdHome></MdHome></Link></Text>
          <Text><Link to="/about"><MdSearch></MdSearch></Link></Text>
          <Text><Link to="/Profiles"><MdShoppingCart/></Link></Text>
-         <Text><Link to="/HistorySample"><MdAccountCircle/></Link></Text>
+         <Text><Link to="/MyPage"><MdAccountCircle/></Link></Text>
       </BottomTebBlock>
          </>
    )
