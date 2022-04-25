@@ -1,6 +1,5 @@
 import React,{useState, useEffect} from 'react'
 import styled from 'styled-components';
-//const databaseURL = 'https://reactstagram-13fac-default-rtdb.firebaseio.com';
 import {firebase_db} from "../firebaseConfig"
 
 
@@ -52,19 +51,34 @@ function Post() {
    return (
       <div>
       {tip.posts && (
-         tip.posts.map((post,index)=>(
-            <PostBlock key={index}>
+         tip.posts.map((post)=>(
+            <PostBlock key={post.index}>
                <PostText>{post.user_id}</PostText>
                <PostImg src={post.post_picture}/>
-               <PostText key={index}>좋아요 {post.post_like}</PostText>
-               <PostText>
-                  {Object.keys(post.post_hashtag).map(function(v){
-                     return(<div>#{v}</div>)
-                  })}
-                  {Object.keys(post.post_feed).map(function(v){
+               <div>
+                  {post.post_like && <PostText>좋아요 {post.post_like}</PostText>}
+               </div>
+               <PostText>{post.post_content}</PostText>
+               <div>
+                  {post.post_hashtag && <PostText>
+                     {Object.keys(post.post_hashtag)&&(Object.keys(post.post_hashtag).map(function(v){
+                        return(<div>#{v}</div>)
+                     }))}
+                  </PostText>}
+               </div>
+               <div>
+                  {post.post_feed && <PostText>
+                  {Object.keys(post.post_feed)&&(Object.keys(post.post_feed).map(function(v){
                      return(<div>{v} {post.post_feed[v]}</div>)
-                  })}
-               </PostText>
+                  }))}
+               </PostText>}
+               </div>
+               {/* <PostText>
+                  {Object.keys(post.post_feed)&&(Object.keys(post.post_feed).map(function(v){
+                     return(<div>{v} {post.post_feed[v]}</div>)
+                  }))}
+               </PostText> */}
+               
             </PostBlock>
          ))
       )}

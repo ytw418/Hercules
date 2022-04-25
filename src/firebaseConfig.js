@@ -48,4 +48,4 @@ if (!firebase.apps.length) {
 export const firebase_db = firebase.database()
 export const firebaseInstance = firebase; 
 export const authService = firebase.auth();
-
+export const imageStorage=firebase.storage();
