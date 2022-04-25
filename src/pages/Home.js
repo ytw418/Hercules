@@ -5,9 +5,6 @@ const Home = () => {
   return (
     <>
     <Post></Post>
-    <Post></Post>
-    <Post></Post>
-    <Post></Post>
     </>
 
   );
