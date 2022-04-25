@@ -6,11 +6,9 @@
   "private": true,
 
   "dependencies": {
-<<<<<<< HEAD
 
-=======
     "@material-ui/core": "^4.12.4",
->>>>>>> 317e8e21507dc382a4c77b76edf1b2820d6d683a
+
     "@testing-library/jest-dom": "^5.16.4",
 
     "@testing-library/react": "^13.0.1",
