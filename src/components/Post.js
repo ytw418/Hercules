@@ -1,12 +1,8 @@
-import React,{useState,Component, useEffect} from 'react'
+import React,{useState, useEffect} from 'react'
 import styled from 'styled-components';
-import CardContent from '@material-ui/core/CardContent'
-import Card from '@material-ui/core/Card'
-import froflieimg from '../imgs/kawai.jpg'
-import kagong1 from '../imgs/kagong1.jpg'
 //const databaseURL = 'https://reactstagram-13fac-default-rtdb.firebaseio.com';
 import {firebase_db} from "../firebaseConfig"
-import PropTypes from 'prop-types';
+
 
 const PostBlock = styled.div`
   width: 100%;

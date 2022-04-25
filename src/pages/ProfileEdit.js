@@ -2,6 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function ProfileEdit() {
+   
+   const navigate = useNavigate();
 
    const goBack = () => {
       const confirm = window.confirm('편집을 완료하셨습니까?')
