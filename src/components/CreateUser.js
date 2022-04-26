@@ -43,7 +43,6 @@ const CreateUser = () => {
       type: 'CREATE',
     });
     
-    
     reset();
     nextId.current += 1;
   }, [username, text,reset])}>등록</button>
