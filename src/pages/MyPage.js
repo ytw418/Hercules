@@ -5,8 +5,8 @@ import React from 'react';
 // match 는 useParams 로 변경
 import { useParams, useLocation, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
-import userimg from '../imgs/kawai.jpg'
-
+import userimg from '../imgs/kawai.jpg';
+import {useTodoState,useTodoDispatch,useUID} from '../ContextApi';
 
 const ProfileZone = styled.div`
 width: 100%;
@@ -49,6 +49,8 @@ const MyPage = () => {
    const params = useParams();
    const location = useLocation();
    const navigate = useNavigate();
+   const state = useTodoState();
+   const uid = useUID();
 
    const goProfileEdit = () => {
     navigate('/ProfileEdit');
@@ -57,7 +59,7 @@ const MyPage = () => {
   return (
     <>
     <ProfileZone>
-      <UserImg src={userimg} />
+      <UserImg src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4JODtMN3o-SMNzadt6tOblBYp-ePkvgZhEQ&usqp=CAU"} />
         <UserDataSec>
           <UserDataBlock>게시물 0</UserDataBlock>
           <UserDataBlock>팔로워 0</UserDataBlock>
@@ -65,8 +67,8 @@ const MyPage = () => {
         </UserDataSec>
     </ProfileZone>
     <UserZoen>
-      <strong>테리어몬</strong>
-      <div>안녕하세요</div>
+      <strong>{state.User[uid].Username}</strong>
+      <div>{state.User[uid].Introduce}</div>
       <div className='asd'>반가워요</div>
     </UserZoen>
     <ProfileBtn onClick={goProfileEdit}>프로필 편집</ProfileBtn>

@@ -1,31 +1,26 @@
-import React, { useState, useReducer, createContext, useContext, useRef } from 'react'
-import {firebase_db} from "./firebaseConfig"
+import React, { useState, useReducer, createContext, useContext, useRef, useEffect } from 'react'
+import { firebase_db } from "./firebaseConfig"
 
 const initialTodos = {
-  inputs: {
-    username: '',
-    text: ''
-  },
-  users: [
-    {
-      id: 1,
-      uid:'',
-      username: '윤성준',
-      text: '안녕하세요',
-      active: true
-    },
-  ]
-  
+
+  User: {
+    유니크아이디: {
+      id: '',
+      uid: '',
+    }
+  }
+
 };
 
 function todoReducer(state, action) {
 
-
   switch (action.type) {
+    case 'LOGIN_USER':
+      return { User: { [action.user.Uid]: action.user } };
     case 'CREATE_USER':
-      return {users:state.users.concat(action.user)};
+      return { users: state.users.concat(action.user) };
     case 'CREATE':
-      return   firebase_db.ref('/users').set(state.users);
+      return firebase_db.ref('/users').set(state.users);
     case 'TOGGLE':
       return state.map(todo =>
         todo.id === action.id ? { ...todo, done: !todo.done } : todo);
@@ -48,11 +43,8 @@ export function TodoProvider({ children }) {
   const nextId = useRef(5);
   const [UID, SetUID] = useState('유저데이터없음');
 
-  
-
-  console.log(UID)
-  
   console.log(state)
+
 
   return (
     <SetUIDContext.Provider value={SetUID}>
