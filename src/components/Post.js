@@ -40,45 +40,28 @@ margin:0px;
 padding: 5px;
 `;
 function Post() {
-   const [tip,setTip]=useState([]);
+   const [tip,setTip]=useState(["1","2","3","4","5",]);
+   const [t,setT]=useState(["1","2","3","4","5",]);
    useEffect(()=>{
       firebase_db.ref('/').once('value').then((snapshot) => {
-         console.log("메인페이지 파이어베이스 조회 성공")
          setTip(snapshot.val());
+    
       },[])
    },[]);
-   
+
+   console.log(tip)
    return (
       <div>
-         {tip.posts && (
-            tip.posts.map((post) => (
-               <PostBlock key={post.index}>
-                  <PostText>{post.user_id}</PostText>
-                  <PostImg src={post.post_picture} />
-                  <div>
-                     {post.post_like && <PostText>좋아요 {post.post_like}</PostText>}
-                  </div>
-                  <PostText>{post.post_content}</PostText>
-                  <div>
-                     {post.post_hashtag && <PostText>
-                        {Object.keys(post.post_hashtag) && (Object.keys(post.post_hashtag).map(function (v) {
-                           return (<div>#{v}</div>)
-                        }))}
-                     </PostText>}
-                  </div>
-                  <div>
-                     {post.post_feed && <PostText>
-                        {Object.keys(post.post_feed) && (Object.keys(post.post_feed).map(function (v) {
-                           return (<div>{v} {post.post_feed[v]}</div>)
-                        }))}
-                     </PostText>}
-                  </div>
-               </PostBlock>
-            ))
-         )} 
+         {
+         t.map(()=>(
+            <PostBlock >
+               <PostText>asdasd</PostText>
+               <PostImg/>
+            </PostBlock>
+         ))
+      }
       </div>
-
-   )
-}
+   );
+};
 
 export default React.memo(Post);
