@@ -3,4 +3,10 @@
 # 실행 : 깃 클론후 npm install 후 npm start 
 
 
+* 빌드 1. npm run build 
+*      2. firebase deploy 후 5분정도 기다리면 적용
+
+
+
+
 회원가입 성공시 유니크 아이디를 받아서 데이터 베이스에 유저 데이터 생성

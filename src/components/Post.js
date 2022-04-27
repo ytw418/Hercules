@@ -50,7 +50,7 @@ function Post() {
    
    return (
       <div>
-         {/* {tip.posts && (
+         {tip.posts && (
             tip.posts.map((post) => (
                <PostBlock key={post.index}>
                   <PostText>{post.user_id}</PostText>
@@ -75,7 +75,7 @@ function Post() {
                   </div>
                </PostBlock>
             ))
-         )} */}
+         )} 
       </div>
 
    )

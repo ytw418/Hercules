@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {firebase_db,imageStorage} from "../firebaseConfig"
+import {useTodoState,useTodoDispatch,useUID} from '../ContextApi';
 
 function Upload(){
+    const uid = useUID();
+    const dispatch = useTodoDispatch();
+    const state = useTodoState();
 
+
+    
     const [view,setView]=useState([]);
     const [file, setFile]=useState('');
     const [attachment,setAttachment]=useState();
@@ -12,18 +18,12 @@ function Upload(){
         event.preventDefault()
         let attachmentUrl=""
         if(attachment!==""){
-            const attachmentRef=imageStorage.ref().child('${userObj.uid}/${uuidv4()}')
+            const attachmentRef=imageStorage.ref().child(`${uid}/posts/0`)
             const response = await attachmentRef.putString(attachment,'data_url')
             attachmentUrl = await response.ref.getDownloadURL()
         }
-        const postObj = {
-            createdAt:Date.now(),
-            attachmentUrl,
-        }
-        console.log(attachmentUrl)
+        
         setUrl(attachmentUrl)
-        await imageStorage.collection("images").add(postObj);
-        setAttachment('')
         setFile('')
         
     }   
@@ -61,12 +61,13 @@ function Upload(){
 
     const submitValue = () =>{
         
-        firebase_db.ref('/posts/8').set({
+        firebase_db.ref('/posts/10/').push({
             //post_hashtag:content.post_hashtag,
             post_content:content.post_content,
             post_id:content.post_id,
             post_picture : url,
             user_id : content.user_id,
+            user_name : state.User[uid].Username,
             post_like : parseInt(content.post_like)
         }).then(()=>alert("제출되었습니다"))
         
