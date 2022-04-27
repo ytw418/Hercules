@@ -2,22 +2,31 @@ import React, { useState, useReducer, createContext, useContext, useRef, useEffe
 import { firebase_db } from "./firebaseConfig"
 
 const initialTodos = {
-  User: {
-    유니크아이디: {
-      id: '',
-      uid: '',
+    User: {
+        "FMr1485bnCQEbuFpZ6k7sBXIjA23": {
+            "Introduce": "asdasd",
+            "Uid": "FMr1485bnCQEbuFpZ6k7sBXIjA23",
+            "Username": "asdasd",
+            "Userphoto": "undefined"
+        }
+    },
+    posts:{
+      a:'1',
+      b:'2',
     }
-  }
-
 };
 
 function todoReducer(state, action) {
 
   switch (action.type) {
     case 'LOGIN_USER':
-      return { User: { [action.user.Uid]: action.user } };
+      return {
+      ...state,
+      User: { [action.user.Profile.Uid]: action.user.Profile }
+    }
+      
     case 'CREATE_USER':
-      return { users: state.users.concat(action.user) };
+      return { Users: state.users.concat(action.user) };
     case 'CREATE':
       return firebase_db.ref('/users').set(state.users);
     case 'TOGGLE':
@@ -42,7 +51,7 @@ export function TodoProvider({ children }) {
   const nextId = useRef(5);
   const [UID, SetUID] = useState('유저데이터없음');
 
-  console.log(state)
+  console.log(state);
 
 
   return (

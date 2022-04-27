@@ -77,19 +77,11 @@ const CreateUser = () => {
         value={text}
       />
       <button onClick={() => {
-        firebase_db.ref(`/users/${uid}/`).set({
+        firebase_db.ref(`/users/${uid}/Profile/`).set({
           Uid: `${uid}`,
           Username: `${username}`,
           Userphoto: `${url}`,
           Introduce: `${text}`,
-          UserPost: [
-            {
-              post1: 1,
-            },
-            {
-              post1: 2,
-            }
-          ],
         });
         
         firebase_db.ref(`/users/${uid}/`).once('value').then((snapshot) => {

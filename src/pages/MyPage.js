@@ -61,7 +61,7 @@ const MyPage = () => {
     <ProfileZone>
       <UserImg src={state.User[uid].Userphoto} />
         <UserDataSec>
-          <UserDataBlock>게시물 0</UserDataBlock>
+          <UserDataBlock>게시물 {state.posts.a}</UserDataBlock>
           <UserDataBlock>팔로워 0</UserDataBlock>
           <UserDataBlock>팔로잉 0</UserDataBlock>
         </UserDataSec>

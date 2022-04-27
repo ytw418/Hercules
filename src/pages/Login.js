@@ -28,21 +28,18 @@ function Login({ setReady, ready }) {
          if (newAccount) {
             /// 새로운 유저 생성 
             data = await authService.createUserWithEmailAndPassword(email, password);
-            const id = data.user._delegate.uid;
+            const uid = data.user._delegate.uid;
 
-            firebase_db.ref(`/users/${id}/`).set({
-               Uid: `${id}`,
-               Username: `${id}`,
-               Userphoto: '',
-               Introduce: '',
-               UserPost: [
-                  {
-                     post1: 1,
-                  },
-                  {
-                     post1: 2,
-                  }
-               ],
+            firebase_db.ref(`/users/${uid}/`).set({
+               Profile:{
+               Uid: `${uid}`,
+               Username: `이름없음`,
+               Userphoto: 'https://file.namu.moe/file/105db7e730e1402c09dcf2b281232df07cfd8577675ab05e4c269defaefb6f38c54eade7a465fd0b0044aba440e0b6b77c4e742599da767de499eaac22df3317',
+               Introduce: '소개없음',
+               },
+               UserPost: {
+                  a:'1'
+               },
             });
             alert("회원가입 성공");
 
