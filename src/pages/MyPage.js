@@ -59,7 +59,7 @@ const MyPage = () => {
   return (
     <>
     <ProfileZone>
-      <UserImg src={state.User[uid].Photo} />
+      <UserImg src={state.User[uid].Userphoto} />
         <UserDataSec>
           <UserDataBlock>게시물 0</UserDataBlock>
           <UserDataBlock>팔로워 0</UserDataBlock>
@@ -69,7 +69,7 @@ const MyPage = () => {
     <UserZoen>
       <strong>{state.User[uid].Username}</strong>
       <div>{state.User[uid].Introduce}</div>
-      <div className='asd'>반가워요</div>
+   
     </UserZoen>
     <ProfileBtn onClick={goProfileEdit}>프로필 편집</ProfileBtn>
     </>

@@ -8,8 +8,6 @@ function Upload(){
     const [attachment,setAttachment]=useState();
     const [url,setUrl]=useState();
     
-
-
     const onSubmit = async(event) => {
         event.preventDefault()
         let attachmentUrl=""
