@@ -5,8 +5,9 @@ import useInputs from './useInputs';
 
 
 
-const CreateUser = () => {
 
+const CreateUser = () => {
+  
   const dispatch = useTodoDispatch();
   const uid = useUID();
 
@@ -42,7 +43,6 @@ const CreateUser = () => {
     dispatch({
       type: 'CREATE',
     });
-    
     reset();
     nextId.current += 1;
   }, [username, text,reset])}>등록</button>

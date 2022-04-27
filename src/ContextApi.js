@@ -2,7 +2,6 @@ import React, { useState, useReducer, createContext, useContext, useRef, useEffe
 import { firebase_db } from "./firebaseConfig"
 
 const initialTodos = {
-
   User: {
     유니크아이디: {
       id: '',

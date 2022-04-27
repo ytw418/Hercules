@@ -59,7 +59,7 @@ const MyPage = () => {
   return (
     <>
     <ProfileZone>
-      <UserImg src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4JODtMN3o-SMNzadt6tOblBYp-ePkvgZhEQ&usqp=CAU"} />
+      <UserImg src={state.User[uid].Photo} />
         <UserDataSec>
           <UserDataBlock>게시물 0</UserDataBlock>
           <UserDataBlock>팔로워 0</UserDataBlock>
