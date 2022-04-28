@@ -18,22 +18,24 @@ function Upload() {
 
     const goHome = () => {
         navigate('/');
-      }
+    }
 
     const onSubmit = async (event) => {
+        //사진 등록 함수 버튼
         event.preventDefault()
         let attachmentUrl = ""
         if (attachment !== "") {
-            const attachmentRef = imageStorage.ref().child(`${uid}/posts/0`)
+            const attachmentRef = imageStorage.ref().child(`${uid}/posts/${Date()}`)
             const response = await attachmentRef.putString(attachment, 'data_url')
             attachmentUrl = await response.ref.getDownloadURL()
         }
-
         setUrl(attachmentUrl)
         setFile('')
-
     }
+
+
     const onFileChange = (event) => {
+        //사진 등록 함수
         const { target: { files, value } } = event;
         const theFile = files[0];
         const reader = new FileReader();
@@ -51,13 +53,9 @@ function Upload() {
     }
 
     const [content, setContent] = useState({
-        //post_hashtag:'',
-        post_content: '',
-        post_id: '',
-        post_picture: '',
-        user_id: '',
-        post_like: 0
+        postContent: '',
     })
+    const {postContent} = content;
 
     const getValue = e => {
         const { name, value } = e.target;
@@ -65,33 +63,22 @@ function Upload() {
         console.log(content)
     }
 
-    const submitValue = () => {
-
-        firebase_db.ref('/posts/10/').push({
-            //post_hashtag:content.post_hashtag,
-            post_content: content.post_content,
-            post_id: content.post_id,
-            post_picture: url,
-            user_id: content.user_id,
-            user_name: state.User[uid].Username,
-            post_like: parseInt(content.post_like)
-        }).then(() => alert("제출되었습니다"))
-
-    }
-
     const writeNewPost = () => {
-        // A post entry.
-        var postData = {
-            author: state.User[uid].Username,
-            uid: uid,
-            body: "body",
-            title: "title",
-            starCount: 0,
-            authorPic: url,
-        };
 
         // Get a key for a new Post.
         var newPostKey = firebase_db.ref().child('posts').push().key;
+
+        // A post entry.
+        var postData = {
+            userName: state.User[uid].Username,
+            uid: uid,
+            postContent: postContent,
+            postKey: newPostKey,
+            starCount: 0,
+            postPic: url,
+            
+        };
+        setView(postData)
 
         // Write the new post's data simultaneously in the posts list and the user's post list.
         var updates = {};
@@ -118,28 +105,18 @@ function Upload() {
                     )}
                 </form>
             </div>
-            <div>
-                {view.map((element) =>
-                    <div key={element.index}>
-                        <h2>{element.title}</h2>
-                        <div>{element.content}</div>
-                    </div>)}
-            </div>
+                    <div>
+                        <h2>{state.User[uid].Username}</h2>
+                        <div>{postContent}</div>
+                        <div><img src={url}></img></div>
+                    </div>
+
 
             <input type="text"
                 placeholder='내용'
                 onChange={getValue}
-                name='post_content' />
+                name='postContent' />
 
-            <input type="text"
-                placeholder='포스트 아이디'
-                onChange={getValue}
-                name='post_id' />
-
-            <input type="text"
-                placeholder='유저 아이디'
-                onChange={getValue}
-                name='user_id' />
 
             <button onClick={writeNewPost}>제출</button>
         </div>
