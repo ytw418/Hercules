@@ -55,7 +55,6 @@ function Login({ setReady, ready }) {
                   type: 'LOGIN_USER',
                   user: snapshot.val(),
                })
-               console.log(snapshot.val());
             });
          setReady(!ready);
          alert("로그인 성공");

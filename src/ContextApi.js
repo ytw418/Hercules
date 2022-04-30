@@ -39,10 +39,11 @@ function todoReducer(state, action) {
   }
 
 }
+const TodoNextIdContext = createContext();
+
 
 const TodoStateContext = createContext();
 const TodoDispatchContext = createContext();
-const TodoNextIdContext = createContext();
 const UIDContext = createContext();
 const SetUIDContext = createContext();
 
@@ -51,7 +52,6 @@ export function TodoProvider({ children }) {
   const nextId = useRef(5);
   const [UID, SetUID] = useState('유저데이터없음');
 
-  console.log(state);
 
 
   return (

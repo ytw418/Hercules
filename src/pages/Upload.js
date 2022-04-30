@@ -76,6 +76,7 @@ function Upload() {
             postKey: newPostKey,
             starCount: 0,
             postPic: url,
+            date:Date.now()
             
         };
         setView(postData)

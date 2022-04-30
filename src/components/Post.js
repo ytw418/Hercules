@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { firebase_db } from "../firebaseConfig"
 
 
+
 const PostBlock = styled.div`
    width: 100%;
    height: 100%;
@@ -21,6 +22,7 @@ const FroflieZone = styled.div`
 display: flex;
 padding: 5px;
 align-items: center;
+
 `;
 const FroflieImg = styled.img`
 width: 30px;
@@ -39,18 +41,27 @@ const PostText = styled.p`
 margin:0px;
 padding: 5px;
 `;
-function Post() {
-   const [posts, setPosts] = useState({      
-   });
 
+
+function Post() {
+   const [posts, setPosts] = useState([1,2,3,4,5,]);
+   //var posts = [];
+   
    useEffect(() => {
-      firebase_db.ref('/posts/').once('value').then((snapshot) => {
-         setPosts(snapshot.val());
+      firebase_db.ref('posts').orderByChild('date').startAfter(1).once('value').then((snapshot) => {
+         //setPosts(snapshot.val());
+         // posts.push().snapshot.val();
+         // posts.reverse()
+        let asd = snapshot.val()
+        
+        console.log(asd)
       })
    }, []);
+ 
 
-   console.log(posts)
-   
+
+
+
    return (
       <div>
           

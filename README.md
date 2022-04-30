@@ -10,3 +10,10 @@
 
 
 회원가입 성공시 유니크 아이디를 받아서 데이터 베이스에 유저 데이터 생성
+
+파이어베이스 팁 
+
+      firebase_db.ref(`posts`).orderByChild('date').equalTo(5).once('value').then((snapshot) => {
+         setPosts(snapshot.val());
+      })
+date 값이 넘버 5 인 객체 찾기
