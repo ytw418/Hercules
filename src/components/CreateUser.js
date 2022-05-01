@@ -87,7 +87,7 @@ const CreateUser = () => {
         firebase_db.ref(`/users/${uid}/`).once('value').then((snapshot) => {
           console.log("로그인회원 파이어베이스 조회 성공")
           dispatch({
-            type: 'LOGIN_USER',
+            type: 'CREATE_USER',
             user: snapshot.val(),
           })
       });

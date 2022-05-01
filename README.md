@@ -13,7 +13,9 @@
 
 파이어베이스 팁 
 
-      firebase_db.ref(`posts`).orderByChild('date').equalTo(5).once('value').then((snapshot) => {
+1.   firebase_db.ref(`posts`).orderByChild('date').equalTo(5).once('value').then((snapshot) => {
          setPosts(snapshot.val());
       })
-date 값이 넘버 5 인 객체 찾기
+          //date 값이 넘버 5 인 객체 찾기
+
+2. 

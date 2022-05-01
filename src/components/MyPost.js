@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { firebase_db } from "../firebaseConfig"
-
+import {useTodoState,useTodoDispatch,useUID} from '../ContextApi';
 
 
 const PostBlock = styled.div`
@@ -43,14 +43,15 @@ padding: 5px;
 `;
 
 
-function Post() {
+function MyPost({uid}) {
+   
    const [posts, setPosts] = useState([1, 2, 3, 4, 5,]);
    //var posts = [];
 
    useEffect(() => {
-      firebase_db.ref('posts').orderByChild('date').startAfter(1).once('value').then((snapshot) => {
+      firebase_db.ref(`/users/${uid}/UserPosts`).orderByChild('date').startAfter(1).once('value').then((snapshot) => {
          setPosts(snapshot.val());
-      
+         console.log(snapshot.val())
       })
    }, []);
 
@@ -73,5 +74,5 @@ function Post() {
    );
 };
 
-export default React.memo(Post);
+export default React.memo(MyPost);
 

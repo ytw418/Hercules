@@ -64,13 +64,14 @@ function Upload() {
     }
 
     const writeNewPost = () => {
+        
 
         // Get a key for a new Post.
         var newPostKey = firebase_db.ref().child('posts').push().key;
 
         // A post entry.
         var postData = {
-            userName: state.User[uid].Username,
+            userName: state.User[uid].Profile.Username,
             uid: uid,
             postContent: postContent,
             postKey: newPostKey,
