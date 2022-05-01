@@ -38,7 +38,7 @@ function Login({ setReady, ready }) {
                Introduce: '소개없음',
                },
                UserPost: {
-                  a:'1'
+                  
                },
             });
             alert("회원가입 성공");

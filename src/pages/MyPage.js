@@ -76,7 +76,7 @@ const MyPage = () => {
 
       </UserZoen>
       <ProfileBtn onClick={goProfileEdit}>프로필 편집</ProfileBtn>
-      
+      <MyPost posts={state.User[uid].UserPost} profile={state.User[uid].Profile}></MyPost>
     </>
     //  <button onClick={() => navigate('/')}>홈으로</button>
   );

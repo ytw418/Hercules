@@ -18,18 +18,37 @@ const PostBlock = styled.div`
 `;
 
 
-const FroflieZone = styled.div`
+const ProflieZone = styled.div`
 display: flex;
 padding: 5px;
 align-items: center;
+background: #fdf0ff;
+position: relative;
 
 `;
-const FroflieImg = styled.img`
-width: 30px;
-height: 30px;
+const ProflieImg = styled.img`
+width: 35px;
+height: 35px;
+border-radius: 50%;
+border: 3px #405add solid;
 `;
-const FroflieName = styled.p`
+const ProflieName = styled.p`
 margin:0px;
+font-weight: bold;
+padding-left: 10px;
+font-size: 16px;
+flex: 1;
+`;
+
+const ProfileEdit = styled.p`
+margin: 0;
+font-size: 16px;
+padding-right: 10px;
+font-weight:600;
+&:hover {
+   color: #339af0;
+}
+
 `;
 
 const PostImg = styled.img`
@@ -43,28 +62,36 @@ padding: 5px;
 `;
 
 
-function MyPost({uid}) {
+function MyPost({posts,profile}) {
+
+   const postDelete = (postKey)=>{
+
+      alert("포스트를 삭제합니다");
+
+      
+      console.log(postKey)
+      console.log(profile.Uid)
+
+      firebase_db.ref(`users/${profile.Uid}/UserPost/${postKey}`).remove();
+
+      
+      alert("포스트 삭제완료");
+   }
+
    
-   const [posts, setPosts] = useState([1, 2, 3, 4, 5,]);
-   //var posts = [];
-
-   useEffect(() => {
-      firebase_db.ref(`/users/${uid}/UserPosts`).orderByChild('date').startAfter(1).once('value').then((snapshot) => {
-         setPosts(snapshot.val());
-         console.log(snapshot.val())
-      })
-   }, []);
-
-
-
-
-
    return (
       <div>
          {posts && (
             Object.values(posts).reverse().map((posts) => (
                <PostBlock key={posts.postKey}>
-                  <PostText>{posts.userName}</PostText>
+                  <ProflieZone>
+                  
+                  <ProflieImg src={profile.Userphoto}></ProflieImg>
+                  <ProflieName>{profile.Username}</ProflieName>
+                  
+                  <ProfileEdit onClick={()=>postDelete(posts.postKey)} >삭제</ProfileEdit>
+                  </ProflieZone>
+                  
                   <PostImg src={posts.postPic} />
                   <PostText>{posts.postContent}</PostText>
                </PostBlock>
