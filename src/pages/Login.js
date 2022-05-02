@@ -1,13 +1,18 @@
 
 import React, { useState } from 'react';
-import { authService,firebaseInstance } from '../firebaseConfig';
+import { authService, firebaseInstance } from '../firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {useSetUID} from '../ContextApi'
-function Login({setReady,ready}) {
+import { useSetUID, useTodoDispatch } from '../ContextApi';
+
+import { firebase_db } from "../firebaseConfig";
+
+function Login({ setReady, ready }) {
    const setuid = useSetUID();
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [newAccount, setNewAccount] = useState(true);
+   const dispatch = useTodoDispatch();
+
 
    // 로그인시 이벤트 
    const onChange = (event) => {
@@ -19,68 +24,91 @@ function Login({setReady,ready}) {
    const onSubmit = async (event) => {
       event.preventDefault();
       try {
-         let data; 
+         let data;
          if (newAccount) {
             /// 새로운 유저 생성 
-            await authService.createUserWithEmailAndPassword(email, password);
+            data = await authService.createUserWithEmailAndPassword(email, password);
+            const uid = data.user._delegate.uid;
+
+            firebase_db.ref(`/users/${uid}/`).set({
+               Profile:{
+               Uid: `${uid}`,
+               Username: `이름없음`,
+               Userphoto: 'https://file.namu.moe/file/105db7e730e1402c09dcf2b281232df07cfd8577675ab05e4c269defaefb6f38c54eade7a465fd0b0044aba440e0b6b77c4e742599da767de499eaac22df3317',
+               Introduce: '소개없음',
+               },
+               UserPost: {
+                  
+               },
+            });
             alert("회원가입 성공");
+
+
          } else { // 회원가입 한 유저가 로그인시 이벤트
             data = await authService.signInWithEmailAndPassword(email, password);
-            setReady(!ready);
+            
             setuid(data.user._delegate.uid);
-            
-            alert("로그인 성공");
-            
-         } console.log(data.user._delegate.uid);
-      } catch (error) {
-         console.log(error)
+
+            firebase_db.ref(`/users/${data.user._delegate.uid}/`).once('value').then((snapshot) => {
+               console.log("로그인회원 파이어베이스 조회 성공")
+               dispatch({
+                  type: 'LOGIN_USER',
+                  user: snapshot.val(),
+               })
+            });
+         setReady(!ready);
+         alert("로그인 성공");
+
       }
+   } catch (error) {
+      console.log(error)
    }
+}
 
-   // const onSubmit = async (event) => {
-   //    event.preventDefault();
-   //    try {
-   //       let data; 
-   //       if (newAccount) {
-   //          / 새로운 유저 생성 
-   //          data = await authService.createUserWithEmailAndPassword(email, password);
-   //       } else { // 회원가입 한 유저가 로그인시 이벤트
-   //          data = await authService.signInWithEmailAndPassword(email, password);
-   //       } console.log(data);
-   //    } catch (error) {
-   //       console.log(error)
-   //    }
-   // }
+// const onSubmit = async (event) => {
+//    event.preventDefault();
+//    try {
+//       let data; 
+//       if (newAccount) {
+//          / 새로운 유저 생성 
+//          data = await authService.createUserWithEmailAndPassword(email, password);
+//       } else { // 회원가입 한 유저가 로그인시 이벤트
+//          data = await authService.signInWithEmailAndPassword(email, password);
+//       } console.log(data);
+//    } catch (error) {
+//       console.log(error)
+//    }
+// }
 
-   const toggleAccount = () => setNewAccount((prev) => !prev);
-
-
-   const onGoggleClick = async(event) => {
-      const {target: {name}} = event;
-      let provider; 
-      if (name === 'google') { 
-         provider = new firebaseInstance.auth.GoogleAuthProvider(); 
-      }
-         const data = await authService.signInWithPopup(provider); 
-         console.log(data); 
-      }
+const toggleAccount = () => setNewAccount((prev) => !prev);
 
 
+const onGoggleClick = async (event) => {
+   const { target: { name } } = event;
+   let provider;
+   if (name === 'google') {
+      provider = new firebaseInstance.auth.GoogleAuthProvider();
+   }
+   const data = await authService.signInWithPopup(provider);
+   console.log(data);
+}
 
-   return (
-      <>
-         <div>
-            <form onSubmit={onSubmit}>
-               <input name="email" type="email" placeholder="Email" required value={email} onChange={onChange} />
-               <input name="password" type="password" placeholder="password" required value={password} onChange={onChange} />
-               {/* 로그인 했다 ?? 하면 회원가입 유저와 기존 유저가 로그인할때를 구분해줌 */}
-               <input type="submit" value={newAccount ? "Create Account" : "Login"} />
-            </form>
-            <span onClick={toggleAccount}>{newAccount ? "Login" : "Craete Account"}</span>
-         </div>
-            <button onClick={onGoggleClick} name='google'>구글로그인</button>
-            
-      </>);
+
+
+return (
+   <>
+      <div>
+         <form onSubmit={onSubmit}>
+            <input name="email" type="email" placeholder="Email" required value={email} onChange={onChange} />
+            <input name="password" type="password" placeholder="password" required value={password} onChange={onChange} />
+            {/* 로그인 했다 ?? 하면 회원가입 유저와 기존 유저가 로그인할때를 구분해줌 */}
+            <input type="submit" value={newAccount ? "Create Account" : "Login"} />
+         </form>
+         <span onClick={toggleAccount}>{newAccount ? "Login" : "Craete Account"}</span>
+      </div>
+      <button onClick={onGoggleClick} name='google'>구글로그인</button>
+
+   </>);
 
 
 }

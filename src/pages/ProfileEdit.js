@@ -10,7 +10,7 @@ function ProfileEdit() {
       navigate(-1);
     }
   };
-
+  
   return (
     <CreateUser></CreateUser>
   )

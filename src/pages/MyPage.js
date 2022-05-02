@@ -1,11 +1,14 @@
-import React from 'react';
+
 //버전 v6 
 //withRouter, useRouteMatch, match, 사라짐
 //기존 history의 모든 기능은 useNavigate로 통합되었다
 // match 는 useParams 로 변경
-import { useParams, useLocation, useNavigate} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import userimg from '../imgs/kawai.jpg'
+import userimg from '../imgs/kawai.jpg';
+import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
+import MyPost from '../components/MyPost'
 
 
 const ProfileZone = styled.div`
@@ -46,30 +49,34 @@ background-color: #fff;
 
 const MyPage = () => {
 
-   const params = useParams();
-   const location = useLocation();
-   const navigate = useNavigate();
+  const params = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const state = useTodoState();
+  const uid = useUID();
 
-   const goProfileEdit = () => {
+  const goProfileEdit = () => {
     navigate('/ProfileEdit');
   }
 
+
   return (
     <>
-    <ProfileZone>
-      <UserImg src={userimg} />
+      <ProfileZone>
+        <UserImg src={state.User[uid].Profile.Userphoto} />
         <UserDataSec>
           <UserDataBlock>게시물 0</UserDataBlock>
           <UserDataBlock>팔로워 0</UserDataBlock>
           <UserDataBlock>팔로잉 0</UserDataBlock>
         </UserDataSec>
-    </ProfileZone>
-    <UserZoen>
-      <strong>테리어몬</strong>
-      <div>안녕하세요</div>
-      <div className='asd'>반가워요</div>
-    </UserZoen>
-    <ProfileBtn onClick={goProfileEdit}>프로필 편집</ProfileBtn>
+      </ProfileZone>
+      <UserZoen>
+        <strong>{state.User[uid].Profile.Username}</strong>
+        <div>{state.User[uid].Profile.Introduce}</div>
+
+      </UserZoen>
+      <ProfileBtn onClick={goProfileEdit}>프로필 편집</ProfileBtn>
+      <MyPost posts={state.User[uid].UserPost} profile={state.User[uid].Profile}></MyPost>
     </>
     //  <button onClick={() => navigate('/')}>홈으로</button>
   );
