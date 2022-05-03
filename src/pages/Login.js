@@ -3,9 +3,11 @@ import React, { useState,useEffect } from 'react';
 import { authService, firebaseInstance } from '../firebaseConfig';
 import { useSetUID, useTodoDispatch } from '../ContextApi';
 import { firebase_db } from "../firebaseConfig";
+import {useNavigate } from 'react-router-dom';
 
 
 function Login({ setReady, ready }) {
+   const navigate = useNavigate();
    const setuid = useSetUID();
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
@@ -15,9 +17,9 @@ function Login({ setReady, ready }) {
 
    // 페이지 마운트시 로그인 검사
    useEffect(() => {
-      authService.onAuthStateChanged( async(user) => {
+      authService.onAuthStateChanged((user) => {
       if (user) {
-         await firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
+      firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
             console.log("로그인회원 파이어베이스 유저데이터 조회 성공")
             dispatch({
                type: 'LOGIN_USER',
@@ -25,9 +27,9 @@ function Login({ setReady, ready }) {
             })
          });
          setuid(user.uid);
-
-         setReady(!ready)
          console.log("user is signed in:" + user.uid)
+         navigate('/Home');
+         
       
    } else {
       setLoading(!loading)
@@ -80,8 +82,7 @@ function Login({ setReady, ready }) {
                   user: snapshot.val(),
                })
             });
-            setReady(!ready);
-            alert("로그인 성공");
+            navigate('/Home');
 
          }
       } catch (error) {
@@ -131,6 +132,7 @@ function Login({ setReady, ready }) {
             </form>
             <span onClick={toggleAccount}>{newAccount ? "Login" : "Craete Account"}</span>
          </div>
+         
          <button onClick={onGoggleClick} name='google'>구글로그인</button>
 
       </>));
