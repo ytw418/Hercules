@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import userimg from '../imgs/kawai.jpg';
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 import MyPost from '../components/MyPost'
-
+import {authService} from "../firebaseConfig"
 
 const ProfileZone = styled.div`
 width: 100%;
@@ -48,15 +48,20 @@ background-color: #fff;
 `
 
 const MyPage = () => {
-
-  const params = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
   const state = useTodoState();
   const uid = useUID();
 
   const goProfileEdit = () => {
     navigate('/ProfileEdit');
+  }
+
+  const signOut = () =>{ 
+    authService.signOut().then(() => {
+    console.log('Sign-out successful');
+  }).catch((error) => {
+    console.log(error.message );
+  });
   }
 
 
@@ -76,6 +81,7 @@ const MyPage = () => {
 
       </UserZoen>
       <ProfileBtn onClick={goProfileEdit}>프로필 편집</ProfileBtn>
+      <ProfileBtn onClick={signOut}>로그아웃</ProfileBtn>
       <MyPost posts={state.User[uid].UserPost} profile={state.User[uid].Profile}></MyPost>
     </>
     //  <button onClick={() => navigate('/')}>홈으로</button>

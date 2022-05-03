@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { authService, firebaseInstance } from '../firebaseConfig';
 import { useSetUID, useTodoDispatch } from '../ContextApi';
 import { firebase_db } from "../firebaseConfig";
@@ -14,9 +14,10 @@ function Login({ setReady, ready }) {
    const [loading ,setLoading] = useState(true);
 
    // 페이지 마운트시 로그인 검사
-   authService.onAuthStateChanged((user) => {
+   useEffect(() => {
+      authService.onAuthStateChanged( async(user) => {
       if (user) {
-         firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
+         await firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
             console.log("로그인회원 파이어베이스 유저데이터 조회 성공")
             dispatch({
                type: 'LOGIN_USER',
@@ -33,7 +34,8 @@ function Login({ setReady, ready }) {
          console.log("user is signed out")
    }
    });
-   
+}, []);
+
 
 
    // 로그인시 이벤트 
@@ -86,6 +88,7 @@ function Login({ setReady, ready }) {
          console.log(error)
       }
    }
+
 
    // const onSubmit = async (event) => {
    //    event.preventDefault();

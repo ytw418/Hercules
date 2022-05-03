@@ -44,7 +44,7 @@ padding: 5px;
 
 
 function Post() {
-   const [posts, setPosts] = useState([1, 2, 3, 4, 5,]);
+   const [posts, setPosts] = useState();
    //var posts = [];
 
    useEffect(() => {
