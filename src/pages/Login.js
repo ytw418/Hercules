@@ -54,7 +54,13 @@ function Login({ setReady, ready }) {
          let data;
          if (newAccount) {
             /// 새로운 유저 생성 
-            data = await authService.createUserWithEmailAndPassword(email, password);
+            data = await authService.createUserWithEmailAndPassword(email, password).then(() => {
+               console.log('이메일 패스워드 등록')
+             })
+             .catch((error) => {
+               var errorMessage = error.message;
+               alert(`회원가입에 문제가 있습니다.\n이메일과 비밀번호를 확인해주세요\n${errorMessage}`)
+             });
             const uid = data.user._delegate.uid;
 
             firebase_db.ref(`/users/${uid}/`).set({
