@@ -137,17 +137,26 @@ function Upload() {
                 </form>
             </div>
             
-            <input type="text"
-                placeholder='내용'
+            <textarea type="text" 
+                placeholder='내용을 입력해주세요'
                 onChange={getValue}
-                name='postContent' style={{width: '100%',
-                    height: '300px',borderBottom:'1px #aaa solid'}}/>
+                name='postContent'/>
+
             <p className='uploadbtn'>작성 완료</p>
         </UploadBlock>
     )
 }
 
 const UploadBlock = styled.div`
+textarea{
+    width: 100%;
+    height: 150px;
+    padding: 20px;
+    display: flex;
+    border: none;
+    
+    &:focus { outline: none; }
+}
 .upLoadHeader{
     display: flex;
     height: 65px;
