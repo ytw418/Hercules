@@ -167,6 +167,7 @@ textarea{
         margin: 0;
         font-size: 21px;
         font-weight: bold;
+        flex:2;
     }
     .MdKeyboardBackspace{
         height: 35px;
@@ -176,7 +177,7 @@ textarea{
     .MdCheck{
         width: 35px;
         height: 35px;
-        margin-left: 180px;
+        margin-right: 20px;
         color: #5a77f3;
         &:hover{
             color: #000;
