@@ -56,11 +56,11 @@ function Login({ setReady, ready }) {
             /// 새로운 유저 생성 
             data = await authService.createUserWithEmailAndPassword(email, password).then(() => {
                console.log('이메일 패스워드 등록')
-             })
-             .catch((error) => {
-               var errorMessage = error.message;
-               alert(`회원가입에 문제가 있습니다.\n이메일과 비밀번호를 확인해주세요\n${errorMessage}`)
-             });
+            })
+               .catch((error) => {
+                  var errorMessage = error.message;
+                  alert(`회원가입에 문제가 있습니다.\n이메일과 비밀번호를 확인해주세요\n${errorMessage}`)
+               });
             const uid = data.user._delegate.uid;
 
             firebase_db.ref(`/users/${uid}/`).set({
@@ -124,9 +124,9 @@ function Login({ setReady, ready }) {
       console.log(data);
    }
 
-   
 
-   return (loading ? <Loading/> :(
+
+   return (loading ? <Loading /> : (
       <Block>
          <HeaderTitle>Reactstagram</HeaderTitle>
          <div className='loginBlock'>
@@ -200,9 +200,9 @@ form p{
 }
 .toggleAccountZone{
    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+   flex-direction: row;
+   justify-content: space-around;
+   align-items: center;
 }
 
 .toggleAccountZone span{
@@ -213,14 +213,14 @@ form p{
 
 const HeaderTitle = styled.div`
 cursor: pointer;
-    font-size: 35px;
-    font-weight: bold;
-    font-family: auto;
-    height: 140px;
-    display: flex;
-    color: #61dafb;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+   font-size: 35px;
+   font-weight: bold;
+   font-family: auto;
+   height: 140px;
+   display: flex;
+   color: #61dafb;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
 `;
 
