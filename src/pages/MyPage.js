@@ -45,8 +45,9 @@ font-weight: bold;
 
 `;
 const ProfileBtn = styled.button`
-width: 100%;
+margin: 5px;
 background-color: #fff;
+border: #aaa 1px solid;
 `
 
 const MyPage = () => {
