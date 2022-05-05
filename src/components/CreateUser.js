@@ -101,7 +101,9 @@ const CreateUser = () => {
         <label htmlFor="imageLoader" className="button">프로필 사진 변경</label>
         <input id='imageLoader' type='file' accept='image/*' onChange={onFileChange} />
       </div>
+      <p>사용자 이름</p>
       <input className='username' name="username" placeholder="이름" onChange={onChange} value={username} />
+      <p>소개</p>
       <input className='text' name="text" placeholder="text" onChange={onChange} value={text} />
     </ProfileEditBlock>
   );
@@ -112,6 +114,12 @@ const CreateUser = () => {
 const ProfileEditBlock = styled.div`
 width: 100%;
 overflow: hidden;
+padding: 10px;
+p{
+  font-size: 13px;
+  margin: 0;
+  padding: 10px 0 0 10px;
+}
 
 .ProfileEditHeader{
   display: flex;
@@ -143,7 +151,7 @@ overflow: hidden;
 }
 
 .imgBlock{
-  height: 250px;
+  height: 230px;
     display: flex;
     position: relative;
     flex-direction: column;
@@ -151,8 +159,8 @@ overflow: hidden;
     justify-content: space-evenly;
 }
 .imgBlock img{
-  width: 140px;
-  height: 140px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
 }
 .imgBlock .button{    
@@ -163,7 +171,7 @@ overflow: hidden;
     justify-content: center;
     color: #5a77f3;
     font-weight: bold;
-    font-size: 19px;
+    font-size: 18px;
 
 }
 
@@ -174,18 +182,22 @@ overflow: hidden;
 }
 
 input{
-  width: 90%;
+  width: 100%;
   font-size: 14px;
   font-weight: bold;
   padding: 10px;
   height: 40px;
   border: none;
   border-bottom: 1px #aaa solid;
+}
 .username{
-  
+
 }
 
+
+
 `;
+
 
 
 export default React.memo(CreateUser);
