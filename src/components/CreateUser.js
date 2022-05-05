@@ -1,10 +1,10 @@
-import React, {  useRef, useCallback, useState, } from 'react';
-import {  useTodoState,useTodoDispatch, useUID } from '../ContextApi';
+import React, { useRef, useCallback, useState, } from 'react';
+import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 import useInputs from './useInputs';
 import { firebase_db, imageStorage } from "../firebaseConfig"
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import {MdKeyboardBackspace,MdPhotoCamera,MdCheck} from 'react-icons/md';
+import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
 
 
 
@@ -23,9 +23,9 @@ const CreateUser = () => {
   const goBack = () => {
     const confirm = window.confirm('프로필편집을 취소하시겠습니까??')
     if (confirm) {
-        navigate(-1);
+      navigate(-1);
     }
-};
+  };
 
   const [{ username, text }, onChange,] = useInputs({
     username: `${state.User[uid].Profile.Username}`,
@@ -40,7 +40,7 @@ const CreateUser = () => {
       attachmentUrl = await response.ref.getDownloadURL()
     }
     setUrl(attachmentUrl)
-    
+
 
   }
 
@@ -52,35 +52,35 @@ const CreateUser = () => {
     reader.onloadend = (finishedEvent) => {
       const { currentTarget: { result } } = finishedEvent
       setAttachment(result)
-          }
+    }
     reader.readAsDataURL(theFile)
-    
+
 
 
   }
 
-  
+
 
   const onClearAttachment = () => {
     setAttachment(null);
   };
 
 
-  const profileEditBtn = () =>{
+  const profileEditBtn = () => {
     firebase_db.ref(`/users/${uid}/Profile/`).set({
       Uid: `${uid}`,
       Username: `${username}`,
       Userphoto: `${url}`,
       Introduce: `${text}`,
     });
-    
+
     firebase_db.ref(`/users/${uid}/`).once('value').then((snapshot) => {
       console.log("로그인회원 파이어베이스 조회 성공")
       dispatch({
         type: 'CREATE_USER',
         user: snapshot.val(),
       })
-  });
+    });
     alert("프로필편집 완료");
   }
 
@@ -91,32 +91,18 @@ const CreateUser = () => {
   return (
     <ProfileEditBlock>
       <div className='ProfileEditHeader'>
-      <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
-            <p>프로필 편집</p>
-            <MdCheck className='MdCheck' onClick={profileEditBtn}></MdCheck>
+        <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
+        <p>프로필 편집</p>
+        <MdCheck className='MdCheck' onClick={profileEditBtn}></MdCheck>
       </div>
 
-    <div className='imgBlock'>
-      <img src={attachment} alt=""></img>
-      <label htmlFor="imageLoader" className="button">프로필 사진 변경</label>
-      <input id='imageLoader' type='file' accept='image/*' onChange={onFileChange} />
-    
+      <div className='imgBlock'>
+        <img src={attachment} alt=""></img>
+        <label htmlFor="imageLoader" className="button">프로필 사진 변경</label>
+        <input id='imageLoader' type='file' accept='image/*' onChange={onFileChange} />
       </div>
-
-      <input
-        className='username'
-        name="username"
-        placeholder="이름"
-        onChange={onChange}
-        value={username}
-      />
-      <input
-        className='text'
-        name="text"
-        placeholder="text"
-        onChange={onChange}
-        value={text}
-      />
+      <input className='username' name="username" placeholder="이름" onChange={onChange} value={username} />
+      <input className='text' name="text" placeholder="text" onChange={onChange} value={text} />
     </ProfileEditBlock>
   );
 };
@@ -195,7 +181,10 @@ input{
   height: 40px;
   border: none;
   border-bottom: 1px #aaa solid;
-.username{}
+.username{
+  
+}
+
 `;
 
 
