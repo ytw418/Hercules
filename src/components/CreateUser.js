@@ -1,10 +1,12 @@
-import React, { useRef, useCallback, useState, } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 import useInputs from './useInputs';
 import { firebase_db, imageStorage } from "../firebaseConfig"
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
+
+
 
 
 
@@ -31,57 +33,67 @@ const CreateUser = () => {
     username: `${state.User[uid].Profile.Username}`,
     text: `${state.User[uid].Profile.Introduce}`
   });
-  const onSubmit = async () => {
+  // const onSubmit = async () => {
 
-    let attachmentUrl = ""
-    if (attachment !== "") {
-      const attachmentRef = imageStorage.ref().child(`${uid}/profile/photo`)
-      const response = await attachmentRef.putString(attachment, 'data_url')
-      attachmentUrl = await response.ref.getDownloadURL()
-    }
-    setUrl(attachmentUrl)
-
-
-  }
+  //   let attachmentUrl = ""
+  //   if (attachment !== "") {
+  //     const attachmentRef = imageStorage.ref().child(`${uid}/profile/photo`)
+  //     const response = await attachmentRef.putString(attachment, 'data_url')
+  //     attachmentUrl = await response.ref.getDownloadURL()
+  //   }
+  //   setUrl(attachmentUrl)
+  //   console.log('onSubmit')
+  // }
 
   const onFileChange = async (event) => {
     const { target: { files } } = event;
     const theFile = files[0];
-    const reader = new FileReader();
+    const reader =  new FileReader();
+
+    reader.readAsDataURL(theFile)
 
     reader.onloadend = (finishedEvent) => {
       const { currentTarget: { result } } = finishedEvent
       setAttachment(result)
     }
-    reader.readAsDataURL(theFile)
-
-
-
   }
 
+  useEffect( ()=>{
+  
+    const onSubmit = async () => {
+
+      let attachmentUrl = ""
+      if (attachment !== state.User[uid].Profile.Userphoto) {
+        const attachmentRef = imageStorage.ref().child(`${uid}/profile/photo`)
+        const response = await attachmentRef.putString(attachment, 'data_url')
+        attachmentUrl = await response.ref.getDownloadURL()
+        setUrl(attachmentUrl)
+        console.log(attachmentUrl)
+      }
+    }
+    onSubmit();
+
+  }, [attachment]) 
 
 
-  const onClearAttachment = () => {
-    setAttachment(null);
-  };
 
-
-  const profileEditBtn = () => {
-    firebase_db.ref(`/users/${uid}/Profile/`).set({
+  const profileEditBtn = async() => {
+    await firebase_db.ref(`/users/${uid}/Profile/`).set({
       Uid: `${uid}`,
       Username: `${username}`,
       Userphoto: `${url}`,
       Introduce: `${text}`,
     });
 
-    firebase_db.ref(`/users/${uid}/`).once('value').then((snapshot) => {
+    await firebase_db.ref(`/users/${uid}/`).once('value').then((snapshot) => {
       console.log("로그인회원 파이어베이스 조회 성공")
       dispatch({
         type: 'CREATE_USER',
         user: snapshot.val(),
       })
     });
-    alert("프로필편집 완료");
+
+    navigate(-1);
   }
 
 
