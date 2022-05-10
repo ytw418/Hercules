@@ -14,13 +14,12 @@ import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
 
 const CreateUser = () => {
 
-  const [url, setUrl] = useState();
   const dispatch = useTodoDispatch();
   const state = useTodoState();
   const uid = useUID();
   const navigate = useNavigate();
   const [attachment, setAttachment] = useState(state.User[uid].Profile.Userphoto);
-
+  const [url, setUrl] = useState(state.User[uid].Profile.Userphoto);
 
   const goBack = () => {
     const confirm = window.confirm('프로필편집을 취소하시겠습니까??')
@@ -105,7 +104,7 @@ const CreateUser = () => {
       <div className='ProfileEditHeader'>
         <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
         <p>프로필 편집</p>
-        <MdCheck className='MdCheck' onClick={profileEditBtn}></MdCheck>
+        <MdCheck type='button' className='MdCheck' onClick={profileEditBtn}></MdCheck>
       </div>
 
       <div className='imgBlock'>

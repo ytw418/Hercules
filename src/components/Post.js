@@ -88,7 +88,7 @@ function Post() {
             Object.values(posts).reverse().map((posts) => (
                <PostBlock key={posts.postKey}>
                   <ProflieZone>
-                     <ProflieImg src={posts.postPic}></ProflieImg>
+                     <ProflieImg src={posts.userPhoto}></ProflieImg>
                      <ProflieName>{posts.userName}</ProflieName>
                   </ProflieZone>
                   <PostImg src={posts.postPic} />

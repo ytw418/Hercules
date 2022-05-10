@@ -3,7 +3,7 @@ import { firebase_db, imageStorage } from "../firebaseConfig"
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import {MdKeyboardBackspace,MdPhotoCamera,MdCheck} from 'react-icons/md';
+import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
 
 
 function Upload() {
@@ -16,12 +16,10 @@ function Upload() {
 
     const [view, setView] = useState([]);
     const [file, setFile] = useState('');
-    const [attachment, setAttachment] = useState();
-    const [url, setUrl] = useState();
+    const [attachment, setAttachment] = useState("");
+    const [url, setUrl] = useState("https://2.bp.blogspot.com/-7fdJ0sJ_QrI/U4W-v8caIpI/AAAAAAAABxo/e7_hvfnNVFU/s1600/img.gif");
 
-    const goHome = () => {
-        navigate('/');
-    }
+
 
     const goBack = () => {
         const confirm = window.confirm('업로드를 취소하시겠습니까??')
@@ -30,18 +28,37 @@ function Upload() {
         }
     };
 
-    const onSubmit = async (event) => {
-        //사진 등록 함수 버튼
 
-        let attachmentUrl = ""
-        if (attachment !== "") {
-            const attachmentRef =  imageStorage.ref().child(`${uid}/posts/${Date()}`)
-            const response = await attachmentRef.putString(attachment, 'data_url')
-            attachmentUrl = await response.ref.getDownloadURL()
+    useEffect(() => {
+
+        const onSubmit = async () => {
+
+            let attachmentUrl = ""
+            if (attachment !== "") {
+                const attachmentRef = imageStorage.ref().child(`${uid}/profile/photo`)
+                const response = await attachmentRef.putString(attachment, 'data_url')
+                attachmentUrl = await response.ref.getDownloadURL()
+                setUrl(attachmentUrl)
+                console.log(attachmentUrl)
+            }
         }
-        setUrl(attachmentUrl)
-        setFile('')
-    }
+        onSubmit();
+
+    }, [attachment])
+
+    // const onSubmit = async (event) => {
+    //     //사진 등록 함수 버튼
+
+    //     let attachmentUrl = ""
+    //     if (attachment !== "") {
+    //         const attachmentRef = imageStorage.ref().child(`${uid}/posts/${Date()}`)
+    //         const response = await attachmentRef.putString(attachment, 'data_url')
+    //         attachmentUrl = await response.ref.getDownloadURL()
+    //     }
+    //     setUrl(attachmentUrl)
+    //     setFile('')
+    // }
+
 
 
     const onFileChange = (event) => {
@@ -75,73 +92,63 @@ function Upload() {
 
     const writeNewPost = async (event) => {
         event.preventDefault();
-        try{
-        let attachmentUrl = ""
-        if (attachment !== "") {
-            const attachmentRef =  imageStorage.ref().child(`${uid}/posts/${Date()}`)
-            const response = await attachmentRef.putString(attachment, 'data_url')
-            attachmentUrl = await response.ref.getDownloadURL()
+        try {
+            // Get a key for a new Post.
+            let newPostKey = firebase_db.ref().child('posts').push().key;
+            // A post entry.
+            let postData = {
+                userName: state.User[uid].Profile.Username,
+                uid: uid,
+                postContent: postContent,
+                postKey: newPostKey,
+                starCount: 0,
+                postPic: url,
+                date: Date.now(),
+                newDate:new Date(),
+                userPhoto:state.User[uid].Profile.Userphoto,
+                hashtag:null
+            };
+            // Write the new post's data simultaneously in the posts list and the user's post list.
+            let updates = {};
+            updates['/posts/' + newPostKey] = postData;
+            updates['/users/' + uid + '/UserPost/' + newPostKey] = postData;
+
+            firebase_db.ref().update(updates).then(() => alert("게시물 작성완료")).catch((error) => {
+                console.error(error);
+                console.log(updates);
+            });
+        } catch (error) {
+            console.log(error)
         }
-        let url = attachmentUrl
-        setFile('')
 
-        console.log(state.User[uid].Profile.Username)
-        console.log(url)
+        navigate('/Home');
 
-        // Get a key for a new Post.
-        let newPostKey = firebase_db.ref().child('posts').push().key;
-        // A post entry.
-        let postData = {
-            userName: state.User[uid].Profile.Username,
-            uid: uid,
-            postContent: postContent,
-            postKey: newPostKey,
-            starCount: 0,
-            postPic: url,
-            date: Date.now()
-        };
-
-
-        // Write the new post's data simultaneously in the posts list and the user's post list.
-        let updates = {};
-        updates['/posts/' + newPostKey] = postData;
-        updates['/users/' + uid + '/UserPost/' + newPostKey] = postData;
-
-        firebase_db.ref().update(updates).then(() => alert("게시물 작성완료")).catch((error) => {
-            console.error(error);
-        });
-    }catch(error) {
-        console.log(error)
-    }
-
-        goHome();
-        
     }
 
     return (
         <UploadBlock>
             <div className='upLoadHeader'>
-            <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
-            <p>새 게시물</p>
-            <MdCheck className='MdCheck' onClick={writeNewPost}></MdCheck>
+                <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
+                <p>새 게시물</p>
+                <MdCheck className='MdCheck' onClick={writeNewPost}></MdCheck>
             </div>
             <div className='imageBox'>
-                <form onSubmit={onSubmit}>
-                    <label htmlFor="imageLoader" className="button"><MdPhotoCamera style={{ width: '40px',height: '40px'}}/></label>
+                <form >
+                    <label htmlFor="imageLoader" className="button"><MdPhotoCamera style={{ width: '40px', height: '40px' }} /></label>
                     <input id='imageLoader' type='file' accept='image/*' onChange={onFileChange} value={file} />
                     {attachment && (
                         <div>
-                            <img src={attachment} style={{width:'80px',height:'80px',marginLeft:'20px'}} alt="attachment" />
+                            <img src={attachment} style={{ width: '80px', height: '80px', marginLeft: '20px' }} alt="attachment" />
                             <button className='picDelete' onClick={onClearAttachment}>x</button>
                         </div>
                     )}
                 </form>
             </div>
-            
-            <textarea type="text" 
+
+            <textarea type="text"
                 placeholder='내용을 입력해주세요'
                 onChange={getValue}
-                name='postContent'/>
+                name='postContent' />
 
             <p className='uploadbtn'>작성 완료</p>
         </UploadBlock>
@@ -183,6 +190,7 @@ textarea{
         &:hover{
             color: #000;
         }
+        
     }
 }
 .imageBox form{

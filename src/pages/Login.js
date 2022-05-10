@@ -66,9 +66,10 @@ function Login({ setReady, ready }) {
                await firebase_db.ref(`/users/${uid}/`).set({
                   Profile: {
                      Uid: `${uid}`,
-                     Username: `이름없음`,
+                     Username: `익명`,
                      Userphoto: 'https://file.namu.moe/file/105db7e730e1402c09dcf2b281232df07cfd8577675ab05e4c269defaefb6f38c54eade7a465fd0b0044aba440e0b6b77c4e742599da767de499eaac22df3317',
                      Introduce: '소개없음',
+                     Email:data.user._delegate.email,
                   },
                   UserPost: {
                   },
