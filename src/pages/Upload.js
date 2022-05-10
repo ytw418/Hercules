@@ -35,7 +35,7 @@ function Upload() {
 
             let attachmentUrl = ""
             if (attachment !== "") {
-                const attachmentRef = imageStorage.ref().child(`${uid}/profile/photo`)
+                const attachmentRef = imageStorage.ref().child(`${uid}/posts/${Date()}`)
                 const response = await attachmentRef.putString(attachment, 'data_url')
                 attachmentUrl = await response.ref.getDownloadURL()
                 setUrl(attachmentUrl)

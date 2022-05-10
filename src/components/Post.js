@@ -62,6 +62,8 @@ const PostText = styled.p`
    padding: 20px;
    border-bottom: 1px #e0e0e0 solid;
    font-size: 15px;
+   white-space:pre;
+
 `;
 
 
@@ -92,7 +94,7 @@ function Post() {
                      <ProflieName>{posts.userName}</ProflieName>
                   </ProflieZone>
                   <PostImg src={posts.postPic} />
-                  <PostText>{posts.postContent}</PostText>
+                  <PostText >{posts.postContent}</PostText>
 
                </PostBlock>
             ))

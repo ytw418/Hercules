@@ -68,6 +68,8 @@ const CreateUser = () => {
         attachmentUrl = await response.ref.getDownloadURL()
         setUrl(attachmentUrl)
         console.log(attachmentUrl)
+        console.log(url)
+        alert('프로필사진 변경 완료')
       }
     }
     onSubmit();
@@ -77,6 +79,7 @@ const CreateUser = () => {
 
 
   const profileEditBtn = async() => {
+    console.log(url)
     await firebase_db.ref(`/users/${uid}/Profile/`).set({
       Uid: `${uid}`,
       Username: `${username}`,
@@ -115,7 +118,7 @@ const CreateUser = () => {
       <p>사용자 이름</p>
       <input className='username' name="username" placeholder="이름" onChange={onChange} value={username} />
       <p>소개</p>
-      <input className='text' name="text" placeholder="text" onChange={onChange} value={text} />
+      <textarea className='text' name="text" placeholder="text" onChange={onChange} value={text} />
     </ProfileEditBlock>
   );
 };
@@ -198,6 +201,15 @@ input{
   font-weight: bold;
   padding: 10px;
   height: 40px;
+  border: none;
+  border-bottom: 1px #aaa solid;
+}
+textarea{
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px;
+  height: 300px;
   border: none;
   border-bottom: 1px #aaa solid;
 }

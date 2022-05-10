@@ -18,7 +18,7 @@ const initialTodos = {
               date: 1651291106864,
               postContent: "리액트 공부합시다",
               postKey: "-N0sbeuUtsj4JINTUf9C",
-              postPic: "https://firebasestorage.googleapis.com/v0/b/reactstagram-13fac.appspot.com/o/2WAF3CdAj0XdB2gN5qszar1ApvJ3%2Fposts%2FSat%20Apr%2030%202022%2012%3A58%3A12%20GMT%2B0900%20(%ED%95%9C%EA%B5%AD%20%ED%91%9C%EC%A4%80%EC%8B%9C)?alt=media&token=d065bcf0-d150-45a2-92cc-bdd7a2ab256d",
+              postPic: "d",
               starCount: 0,
               uid: "2WAF3CdAj0XdB2gN5qszar1ApvJ3",
               userName: "이름없음"

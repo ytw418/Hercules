@@ -110,7 +110,7 @@ const MyPage = () => {
       </ProfileZone>
       <UserZoen>
         <strong>{state.User[uid].Profile.Username}</strong>
-        <div>{state.User[uid].Profile.Introduce}</div>
+        <div style={{whiteSpace:'pre'}}>{state.User[uid].Profile.Introduce}</div>
 
       </UserZoen>
       <ProfileBtn onClick={goProfileEdit}>프로필 편집</ProfileBtn>
