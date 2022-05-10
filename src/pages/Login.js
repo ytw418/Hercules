@@ -17,27 +17,26 @@ function Login({ setReady, ready }) {
    const [loading, setLoading] = useState(true);
 
    // 페이지 마운트시 로그인 검사
-   useEffect(() => {
-      authService.onAuthStateChanged((user) => {
-         if (user) {
-            firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
-               console.log("로그인회원 파이어베이스 유저데이터 조회 성공")
-               dispatch({
-                  type: 'LOGIN_USER',
-                  user: snapshot.val(),
-               })
-            });
-            setuid(user.uid);
-            console.log("user is signed in:" + user.uid)
-            navigate('/Home');
+   // useEffect(() => {
+   //    authService.onAuthStateChanged( async(user) => {
+   //       if (user) {
+   //          await firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
+   //             console.log("로그인 검사 로그인회원 파이어베이스 유저데이터 조회 성공")
+   //             dispatch({
+   //                type: 'LOGIN_USER',
+   //                user: snapshot.val(),
+   //             })
+   //          });
+   //          setuid(user.uid);
+   //          console.log("user is signed in:" + user.uid)
+   //          navigate('/Home');
 
-
-         } else {
-            setLoading(!loading)
-            console.log("user is signed out")
-         }
-      });
-   }, []);
+   //       } else {
+   //          navigate('/Login');
+   //          console.log("user is signed out")
+   //       }
+   //    });
+   // },[]);
 
 
 
@@ -54,39 +53,41 @@ function Login({ setReady, ready }) {
          let data;
          if (newAccount) {
             /// 새로운 유저 생성 
-            data = await authService.createUserWithEmailAndPassword(email, password).then(() => {
+            await authService.createUserWithEmailAndPassword(email, password).then((load) => {
+               data = load;
                console.log('이메일 패스워드 등록')
-            })
-               .catch((error) => {
+            }).catch((error) => {
                   var errorMessage = error.message;
                   alert(`회원가입에 문제가 있습니다.\n이메일과 비밀번호를 확인해주세요\n${errorMessage}`)
                });
-            const uid = data.user._delegate.uid;
 
-            firebase_db.ref(`/users/${uid}/`).set({
-               Profile: {
-                  Uid: `${uid}`,
-                  Username: `이름없음`,
-                  Userphoto: 'https://file.namu.moe/file/105db7e730e1402c09dcf2b281232df07cfd8577675ab05e4c269defaefb6f38c54eade7a465fd0b0044aba440e0b6b77c4e742599da767de499eaac22df3317',
-                  Introduce: '소개없음',
-               },
-               UserPost: {
-
-               },
-            });
-            alert("회원가입 성공");
-            toggleAccount()
-
-
+               console.log(data)
+               const uid = data.user._delegate.uid;
+               await firebase_db.ref(`/users/${uid}/`).set({
+                  Profile: {
+                     Uid: `${uid}`,
+                     Username: `이름없음`,
+                     Userphoto: 'https://file.namu.moe/file/105db7e730e1402c09dcf2b281232df07cfd8577675ab05e4c269defaefb6f38c54eade7a465fd0b0044aba440e0b6b77c4e742599da767de499eaac22df3317',
+                     Introduce: '소개없음',
+                  },
+                  UserPost: {
+                  },
+               });
+               alert("회원가입 성공");
+               navigate('/Home');
          } else { // 회원가입 한 유저가 로그인시 이벤트
             data = await authService.signInWithEmailAndPassword(email, password);
+            console.log(data)
             setuid(data.user._delegate.uid);
-            firebase_db.ref(`/users/${data.user._delegate.uid}/`).once('value').then((snapshot) => {
+            await firebase_db.ref(`/users/${data.user._delegate.uid}/`).once('value').then((snapshot) => {
                console.log("로그인회원 파이어베이스 조회 성공")
                dispatch({
                   type: 'LOGIN_USER',
                   user: snapshot.val(),
                })
+            }).catch((error) => {
+               var errorMessage = error.message;
+               alert(`로그인에 문제가 있습니다.\n${errorMessage}`)
             });
             navigate('/Home');
          }
@@ -113,7 +114,6 @@ function Login({ setReady, ready }) {
 
    const toggleAccount = () => setNewAccount((prev) => !prev);
 
-
    const onGoggleClick = async (event) => {
       const { target: { name } } = event;
       let provider;
@@ -126,7 +126,7 @@ function Login({ setReady, ready }) {
 
 
 
-   return (loading ? <Loading /> : (
+   return ( 
       <Block>
          <HeaderTitle>Reactstagram</HeaderTitle>
          <div className='loginBlock'>
@@ -145,20 +145,13 @@ function Login({ setReady, ready }) {
          </div>
          {/* <button onClick={onGoggleClick} name='google'>구글로그인</button> */}
 
-      </Block>));
+      </Block>);
 
 
 }
 export default Login;
 
 
-export function Loading() {
-
-
-   return (
-      <div>Loading...</div>
-   )
-}
 
 
 const Block = styled.div`

@@ -73,7 +73,8 @@ function Upload() {
         console.log(content)
     }
 
-    const writeNewPost = async () => {
+    const writeNewPost = async (event) => {
+        event.preventDefault();
         try{
         let attachmentUrl = ""
         if (attachment !== "") {
@@ -113,7 +114,7 @@ function Upload() {
         console.log(error)
     }
 
-        return goHome();
+        goHome();
         
     }
 

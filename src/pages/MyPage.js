@@ -5,13 +5,13 @@
 // match 는 useParams 로 변경
 import BottomTeb from '../components/BottomTeb'
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import userimg from '../imgs/kawai.jpg';
-import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
+import { useTodoState, useTodoDispatch, useUID,useSetUID, } from '../ContextApi';
 import MyPost from '../components/MyPost'
-import {authService} from "../firebaseConfig"
-import Login from '../pages/Login';
+import { authService} from '../firebaseConfig';
+import { firebase_db } from "../firebaseConfig";
+import { useNavigate } from 'react-router-dom';
 
 const ProfileZone = styled.div`
 width: 100%;
@@ -51,11 +51,38 @@ border: #aaa 1px solid;
 `
 
 const MyPage = () => {
+  // 페이지 마운트시 로그인 검사
+  // useEffect(() => {
+  //   authService.onAuthStateChanged(async (user) => {
+  //     console.log(user);
+  //     if (user) {
+  //       await firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
+  //         console.log("로그인 검사 로그인회원 파이어베이스 유저데이터 조회 성공")
+  //         dispatch({
+  //           type: 'LOGIN_USER',
+  //           user: snapshot.val(),
+  //         })
+  //       });
+  //       setuid(user.uid);
+  //       console.log("user is signed in:" + user.uid)
+
+  //     } else {
+  //       navigate('/Login');
+  //       console.log("user is signed out")
+  //     }
+  //   });
+  // }, []);
 
   const [login, setLogin] =useState(false);
   const navigate = useNavigate();
   const state = useTodoState();
   const uid = useUID();
+
+  const setuid = useSetUID();
+  const dispatch = useTodoDispatch();
+
+  
+
 
   const goProfileEdit = () => {
     navigate('/ProfileEdit');

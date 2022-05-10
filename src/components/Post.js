@@ -73,7 +73,9 @@ function Post() {
       firebase_db.ref('posts').orderByChild('date').startAfter(1).once('value').then((snapshot) => {
          setPosts(snapshot.val());
 
-      })
+      });
+      
+      
    }, []);
 
 
