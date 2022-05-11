@@ -27,7 +27,6 @@ const App = () => {
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/ProfileEdit" element={<ProfileEdit />} />
           <Route path='/*' element={<h1>이 페이지는 존재하지 않습니다. - </h1>} />
-          <Route path='*'  replace to="/" />
         </Routes>
       </MainBlock>
     </TodoProvider>

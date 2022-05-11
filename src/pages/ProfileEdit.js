@@ -1,10 +1,16 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import CreateUser from '../components/CreateUser';
 import BottomTeb from '../components/BottomTeb';
-function ProfileEdit() {
+import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 
-  return (
+function ProfileEdit() {
+  const state = useTodoState();
+  const navigate = useNavigate()
+
+
+
+  return (state.User.default===null ? <div>404</div> :
     <>
     <CreateUser></CreateUser>
     <BottomTeb></BottomTeb>

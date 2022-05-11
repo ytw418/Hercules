@@ -13,11 +13,16 @@ import FullLoading from './TimeLoading'
 
 
 const CreateUser = () => {
+
+  const navigate = useNavigate();
   const [isReactLoading, setIsReactLoading] = useState(false)
   const dispatch = useTodoDispatch();
   const state = useTodoState();
+
+
+
   const uid = useUID();
-  const navigate = useNavigate();
+  
   const [attachment, setAttachment] = useState(state.User[uid].Profile.Userphoto);
   const [url, setUrl] = useState(state.User[uid].Profile.Userphoto);
 

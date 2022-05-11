@@ -82,7 +82,7 @@ const MyPage = () => {
   const dispatch = useTodoDispatch();
 
   
-
+console.log(state)
 
   const goProfileEdit = () => {
     navigate('/ProfileEdit');
@@ -98,7 +98,7 @@ const MyPage = () => {
   }
 
 
-  return ( 
+  return ( state.User.default===null ? <div>404</div> :
     <>
       <ProfileZone>
         <UserImg src={state.User[uid].Profile.Userphoto} />

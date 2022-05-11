@@ -1,31 +1,35 @@
 import React, { useState, useReducer, createContext, useContext, useRef, useEffect } from 'react'
 import { firebase_db } from "./firebaseConfig"
-
+import { useNavigate } from 'react-router-dom';
 
 
 const initialTodos = {
-  User: {
-    userId: {
-            Profile: {
-              Introduce: "소개없음",
-              Uid: "없음",
-              Username: "이름없음",
-              Userphoto: "https://file.namu.moe/file/105db7e730e1402c09dcf2b281232df07cfd8577675ab05e4c269defaefb6f38c54eade7a465fd0b0044aba440e0b6b77c4e742599da767de499eaac22df3317",
-              Email:'ex@naver.com',
-            },
-            UserPost: {
-              "-N0sbeuUtsj4JINTUf9C": {
-              date: 1651291106864,
-              postContent: "리액트 공부합시다",
-              postKey: "-N0sbeuUtsj4JINTUf9C",
-              postPic: "d",
-              starCount: 0,
-              uid: "2WAF3CdAj0XdB2gN5qszar1ApvJ3",
-              userName: "이름없음"
-              },
-            }
-          }
-        }
+  User:{
+    default:null
+  }
+  
+  // User: {
+  //   userId: {
+  //           Profile: {
+  //             Introduce: "소개없음",
+  //             Uid: "없음",
+  //             Username: "이름없음",
+  //             Userphoto: "https://file.namu.moe/file/105db7e730e1402c09dcf2b281232df07cfd8577675ab05e4c269defaefb6f38c54eade7a465fd0b0044aba440e0b6b77c4e742599da767de499eaac22df3317",
+  //             Email:'ex@naver.com',
+  //           },
+  //           UserPost: {
+  //             "-N0sbeuUtsj4JINTUf9C": {
+  //             date: 1651291106864,
+  //             postContent: "리액트 공부합시다",
+  //             postKey: "-N0sbeuUtsj4JINTUf9C",
+  //             postPic: "d",
+  //             starCount: 0,
+  //             uid: "2WAF3CdAj0XdB2gN5qszar1ApvJ3",
+  //             userName: "이름없음"
+  //             },
+  //           }
+  //         }
+  //       }
 };
 
 function todoReducer(state, action) {
@@ -64,11 +68,22 @@ const UIDContext = createContext();
 const SetUIDContext = createContext();
 
 export function TodoProvider({ children }) {
+  const navigate = useNavigate();
+
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
   const nextId = useRef(5);
   const [UID, SetUID] = useState('유저데이터없음');
-
   console.log(state)
+
+
+  useEffect(()=>{
+
+    if(state === initialTodos){
+      navigate('/');
+      console.log('이동')
+    }
+
+  },[])
 
 
   return (
