@@ -5,7 +5,7 @@ import { useSetUID, useTodoDispatch } from '../ContextApi';
 import { firebase_db } from "../firebaseConfig";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+import FullLoading from '../components/TimeLoading';
 
 function Login({ setReady, ready }) {
    const navigate = useNavigate();
@@ -15,6 +15,7 @@ function Login({ setReady, ready }) {
    const [newAccount, setNewAccount] = useState(true);
    const dispatch = useTodoDispatch();
    const [loading, setLoading] = useState(true);
+   const[isReactLoading, setIsReactLoading]= useState(false)
 
    // 페이지 마운트시 로그인 검사
    // useEffect(() => {
@@ -49,6 +50,7 @@ function Login({ setReady, ready }) {
 
    const onSubmit = async (event) => {
       event.preventDefault();
+      setIsReactLoading(true)
       try {
          let data;
          if (newAccount) {
@@ -129,6 +131,7 @@ function Login({ setReady, ready }) {
 
    return ( 
       <Block>
+         <FullLoading isReactLoading={isReactLoading}></FullLoading>
          <HeaderTitle>Reactstagram</HeaderTitle>
          <div className='loginBlock'>
             <form onSubmit={onSubmit}>

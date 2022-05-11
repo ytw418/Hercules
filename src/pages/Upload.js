@@ -4,6 +4,30 @@ import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
+import ReactLoading from 'react-loading';
+
+
+
+const Loading = styled.div`
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background: #386cae30;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+
+    .ReactLoading{
+    fill: rgb(255, 255, 255);
+    height: 64px;
+    width: 64px;
+}
+`
 
 
 function Upload() {
@@ -19,6 +43,8 @@ function Upload() {
     const [attachment, setAttachment] = useState("");
     const [url, setUrl] = useState("https://2.bp.blogspot.com/-7fdJ0sJ_QrI/U4W-v8caIpI/AAAAAAAABxo/e7_hvfnNVFU/s1600/img.gif");
 
+    const[isReactLoading, setIsReactLoading]= useState(false)
+
 
 
     const goBack = () => {
@@ -28,22 +54,22 @@ function Upload() {
         }
     };
 
-
+       
     useEffect(() => {
-
+        
         const onSubmit = async () => {
-
             let attachmentUrl = ""
+            
             if (attachment !== "") {
                 const attachmentRef = imageStorage.ref().child(`${uid}/posts/${Date()}`)
                 const response = await attachmentRef.putString(attachment, 'data_url')
                 attachmentUrl = await response.ref.getDownloadURL()
                 setUrl(attachmentUrl)
-                console.log(attachmentUrl)
+                setIsReactLoading(false)
+                console.log(url)
             }
         }
         onSubmit();
-
     }, [attachment])
 
     // const onSubmit = async (event) => {
@@ -66,7 +92,7 @@ function Upload() {
         const { target: { files, value } } = event;
         const theFile = files[0];
         const reader = new FileReader();
-        setFile(value)
+        setIsReactLoading(true)
         reader.onloadend = (finishedEvent) => {
             const { currentTarget: { result } } = finishedEvent
             setAttachment(result)
@@ -75,7 +101,8 @@ function Upload() {
     }
 
     const onClearAttachment = () => {
-        setAttachment(null)
+        setAttachment("")
+        setUrl("")
         setFile('')
     }
 
@@ -91,6 +118,7 @@ function Upload() {
     }
 
     const writeNewPost = async (event) => {
+        setIsReactLoading(true)
         event.preventDefault();
         try {
             // Get a key for a new Post.
@@ -113,19 +141,23 @@ function Upload() {
             updates['/posts/' + newPostKey] = postData;
             updates['/users/' + uid + '/UserPost/' + newPostKey] = postData;
 
-            firebase_db.ref().update(updates).then(() => alert("게시물 작성완료")).catch((error) => {
+            firebase_db.ref().update(updates).then(() => console("게시물 작성완료")).catch((error) => {
                 console.error(error);
                 console.log(updates);
             });
         } catch (error) {
             console.log(error)
         }
-
+    
         navigate('/Home');
 
     }
 
     return (
+        <>
+        {isReactLoading && (<Loading>
+        <ReactLoading className='ReactLoading' type={"spin"} />
+        </Loading>)}
         <UploadBlock>
             <div className='upLoadHeader'>
                 <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
@@ -149,13 +181,19 @@ function Upload() {
                 placeholder='내용을 입력해주세요'
                 onChange={getValue}
                 name='postContent' />
-
             <p className='uploadbtn'>작성 완료</p>
         </UploadBlock>
+        </>
     )
 }
 
+
+
 const UploadBlock = styled.div`
+
+
+
+
 textarea{
     width: 100%;
     height: 150px;

@@ -5,6 +5,7 @@ import { useSetUID, useTodoDispatch } from '../ContextApi';
 import { firebase_db } from "../firebaseConfig";
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import FullLoading from '../components/TimeLoading';
 
 
 function Loading() {
@@ -44,7 +45,7 @@ function Loading() {
 
 
    return (
-      <div>Loading...</div>
+  <FullLoading isReactLoading={true}/>
    )
 }
 

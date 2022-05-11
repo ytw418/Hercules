@@ -5,7 +5,7 @@ import { firebase_db, imageStorage } from "../firebaseConfig"
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
-
+import FullLoading from './TimeLoading'
 
 
 
@@ -13,7 +13,7 @@ import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
 
 
 const CreateUser = () => {
-
+  const [isReactLoading, setIsReactLoading] = useState(false)
   const dispatch = useTodoDispatch();
   const state = useTodoState();
   const uid = useUID();
@@ -45,6 +45,7 @@ const CreateUser = () => {
   // }
 
   const onFileChange = async (event) => {
+    setIsReactLoading(true)
     const { target: { files } } = event;
     const theFile = files[0];
     const reader =  new FileReader();
@@ -69,7 +70,9 @@ const CreateUser = () => {
         setUrl(attachmentUrl)
         console.log(attachmentUrl)
         console.log(url)
-        alert('프로필사진 변경 완료')
+        console.log('프로필사진 변경 완료')
+        setIsReactLoading(false)
+        
       }
     }
     onSubmit();
@@ -79,6 +82,7 @@ const CreateUser = () => {
 
 
   const profileEditBtn = async() => {
+    setIsReactLoading(true)
     console.log(url)
     await firebase_db.ref(`/users/${uid}/Profile/`).set({
       Uid: `${uid}`,
@@ -103,6 +107,8 @@ const CreateUser = () => {
 
 
   return (
+    <>
+    <FullLoading isReactLoading={isReactLoading} ></FullLoading>
     <ProfileEditBlock>
       <div className='ProfileEditHeader'>
         <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
@@ -120,6 +126,7 @@ const CreateUser = () => {
       <p>소개</p>
       <textarea className='text' name="text" placeholder="text" onChange={onChange} value={text} />
     </ProfileEditBlock>
+    </>
   );
 };
 
