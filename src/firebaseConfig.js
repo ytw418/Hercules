@@ -4,6 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import firebase from "firebase/compat/app";
 import 'firebase/auth';
 
+//제외파일
 
 // 사용할 파이어베이스 서비스 주석을 해제합니다
 import "firebase/compat/auth";
