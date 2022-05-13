@@ -35,7 +35,7 @@ color:#000;
 
 
 function BottomTeb() {
-   console.log("BottomTeb 랜더링")
+
    return (
       <>
       <BottomTebBlock>

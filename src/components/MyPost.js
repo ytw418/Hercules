@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
-import { firebase_db } from "../firebaseConfig"
+import { firebase_db } from "../firebaseConfig.js"
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 
 
@@ -66,8 +66,9 @@ const PostText = styled.p`
 
 
 function MyPost({ posts, profile }) {
+   const dispatch = useTodoDispatch();
 
-   const postDelete = async (postKey) => {
+   const postDelete = async (posts) => {
 
       const confirm = window.confirm('포스트를 삭제하시겠습니까?')
       if (confirm) {
@@ -75,14 +76,13 @@ function MyPost({ posts, profile }) {
          //    ['/posts/' + postKey]:null,
          //    ['/users/' + profile.Uid + '/UserPost/' + postKey]:null
          //    };
-      
-            await firebase_db.ref(`users/${profile.Uid}/UserPost/${postKey}`).remove();
-            await firebase_db.ref('/posts/' + postKey).remove();
-      
+            await firebase_db.ref(`users/${profile.Uid}/UserPost/${posts.postKey}`).remove();
+            await firebase_db.ref('/posts/' + posts.postKey).remove();
+            
             alert("포스트 삭제완료");
       }
-      console.log(postKey)
-      console.log(profile.Uid)
+      // console.log(posts.postKey)
+      // console.log(profile.Uid)
    }
 
 
@@ -94,7 +94,7 @@ function MyPost({ posts, profile }) {
                   <ProflieZone>
                      <ProflieImg src={posts.userPhoto}></ProflieImg>
                      <ProflieName>{profile.Username}</ProflieName>
-                     <ProfileEdit onClick={() => postDelete(posts.postKey)} >삭제</ProfileEdit>
+                     <ProfileEdit onClick={() => postDelete(posts)} >삭제</ProfileEdit>
                   </ProflieZone>
 
                   <PostImg src={posts.postPic} />

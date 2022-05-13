@@ -1,7 +1,7 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 import useInputs from './useInputs';
-import { firebase_db, imageStorage } from "../firebaseConfig"
+import { firebase_db, imageStorage } from "../firebaseConfig.js"
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
@@ -96,13 +96,13 @@ const CreateUser = () => {
       Introduce: `${text}`,
     });
 
-    await firebase_db.ref(`/users/${uid}/`).once('value').then((snapshot) => {
-      console.log("로그인회원 파이어베이스 조회 성공")
-      dispatch({
-        type: 'CREATE_USER',
-        user: snapshot.val(),
-      })
-    });
+    // await firebase_db.ref(`/users/${uid}/`).once('value').then((snapshot) => {
+    //   console.log("로그인회원 파이어베이스 조회 성공")
+    //   dispatch({
+    //     type: 'CREATE_USER',
+    //     user: snapshot.val(),
+    //   })
+    // });
 
     navigate(-1);
   }

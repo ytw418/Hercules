@@ -1,13 +1,12 @@
 import React, { useState, useReducer, createContext, useContext, useRef, useEffect } from 'react'
-import { firebase_db } from "./firebaseConfig"
+import { firebase_db } from "./firebaseConfig.js"
 import { useNavigate } from 'react-router-dom';
 
 
 const initialTodos = {
-  User:{
-    default:null
-  }
-  
+  User: {
+    default: null
+  },
   // User: {
   //   userId: {
   //           Profile: {
@@ -38,22 +37,38 @@ function todoReducer(state, action) {
     case 'LOGIN_USER':
       return {
         ...state,
-        User: { [action.user.Profile.Uid]:action.user},
+        User: { [action.user.Profile.Uid]: action.user },
       };
-    case 'CREATE_USER':
-      return {
-        ...state,
-        User: { [action.user.Profile.Uid]:action.user},
-            };
-    
+    // case 'CREATE_USER':
+    //   return {
+    //     ...state,
+    //     User: { [action.user.Profile.Uid]: action.user },
+    //   };
+    // case 'POST_DELETE':
+    //   console.log(action.posts.postKey)
+    //         const UserPosts = {...state.User[action.posts.uid].UserPost}
+    //   delete UserPosts[`${action.posts.postKey}`]
+    //   return {
+    //     ...state,
+    //     User:{[action.posts.uid]:
+    //       {...state.User[action.posts.uid],UserPost:UserPosts
+    //     }}
+    //   }
 
-    case 'CREATE':
-      return firebase_db.ref('/users').set(state.users);
-    case 'TOGGLE':
-      return state.map(todo =>
-        todo.id === action.id ? { ...todo, done: !todo.done } : todo);
-    case 'REMOVE':
-      return state.filter(todo => todo.id !== action.id);
+      // return {
+      //   state.post:'1',
+      //   asdas:'asd',
+
+      //   post:{...state.post, name:'aasdfasf'},
+        
+      // }
+    // case 'CREATE':
+    //   return firebase_db.ref('/users').set(state.users);
+    // case 'TOGGLE':
+    //   return state.map(todo =>
+    //     todo.id === action.id ? { ...todo, done: !todo.done } : todo);
+    // case 'REMOVE':
+    //   return state.filter(todo => todo.id !== action.id);
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -69,21 +84,17 @@ const SetUIDContext = createContext();
 
 export function TodoProvider({ children }) {
   const navigate = useNavigate();
-
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
   const nextId = useRef(5);
   const [UID, SetUID] = useState('유저데이터없음');
-  console.log(state)
+  useEffect(() => {
 
-
-  useEffect(()=>{
-
-    if(state === initialTodos){
+    if (state === initialTodos) {
       navigate('/');
-      console.log('이동')
+      console.log('스테이트에 유저 데이터가 없습니다 로딩페이지로 이동합니다.')
     }
 
-  },[])
+  }, [initialTodos])
 
 
   return (

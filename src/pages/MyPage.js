@@ -9,8 +9,8 @@ import styled from 'styled-components';
 import userimg from '../imgs/kawai.jpg';
 import { useTodoState, useTodoDispatch, useUID,useSetUID, } from '../ContextApi';
 import MyPost from '../components/MyPost'
-import { authService} from '../firebaseConfig';
-import { firebase_db } from "../firebaseConfig";
+import { authService} from '../firebaseConfig.js';
+import { firebase_db } from "../firebaseConfig.js";
 import { useNavigate } from 'react-router-dom';
 
 const ProfileZone = styled.div`
