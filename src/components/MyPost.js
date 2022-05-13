@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
-import { firebase_db } from "../firebaseConfig.js"
+import { firebase_db, imageStorage } from "../firebaseConfig.js"
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 
 
@@ -76,14 +76,26 @@ function MyPost({ posts, profile }) {
          //    ['/posts/' + postKey]:null,
          //    ['/users/' + profile.Uid + '/UserPost/' + postKey]:null
          //    };
-            await firebase_db.ref(`users/${profile.Uid}/UserPost/${posts.postKey}`).remove();
-            await firebase_db.ref('/posts/' + posts.postKey).remove();
-            
-            alert("포스트 삭제완료");
+         await firebase_db.ref(`users/${profile.Uid}/UserPost/${posts.postKey}`).remove();
+         await firebase_db.ref('/posts/' + posts.postKey).remove();
+
+         alert("포스트 삭제완료");
+
+         var desertRef = imageStorage.refFromURL(posts.postPic)
+
+         // Delete the file
+         await desertRef.delete().then(() => {
+            // File deleted successfully
+            console.log('deleted successfully')
+         }).catch((error) => {
+            console.log(error)
+            // Uh-oh, an error occurred!
+         });
       }
       // console.log(posts.postKey)
       // console.log(profile.Uid)
    }
+
 
 
    return (

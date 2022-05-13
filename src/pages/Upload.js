@@ -44,7 +44,7 @@ function Upload() {
     const [url, setUrl] = useState("https://2.bp.blogspot.com/-7fdJ0sJ_QrI/U4W-v8caIpI/AAAAAAAABxo/e7_hvfnNVFU/s1600/img.gif");
 
     const[isReactLoading, setIsReactLoading]= useState(false)
-
+    const imageStorageTime = Date.now()
 
 
     const goBack = () => {
@@ -54,7 +54,7 @@ function Upload() {
         }
     };
 
-       
+
     useEffect(() => {
         
         const onSubmit = async () => {
