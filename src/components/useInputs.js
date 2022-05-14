@@ -13,7 +13,7 @@ const onChange = useCallback( e => {
 },[]);
 
    const reset = useCallback(()=> setForm(initialForm),[initialForm])
-   return [form,onChange, reset];
+   return [form,onChange, reset,setForm];
 }
 
 export default useInputs

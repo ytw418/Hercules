@@ -17,6 +17,8 @@ const Block = styled.div`
   margin: 0 auto; /* 페이지 중앙에 나타나도록 설정 */
   display: flex;
   flex-direction: column;
+  padding-bottom: 56px;
+  /* padding-top: 60px; */
 
 
 

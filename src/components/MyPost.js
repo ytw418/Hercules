@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { firebase_db, imageStorage } from "../firebaseConfig.js"
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
+import { async } from '@firebase/util';
+import useInputs from './useInputs'
+import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
+
 
 
 const PostBlock = styled.div`
@@ -62,11 +66,68 @@ const PostText = styled.p`
    padding: 20px;
    border-bottom: 1px #e0e0e0 solid;
    font-size: 15px;
+   white-space:pre;
 `;
+
+const PostEditBlock = styled.div`
+display: flex;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: #fff;
+flex-direction: column;
+
+
+.ProfileEditHeader{
+  display: flex;
+    height: 65px;
+    width: 100%;
+    border-bottom: 1px #aaa solid;
+    align-items: center;
+    p{
+        margin: 0;
+        font-size: 21px;
+        font-weight: bold;
+        flex:2;
+    }
+    .MdKeyboardBackspace{
+        height: 35px;
+        width: 35px;
+        margin: 0 10px 0 20px;
+        
+    }
+    .MdCheck{
+      margin-right: 20px;
+        width: 35px;
+        height: 35px;
+        color: #5a77f3;
+        &:hover{
+            color: #000;
+        }
+    }
+}
+
+.textdiv{
+   border: none;
+   height: 300px;
+   padding: 15px 30px 15px 30px;
+   
+
+}
+`
+
+
 
 
 function MyPost({ posts, profile }) {
    const dispatch = useTodoDispatch();
+   const [isPostDelete, setIsPostDelete] = useState(false)
+   const [editPostData, setEditPostData] = useState({ postContent: '1' })
+
+
+   const [{ text }, onChange] = useInputs({ text: editPostData.postContent });
 
    const postDelete = async (posts) => {
 
@@ -96,6 +157,24 @@ function MyPost({ posts, profile }) {
       // console.log(profile.Uid)
    }
 
+   const postEditOpen = async (posts) => {
+      setEditPostData(posts)
+      setIsPostDelete(true)
+   }
+
+   const postEdit = async (text, posts) => {
+
+
+      var updates = {};
+      updates[`users/${profile.Uid}/UserPost/${posts.postKey}/postContent`] = text;
+      updates[`/posts/${posts.postKey}/postContent`] = text;
+      await firebase_db.ref().update(updates).then(() => console.log("수정완료")).catch((error) => {
+         console.error(error);
+         console.log(updates);
+      });
+      setIsPostDelete(false)
+
+   }
 
 
    return (
@@ -105,18 +184,40 @@ function MyPost({ posts, profile }) {
                <PostBlock key={posts.postKey}>
                   <ProflieZone>
                      <ProflieImg src={posts.userPhoto}></ProflieImg>
-                     <ProflieName>{profile.Username}</ProflieName>
+                     <ProflieName>{posts.userName}</ProflieName>
+                     <ProfileEdit onClick={() => postEditOpen(posts)} >수정</ProfileEdit>
                      <ProfileEdit onClick={() => postDelete(posts)} >삭제</ProfileEdit>
                   </ProflieZone>
-
                   <PostImg src={posts.postPic} />
                   <PostText>{posts.postContent}</PostText>
+
                </PostBlock>
             ))
+
+         )}
+         {isPostDelete && (
+            <PostEditBlock>
+               <div className='ProfileEditHeader'>
+                  <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={() => setIsPostDelete(false)} />
+                  <p>게시물 수정</p>
+                  <MdCheck type='button' className='MdCheck'onClick={() => postEdit(text, editPostData)} ></MdCheck>
+               </div>
+               <ProflieZone>
+                  <ProflieImg src={editPostData.userPhoto}></ProflieImg>
+                  <ProflieName>{editPostData.userName}</ProflieName>
+               </ProflieZone>
+               <PostImg src={editPostData.postPic} />
+               <textarea autoFocus className='textdiv' name="text" onChange={onChange} value={text} autofocus />
+            
+            </PostEditBlock>
          )}
       </div>
    );
 };
 
+
+
 export default React.memo(MyPost);
+
+
 

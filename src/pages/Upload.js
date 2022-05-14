@@ -178,6 +178,7 @@ function Upload() {
             </div>
 
             <textarea type="text"
+                autoFocus
                 placeholder='내용을 입력해주세요'
                 onChange={getValue}
                 name='postContent' />

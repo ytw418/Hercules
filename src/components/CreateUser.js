@@ -127,7 +127,7 @@ const CreateUser = () => {
         <input id='imageLoader' type='file' accept='image/*' onChange={onFileChange} />
       </div>
       <p>사용자 이름</p>
-      <input className='username' name="username" placeholder="이름" onChange={onChange} value={username} />
+      <input autoFocus  className='username' name="username" placeholder="이름" onChange={onChange} value={username} />
       <p>소개</p>
       <textarea className='text' name="text" placeholder="text" onChange={onChange} value={text} />
     </ProfileEditBlock>
