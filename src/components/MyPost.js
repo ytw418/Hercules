@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components';
 import { firebase_db, imageStorage } from "../firebaseConfig.js"
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
-import { async } from '@firebase/util';
 import useInputs from './useInputs'
 import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
 
@@ -24,7 +23,7 @@ const PostBlock = styled.div`
 
 const ProflieZone = styled.div`
 display: flex;
-padding: 5px;
+padding: 10px 5px 10px 5px;
 align-items: center;
 position: relative;
 
@@ -58,13 +57,13 @@ font-weight:600;
 const PostImg = styled.img`
 width: 100%;
 height: 300px;
-padding: 5px;
+
 `;
 
 const PostText = styled.p`
    margin: 0px;
    padding: 20px;
-   border-bottom: 1px #e0e0e0 solid;
+  
    font-size: 15px;
    white-space:pre;
 `;
@@ -81,32 +80,31 @@ flex-direction: column;
 
 
 .ProfileEditHeader{
-  display: flex;
-    height: 65px;
-    width: 100%;
-    border-bottom: 1px #aaa solid;
-    align-items: center;
-    p{
-        margin: 0;
-        font-size: 21px;
-        font-weight: bold;
-        flex:2;
-    }
-    .MdKeyboardBackspace{
-        height: 35px;
-        width: 35px;
-        margin: 0 10px 0 20px;
-        
-    }
-    .MdCheck{
-      margin-right: 20px;
-        width: 35px;
-        height: 35px;
-        color: #5a77f3;
-        &:hover{
+   display: flex;
+      height: 65px;
+      width: 100%;
+      border-bottom: 1px #aaa solid;
+      align-items: center;
+      p{
+         margin: 0;
+         font-size: 21px;
+         font-weight: bold;
+         flex:2;
+      }
+      .MdKeyboardBackspace{
+         height: 35px;
+         width: 35px;
+         margin: 0 10px 0 20px;        
+      }
+      .MdCheck{
+         margin-right: 20px;
+         width: 35px;
+         height: 35px;
+         color: #5a77f3;
+         &:hover{
             color: #000;
-        }
-    }
+         }
+      }
 }
 
 .textdiv{
@@ -122,10 +120,10 @@ flex-direction: column;
 
 
 function MyPost({ posts, profile }) {
-   const dispatch = useTodoDispatch();
    const [isPostDelete, setIsPostDelete] = useState(false)
    const [editPostData, setEditPostData] = useState({ postContent: '1' })
 
+   const loginUID = useUID();
 
    const [{ text }, onChange] = useInputs({ text: editPostData.postContent });
 
@@ -185,12 +183,15 @@ function MyPost({ posts, profile }) {
                   <ProflieZone>
                      <ProflieImg src={posts.userPhoto}></ProflieImg>
                      <ProflieName>{posts.userName}</ProflieName>
-                     <ProfileEdit onClick={() => postEditOpen(posts)} >수정</ProfileEdit>
-                     <ProfileEdit onClick={() => postDelete(posts)} >삭제</ProfileEdit>
+                     {loginUID === posts.uid && (
+                        <>
+                           <ProfileEdit onClick={() => postEditOpen(posts)} >수정</ProfileEdit>
+                           <ProfileEdit onClick={() => postDelete(posts)} >삭제</ProfileEdit>
+                        </>
+                     )}
                   </ProflieZone>
                   <PostImg src={posts.postPic} />
                   <PostText>{posts.postContent}</PostText>
-
                </PostBlock>
             ))
 
@@ -200,7 +201,7 @@ function MyPost({ posts, profile }) {
                <div className='ProfileEditHeader'>
                   <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={() => setIsPostDelete(false)} />
                   <p>게시물 수정</p>
-                  <MdCheck type='button' className='MdCheck'onClick={() => postEdit(text, editPostData)} ></MdCheck>
+                  <MdCheck type='button' className='MdCheck' onClick={() => postEdit(text, editPostData)} ></MdCheck>
                </div>
                <ProflieZone>
                   <ProflieImg src={editPostData.userPhoto}></ProflieImg>
@@ -208,7 +209,7 @@ function MyPost({ posts, profile }) {
                </ProflieZone>
                <PostImg src={editPostData.postPic} />
                <textarea autoFocus className='textdiv' name="text" onChange={onChange} value={text} autofocus />
-            
+
             </PostEditBlock>
          )}
       </div>

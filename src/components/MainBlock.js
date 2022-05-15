@@ -8,6 +8,12 @@ const Block = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  text-decoration: none;
+  a{color: #000;
+    &:hover {
+    color: #e03c8f;
+}
+  }
   
 
   position: relative; /* 추후 박스 하단에 추가 버튼을 위치시키기 위한 설정 */

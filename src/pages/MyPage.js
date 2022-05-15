@@ -78,10 +78,6 @@ const MyPage = () => {
   const state = useTodoState();
   const uid = useUID();
 
-  const setuid = useSetUID();
-  const dispatch = useTodoDispatch();
-
-  
 console.log(state)
 
   const goProfileEdit = () => {

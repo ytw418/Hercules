@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components';
 import {MdSearch,MdHome,MdAccountCircle,MdShoppingCart} from 'react-icons/md';
-import {Link } from "react-router-dom";
+import {NavLink } from "react-router-dom";
 
 
 const BottomTebBlock =  styled.div`
@@ -39,10 +39,10 @@ function BottomTeb() {
    return (
       <>
       <BottomTebBlock>
-         <Text><Link to="/Home"><MdHome></MdHome></Link></Text>
-         <Text><Link to="/about"><MdSearch></MdSearch></Link></Text>
-         <Text><Link to="/Profiles"><MdShoppingCart/></Link></Text>
-         <Text><Link to="/MyPage"><MdAccountCircle/></Link></Text>
+         <Text><NavLink to="/Home" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdHome></MdHome></NavLink></Text>
+         <Text><NavLink to="/about" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdSearch></MdSearch></NavLink></Text>
+         <Text><NavLink to="/Profiles" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdShoppingCart/></NavLink></Text>
+         <Text><NavLink to="/MyPage" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdAccountCircle/></NavLink></Text>
       </BottomTebBlock>
          </>
    )

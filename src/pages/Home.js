@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import Post from '../components/Post';
 import BottomTeb from '../components/BottomTeb';
 import Header from '../components/Header';
+import Profile from './Profile';
+import { Route,Routes,NavLink  } from 'react-router-dom';
 
 import { authService } from '../firebaseConfig';
 import { useSetUID, useTodoDispatch ,useTodoState} from '../ContextApi';

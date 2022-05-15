@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { firebase_db } from "../firebaseConfig"
+import { Route,Routes,NavLink  } from 'react-router-dom';
 
 
 
@@ -20,7 +21,7 @@ const PostBlock = styled.div`
 
 const ProflieZone = styled.div`
 display: flex;
-padding: 5px;
+padding: 10px 5px 10px 5px;
 align-items: center;
 position: relative;
 
@@ -54,18 +55,20 @@ font-weight:600;
 const PostImg = styled.img`
 width: 100%;
 height: 300px;
-padding: 5px;
+
 `;
 
 const PostText = styled.p`
    margin: 0px;
    padding: 20px;
-   border-bottom: 1px #e0e0e0 solid;
    font-size: 15px;
    white-space:pre;
 
 `;
+const Postdate = styled.div`
+font-size: 13px;
 
+`
 
 function Post() {
    const [posts, setPosts] = useState();
@@ -82,24 +85,34 @@ function Post() {
 
 
 
-
-
    return (
+      
       <div>
+         
          {posts && (
             Object.values(posts).reverse().map((posts) => (
                <PostBlock key={posts.postKey}>
+                  
+                  <NavLink to ={`/${posts.uid}`}style={({ isActive }) => ({  color: isActive ? 'black' : 'black' })}>
                   <ProflieZone>
                      <ProflieImg src={posts.userPhoto}></ProflieImg>
                      <ProflieName>{posts.userName}</ProflieName>
-                  </ProflieZone>
+                     <Postdate >{posts.newDate}</Postdate>
+                     </ProflieZone>
+                     </NavLink>
+                  
+               
                   <PostImg src={posts.postPic} />
+                  
                   <PostText >{posts.postContent}</PostText>
+                  
+                  
 
                </PostBlock>
             ))
          )}
       </div>
+      
    );
 };
 
