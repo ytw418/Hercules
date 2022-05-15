@@ -4,7 +4,7 @@ import { firebase_db } from "../firebaseConfig.js";
 import BottomTeb from '../components/BottomTeb'
 import styled from 'styled-components';
 import MyPost from '../components/MyPost';
-
+import Header from '../components/Header';
 
 const ProfileZone = styled.div`
 width: 100%;
@@ -65,6 +65,7 @@ const Profile = () => {
 
   return (user &&
   <>
+  <Header></Header>
     <ProfileZone>
       <UserImg src={user.Profile.Userphoto} />
       <UserDataSec>

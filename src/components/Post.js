@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { firebase_db } from "../firebaseConfig"
-import { Route,Routes,NavLink  } from 'react-router-dom';
-
-
-
+import { Route, Routes, NavLink } from 'react-router-dom';
+import useInputs from './useInputs'
+import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
+import { MdFavoriteBorder, MdShoppingCart, MdChatBubbleOutline } from 'react-icons/md';
 const PostBlock = styled.div`
    width: 100%;
    height: 100%;
@@ -16,6 +16,15 @@ const PostBlock = styled.div`
    margin: 0 auto; /* 페이지 중앙에 나타나도록 설정 */
    display: flex;
    flex-direction: column;
+   font-size: 20px;
+   .iconblock{
+      flex-direction: row;
+      svg{
+      height: 30px;
+      width: 30px;
+   }
+   }
+
 `;
 
 
@@ -30,7 +39,7 @@ const ProflieImg = styled.img`
 width: 35px;
 height: 35px;
 border-radius: 50%;
-border: 2px #64bfed  solid;
+
 
 `;
 const ProflieName = styled.p`
@@ -54,7 +63,7 @@ font-weight:600;
 
 const PostImg = styled.img`
 width: 100%;
-height: 300px;
+
 
 `;
 
@@ -72,47 +81,85 @@ font-size: 13px;
 
 function Post() {
    const [posts, setPosts] = useState();
-   //var posts = [];
+   const uid = useUID();
+   const state = useTodoState();
+   const [{ comment }, onChange] = useInputs({
+
+   })
 
    useEffect(() => {
       firebase_db.ref('posts').orderByChild('date').startAfter(1).once('value').then((snapshot) => {
          setPosts(snapshot.val());
-
+         console.log(posts)
       });
-      
-      
    }, []);
 
+   const writeNewComment = async (postKey, postuid) => {
+      try {
+         let newCommentKey = firebase_db.ref().child('posts').push().key;
+         let newComment =
+         {
+            userName: state.User[uid].Profile.Username,
+            key: newCommentKey,
+            uid: uid,
+            date: Date.now(),
+            newDate: new Date(),
+            userPhoto: state.User[uid].Profile.Userphoto,
+            text: comment
+         };
+         // Write the new post's data simultaneously in the posts list and the user's post list.
+         let updates = {};
+         updates['/posts/' + postKey + '/comment/' + newCommentKey] = newComment;
+         updates['/users/' + postuid + '/UserPost/' + postKey + '/comment/' + newCommentKey] = newComment;
 
+         firebase_db.ref().update(updates).then(() => console.log("댓글 작성완료")).catch((error) => {
+            console.log(error);
+            console.log(updates);
+         });
+      } catch (error) {
+         console.log(error)
+         console.log(comment)
+      }
+
+
+   }
 
    return (
-      
+
       <div>
-         
+
          {posts && (
             Object.values(posts).reverse().map((posts) => (
                <PostBlock key={posts.postKey}>
-                  
-                  <NavLink to ={`/${posts.uid}`}style={({ isActive }) => ({  color: isActive ? 'black' : 'black' })}>
-                  <ProflieZone>
-                     <ProflieImg src={posts.userPhoto}></ProflieImg>
-                     <ProflieName>{posts.userName}</ProflieName>
-                     <Postdate >{posts.newDate}</Postdate>
+                  <NavLink to={`/${posts.uid}`} style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}>
+                     <ProflieZone>
+                        <ProflieImg src={posts.userPhoto}></ProflieImg>
+                        <ProflieName>{posts.userName}</ProflieName>
+                        <Postdate >{posts.newDate}</Postdate>
                      </ProflieZone>
-                     </NavLink>
-                  
-               
+                  </NavLink>
                   <PostImg src={posts.postPic} />
-                  
+                  <div className='iconblock'><MdChatBubbleOutline /><MdFavoriteBorder /></div>
                   <PostText >{posts.postContent}</PostText>
-                  
-                  
+
+                  {Object.values(posts.comment).map((comment) => (
+                     <ProflieZone key={comment.key}>
+                        <ProflieImg src={comment.userPhoto}></ProflieImg>
+                        <ProflieName>{comment.userName}</ProflieName>
+                        <p>{comment.text}</p>
+                     </ProflieZone>
+                  ))}
+
+                  {/* <p>{posts.comment[0].text}</p> */}
+                  <input name='comment' onChange={onChange} value={comment}></input>
+                  <button onClick={() => writeNewComment(posts.postKey, posts.uid)}>댓글 등록</button>
+
 
                </PostBlock>
             ))
          )}
       </div>
-      
+
    );
 };
 

@@ -32,7 +32,6 @@ const ProflieImg = styled.img`
 width: 35px;
 height: 35px;
 border-radius: 50%;
-border: 2px #64bfed  solid;
 
 `;
 const ProflieName = styled.p`
@@ -56,7 +55,6 @@ font-weight:600;
 
 const PostImg = styled.img`
 width: 100%;
-height: 300px;
 
 `;
 

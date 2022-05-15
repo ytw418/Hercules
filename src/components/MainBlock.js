@@ -10,9 +10,10 @@ const Block = styled.div`
   box-sizing: border-box;
   text-decoration: none;
   a{color: #000;
+    text-decoration: none;
     &:hover {
     color: #e03c8f;
-}
+  }
   }
   
 

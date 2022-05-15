@@ -3,6 +3,7 @@
 //withRouter, useRouteMatch, match, 사라짐
 //기존 history의 모든 기능은 useNavigate로 통합되었다
 // match 는 useParams 로 변경
+import Header from '../components/Header';
 import BottomTeb from '../components/BottomTeb'
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
@@ -96,6 +97,7 @@ console.log(state)
 
   return ( state.User.default===null ? <div>404</div> :
     <>
+    <Header></Header>
       <ProfileZone>
         <UserImg src={state.User[uid].Profile.Userphoto} />
         <UserDataSec>
