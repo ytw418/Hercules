@@ -130,7 +130,7 @@ function Login({ setReady, ready }) {
          if (name === 'google') {
             provider = new firebaseInstance.auth.GoogleAuthProvider();
          }
-         const data = await authService.signInWithPopup(provider);
+         const data = await authService.signInWithRedirect(provider);
          console.log(data);
          const uid = data.user._delegate.uid;
 
