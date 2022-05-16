@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { firebase_db } from "../firebaseConfig"
-import { Route, Routes, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import useInputs from './useInputs'
-import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
-import { MdFavoriteBorder, MdShoppingCart, MdChatBubbleOutline } from 'react-icons/md';
+import { useTodoState,  useUID } from '../ContextApi';
+import { MdFavoriteBorder,MdOutlineChatBubbleOutline, } from 'react-icons/md';
+import { BiMessageRounded,BiNavigation,BiUserPlus} from 'react-icons/bi';
 const PostBlock = styled.div`
    width: 100%;
    height: 100%;
@@ -19,12 +20,13 @@ const PostBlock = styled.div`
    font-size: 20px;
    .iconblock{
       flex-direction: row;
+      padding: 5px 10px;
       svg{
-      height: 30px;
-      width: 30px;
+      height: 22px;
+      width: 22px;
+      margin-right: 15px;
    }
    }
-
 `;
 
 
@@ -69,13 +71,14 @@ width: 100%;
 
 const PostText = styled.p`
    margin: 0px;
-   padding: 20px;
+   padding: 10px 15px;
    font-size: 15px;
-   white-space:pre;
-
+   font-weight: 500;
 `;
 const Postdate = styled.div`
 font-size: 13px;
+padding: 0px 15px;
+color: #626161;;
 
 `
 
@@ -112,7 +115,7 @@ function Post() {
          updates['/posts/' + postKey + '/comment/' + newCommentKey] = newComment;
          updates['/users/' + postuid + '/UserPost/' + postKey + '/comment/' + newCommentKey] = newComment;
 
-         firebase_db.ref().update(updates).then(() => console.log("댓글 작성완료")).catch((error) => {
+         await firebase_db.ref().update(updates).then(() => console.log("댓글 작성완료")).catch((error) => {
             console.log(error);
             console.log(updates);
          });
@@ -135,14 +138,21 @@ function Post() {
                      <ProflieZone>
                         <ProflieImg src={posts.userPhoto}></ProflieImg>
                         <ProflieName>{posts.userName}</ProflieName>
-                        <Postdate >{posts.newDate}</Postdate>
+                        <BiUserPlus></BiUserPlus>
+                        
                      </ProflieZone>
                   </NavLink>
                   <PostImg src={posts.postPic} />
-                  <div className='iconblock'><MdChatBubbleOutline /><MdFavoriteBorder /></div>
-                  <PostText >{posts.postContent}</PostText>
+                  <div className='iconblock'><MdFavoriteBorder /><BiMessageRounded/><BiNavigation/></div>
+                  <PostText><strong>{posts.userName}</strong>{" "}{posts.postContent}</PostText>
+                  {(()=>{
+                           let time = posts.newDate
+                           let realtime = time.substr(0, 10);
+                           return<Postdate >{realtime}</Postdate>})()
+                  }
 
-                  {Object.values(posts.comment).map((comment) => (
+                  {posts.comment && Object.values(posts.comment).map((comment) => (
+                     
                      <ProflieZone key={comment.key}>
                         <ProflieImg src={comment.userPhoto}></ProflieImg>
                         <ProflieName>{comment.userName}</ProflieName>

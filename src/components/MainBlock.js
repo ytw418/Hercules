@@ -9,6 +9,8 @@ const Block = styled.div`
   height: 100%;
   box-sizing: border-box;
   text-decoration: none;
+  white-space: pre-wrap;
+  overflow: hidden;
   a{color: #000;
     text-decoration: none;
     &:hover {

@@ -135,7 +135,7 @@ function Upload() {
                 newDate:new Date(),
                 userPhoto:state.User[uid].Profile.Userphoto,
                 hashtag:null,
-                comment:" "
+                comment:null
             };
             // Write the new post's data simultaneously in the posts list and the user's post list.
             let updates = {};

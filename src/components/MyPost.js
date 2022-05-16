@@ -61,9 +61,7 @@ width: 100%;
 const PostText = styled.p`
    margin: 0px;
    padding: 20px;
-  
    font-size: 15px;
-   white-space:pre;
 `;
 
 const PostEditBlock = styled.div`

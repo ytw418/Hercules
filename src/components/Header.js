@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import {MdFavoriteBorder,MdSend,MdAddCircleOutline} from 'react-icons/md';
+import { BiMessageRounded,BiNavigation} from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 
 const HeaderBlock = styled.header`
@@ -79,7 +80,7 @@ function Header() {
             <HeaderRigthZone>
                <HeaderAdd><MdAddCircleOutline onClick={goUpload}></MdAddCircleOutline></HeaderAdd>
                <HeaderLike><MdFavoriteBorder></MdFavoriteBorder></HeaderLike>
-               <Headerchat><MdSend></MdSend></Headerchat>
+               <Headerchat><BiNavigation></BiNavigation></Headerchat>
             </HeaderRigthZone>
          </HeaderBlock>
       </>
