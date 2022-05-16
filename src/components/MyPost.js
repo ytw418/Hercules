@@ -4,7 +4,9 @@ import { firebase_db, imageStorage } from "../firebaseConfig.js"
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 import useInputs from './useInputs'
 import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
-
+import { MdFavoriteBorder} from 'react-icons/md';
+import { BiMessageRounded,BiNavigation,BiUserPlus} from 'react-icons/bi';
+import { NavLink } from 'react-router-dom';
 
 
 const PostBlock = styled.div`
@@ -18,8 +20,17 @@ const PostBlock = styled.div`
    margin: 0 auto; /* 페이지 중앙에 나타나도록 설정 */
    display: flex;
    flex-direction: column;
+   font-size: 20px;
+   .iconblock{
+      flex-direction: row;
+      padding: 5px 10px;
+      svg{
+      height: 22px;
+      width: 22px;
+      margin-right: 15px;
+   }
+   }
 `;
-
 
 const ProflieZone = styled.div`
 display: flex;
@@ -60,9 +71,17 @@ width: 100%;
 
 const PostText = styled.p`
    margin: 0px;
-   padding: 20px;
+   padding: 10px 15px;
    font-size: 15px;
+   font-weight: 500;
 `;
+const Postdate = styled.div`
+font-size: 13px;
+padding: 0px 15px;
+color: #626161;;
+`
+
+
 
 const PostEditBlock = styled.div`
   @media screen and (min-width: 800px) {
@@ -116,8 +135,6 @@ flex-direction: column;
 
 }
 `
-
-
 
 
 function MyPost({ posts, profile }) {
@@ -192,8 +209,25 @@ function MyPost({ posts, profile }) {
                      )}
                   </ProflieZone>
                   <PostImg src={posts.postPic} />
-                  <PostText>{posts.postContent}</PostText>
+                  <div className='iconblock'>
+                     <MdFavoriteBorder />
+                     <NavLink to={`/Comments/${posts.postKey}`}><BiMessageRounded/></NavLink>
+                     <BiNavigation/>
+                  </div>
+                  <PostText><strong>{posts.userName}</strong>{" "}{posts.postContent}</PostText>
+                  {(()=>{  let comLength = posts.comment;
+                           if(comLength){
+                           let commentLength = Object.values(comLength).length;
+                           return <NavLink to={`/Comments/${posts.postKey}`}><Postdate >{`댓글 ${commentLength}개 모두보기`}</Postdate></NavLink>}})()
+                  }
+                  {(()=>{
+                           let time = posts.newDate
+                           let realtime = time.substr(0, 10);
+                           return<Postdate >{realtime}</Postdate>
+                  })()
+                  }
                </PostBlock>
+               
             ))
 
          )}
