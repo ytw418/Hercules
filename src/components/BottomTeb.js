@@ -5,12 +5,14 @@ import {NavLink } from "react-router-dom";
 
 
 const BottomTebBlock =  styled.div`
+z-index: 10;
 display:flex;
 background:#fff;
 width: 100%;
 height: 56px;
 position: fixed;
 bottom:0px;
+left: 0;
 border-top: 1px #0000002e solid;
 
 `;

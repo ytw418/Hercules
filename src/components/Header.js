@@ -5,7 +5,10 @@ import { BiMessageRounded,BiNavigation} from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 
 const HeaderBlock = styled.header`
-   z-index: 9999;
+  @media screen and (min-width: 800px) {
+   z-index: 10;
+   }
+   z-index: 3;
    padding: 0 15px 0 15px;
    background: #fff;
    border-bottom: 1px #d8d7d7 solid;
@@ -13,6 +16,7 @@ const HeaderBlock = styled.header`
    position: fixed;
    width: 100%;
    display: flex;
+   left: 0;
    justify-content: space-between;
    align-items: center;
    

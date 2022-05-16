@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 const Block = styled.div`
   @media screen and (min-width: 800px) {
-  
+    width: 520px;
+    //align-items: center;
+    
     }
   width: 100%;
   height: 100%;

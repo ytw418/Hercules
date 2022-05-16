@@ -65,8 +65,13 @@ const PostText = styled.p`
 `;
 
 const PostEditBlock = styled.div`
+  @media screen and (min-width: 800px) {
+   z-index: 5;
+   top: 60px;
+   }
+z-index:5;
 display: flex;
-position: fixed;
+position: absolute;
 top: 0;
 left: 0;
 width: 100%;
@@ -177,8 +182,8 @@ function MyPost({ posts, profile }) {
             Object.values(posts).reverse().map((posts) => (
                <PostBlock key={posts.postKey}>
                   <ProflieZone>
-                     <ProflieImg src={posts.userPhoto}></ProflieImg>
-                     <ProflieName>{posts.userName}</ProflieName>
+                     <ProflieImg src={profile.Userphoto}></ProflieImg>
+                     <ProflieName>{profile.Username}</ProflieName>
                      {loginUID === posts.uid && (
                         <>
                            <ProfileEdit onClick={() => postEditOpen(posts)} >수정</ProfileEdit>

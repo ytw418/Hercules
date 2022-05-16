@@ -61,6 +61,7 @@ function Login({ setReady, ready }) {
             }).catch((error) => {
                   var errorMessage = error.message;
                   alert(`회원가입에 문제가 있습니다.\n이메일과 비밀번호를 확인해주세요\n${errorMessage}`)
+                  setIsReactLoading(false)
                });
 
                console.log(data)
@@ -76,6 +77,7 @@ function Login({ setReady, ready }) {
                   UserPost: {
                   },
                });
+               
                alert("회원가입 성공");
                navigate('/Home');
          } else { // 회원가입 한 유저가 로그인시 이벤트
@@ -91,7 +93,9 @@ function Login({ setReady, ready }) {
             }).catch((error) => {
                var errorMessage = error.message;
                alert(`로그인에 문제가 있습니다.\n${errorMessage}`)
+               setIsReactLoading(false)
             });
+            setIsReactLoading(false)
             navigate('/Home');
          }
       } catch (error) {

@@ -70,12 +70,12 @@ function Post() {
                   {(()=>{  let comLength = posts.comment;
                            if(comLength){
                            let commentLength = Object.values(comLength).length;
-                           return <Postdate >{`댓글 ${commentLength}개 모두보기`}</Postdate>}})()
+                           return <NavLink to={`/Comments/${posts.postKey}`}><Postdate >{`댓글 ${commentLength}개 모두보기`}</Postdate></NavLink>}})()
                   }
                   {(()=>{
                            let time = posts.newDate
                            let realtime = time.substr(0, 10);
-                           return<NavLink to={`/Comments/${posts.postKey}`}><Postdate >{realtime}</Postdate></NavLink>
+                           return<Postdate >{realtime}</Postdate>
                   })()
                   }
 
