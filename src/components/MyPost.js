@@ -118,7 +118,7 @@ flex-direction: column;
 function MyPost({ posts, profile }) {
    const [isPostDelete, setIsPostDelete] = useState(false)
    const [editPostData, setEditPostData] = useState({ postContent: '1' })
-
+   const state = useTodoState();
    const loginUID = useUID();
 
    const [{ text }, onChange] = useInputs({ text: editPostData.postContent });

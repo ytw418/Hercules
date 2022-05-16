@@ -4,9 +4,8 @@ import useInputs from './useInputs';
 import { firebase_db, imageStorage } from "../firebaseConfig.js"
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
 import FullLoading from './TimeLoading'
-
+import PageHeader from '../components/PageHeader';
 
 
 
@@ -29,7 +28,7 @@ const CreateUser = () => {
   const goBack = () => {
     const confirm = window.confirm('프로필편집을 취소하시겠습니까??')
     if (confirm) {
-      navigate(-1);
+      navigate(-1 ,);
     }
   };
 
@@ -114,13 +113,8 @@ const CreateUser = () => {
   return (
     <>
     <FullLoading isReactLoading={isReactLoading} ></FullLoading>
+    <PageHeader title={'프로필 편집'} check={profileEditBtn}></PageHeader>
     <ProfileEditBlock>
-      <div className='ProfileEditHeader'>
-        <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
-        <p>프로필 편집</p>
-        <MdCheck type='button' className='MdCheck' onClick={profileEditBtn}></MdCheck>
-      </div>
-
       <div className='imgBlock'>
         <img src={attachment} alt=""></img>
         <label htmlFor="imageLoader" className="button">프로필 사진 변경</label>
@@ -146,36 +140,6 @@ p{
   margin: 0;
   padding: 10px 0 0 10px;
 }
-
-.ProfileEditHeader{
-  display: flex;
-    height: 65px;
-    width: 100%;
-    border-bottom: 1px #aaa solid;
-    align-items: center;
-    p{
-        margin: 0;
-        font-size: 21px;
-        font-weight: bold;
-        flex:2;
-    }
-    .MdKeyboardBackspace{
-        height: 35px;
-        width: 35px;
-        margin: 0 10px 0 20px;
-        
-    }
-    .MdCheck{
-      margin-right: 20px;
-        width: 35px;
-        height: 35px;
-        color: #5a77f3;
-        &:hover{
-            color: #000;
-        }
-    }
-}
-
 .imgBlock{
   height: 230px;
     display: flex;

@@ -35,7 +35,7 @@ function Loading() {
 
                setuid(user.uid);
                console.log("접속유저 :" + user.uid)
-               navigate('/Home');
+               navigate('/Home',{ state: user.uid});
             
             } else {
                navigate('/Login');

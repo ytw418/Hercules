@@ -3,9 +3,9 @@ import { firebase_db, imageStorage } from "../firebaseConfig"
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { MdKeyboardBackspace, MdPhotoCamera, MdCheck } from 'react-icons/md';
+import {MdPhotoCamera} from 'react-icons/md';
 import ReactLoading from 'react-loading';
-
+import PageHeader from '../components/PageHeader';
 
 
 const Loading = styled.div`
@@ -160,11 +160,7 @@ function Upload() {
         <ReactLoading className='ReactLoading' type={"spin"} />
         </Loading>)}
         <UploadBlock>
-            <div className='upLoadHeader'>
-                <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
-                <p>새 게시물</p>
-                <MdCheck className='MdCheck' onClick={writeNewPost}></MdCheck>
-            </div>
+        <PageHeader title={'프로필 편집'} check={writeNewPost}></PageHeader>
             <div className='imageBox'>
                 <form >
                     <label htmlFor="imageLoader" className="button"><MdPhotoCamera style={{ width: '40px', height: '40px' }} /></label>
@@ -205,34 +201,7 @@ textarea{
     
     &:focus { outline: none; }
 }
-.upLoadHeader{
-    display: flex;
-    height: 65px;
-    width: 100%;
-    border-bottom: 1px #aaa solid;
-    align-items: center;
-    p{
-        margin: 0;
-        font-size: 21px;
-        font-weight: bold;
-        flex:2;
-    }
-    .MdKeyboardBackspace{
-        height: 35px;
-        width: 35px;
-        margin: 0 10px 0 20px
-    }
-    .MdCheck{
-        width: 35px;
-        height: 35px;
-        margin-right: 20px;
-        color: #5a77f3;
-        &:hover{
-            color: #000;
-        }
-        
-    }
-}
+
 .imageBox form{
     width: 100%;
     height: 120px;

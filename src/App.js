@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import MyPage from './pages/MyPage';
 import ProfileEdit from './pages/ProfileEdit'
 import Loading from './pages/Loading';
+import Comments from './pages/Comments';
 import MainBlock from './components/MainBlock';
 
 import { useState } from "react";
@@ -28,6 +29,8 @@ const App = () => {
           <Route path="/ProfileEdit" element={<ProfileEdit />} />
           <Route path='/*' element={<h1>이 페이지는 존재하지 않습니다. - </h1>} />
           <Route path='/:uid' element={<Profile/>} />
+          <Route path='/Comments/:postKey' element={<Comments/>} />
+
         </Routes>
       </MainBlock>
     </TodoProvider>
