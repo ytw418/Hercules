@@ -4,7 +4,7 @@
 
 
 * 빌드 1. npm run build 
-*      2. firebase deploy 후 5분정도 기다리면 적용
+*      2. firebase deploy 후 5분정도 기다리면 적용 또는 크롬 쿠키 삭제
 
 
 
