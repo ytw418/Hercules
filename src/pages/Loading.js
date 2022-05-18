@@ -19,8 +19,8 @@ function Loading() {
          authService.onAuthStateChanged( async(user) => {
             if (user) {
                console.log(user)
-                  //유저 데이터 변경시 감지하여 자동 트리거
-               await firebase_db.ref(`/users/${user.uid}/`).on('value',async(snapshot) => {
+               
+               await firebase_db.ref(`/users/${user.uid}/`).once('value').then(async(snapshot) => {
                   console.log("로딩페이지 : 로그인 검사  유저데이터 조회")
                   if(snapshot.val()){
                      dispatch({
@@ -39,8 +39,8 @@ function Loading() {
                         UserPost: {
                         },
                      });
-                     //유저 데이터 변경시 감지하여 자동 트리거
-                     await firebase_db.ref(`/users/${user.uid}/`).on('value',(snapshot) => {
+                  
+                     await firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
                         console.log("로딩페이지 : 구글로그인 검사  유저데이터 조회")
                         if(snapshot.val()){
                            dispatch({

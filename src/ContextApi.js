@@ -39,11 +39,11 @@ function todoReducer(state, action) {
         ...state,
         User: { [action.user.Profile.Uid]: action.user },
       };
-    // case 'CREATE_USER':
-    //   return {
-    //     ...state,
-    //     User: { [action.user.Profile.Uid]: action.user },
-    //   };
+    case 'CREATE_USER':
+      return {
+        ...state,
+        User: { [action.user.Profile.Uid]: action.user },
+      };
     // case 'POST_DELETE':
     //   console.log(action.posts.postKey)
     //         const UserPosts = {...state.User[action.posts.uid].UserPost}
