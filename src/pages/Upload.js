@@ -160,7 +160,7 @@ function Upload() {
         <ReactLoading className='ReactLoading' type={"spin"} />
         </Loading>)}
         <UploadBlock>
-        <PageHeader title={'프로필 편집'} check={writeNewPost}></PageHeader>
+        <PageHeader title={'게시물 작성'} check={writeNewPost}></PageHeader>
             <div className='imageBox'>
                 <form >
                     <label htmlFor="imageLoader" className="button"><MdPhotoCamera style={{ width: '40px', height: '40px' }} /></label>

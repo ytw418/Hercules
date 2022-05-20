@@ -42,8 +42,8 @@ function BottomTeb() {
       <>
       <BottomTebBlock>
          <Text><NavLink to="/Home" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdHome></MdHome></NavLink></Text>
-         <Text><NavLink to="/about" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdSearch></MdSearch></NavLink></Text>
-         <Text><NavLink to="/" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdShoppingCart/></NavLink></Text>
+         <Text><NavLink to="/About" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdSearch></MdSearch></NavLink></Text>
+         <Text><NavLink to="/ChatList" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdShoppingCart/></NavLink></Text>
          <Text><NavLink to="/MyPage" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdAccountCircle/></NavLink></Text>
       </BottomTebBlock>
          </>

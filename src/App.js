@@ -9,6 +9,8 @@ import ProfileEdit from './pages/ProfileEdit'
 import Loading from './pages/Loading';
 import Comments from './pages/Comments';
 import MainBlock from './components/MainBlock';
+import ChatList from './pages/ChatList';
+import ChatRoom from './pages/ChatRoom';
 
 import { useState } from "react";
 import Upload from "./pages/Upload"
@@ -23,14 +25,15 @@ const App = () => {
           <Route path="/" element={<Loading />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Home" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/About" element={<About />} />
           <Route path="/Upload" element={<Upload />} />
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/ProfileEdit" element={<ProfileEdit />} />
           <Route path='/*' element={<h1>이 페이지는 존재하지 않습니다. - </h1>} />
           <Route path='/:uid' element={<Profile/>} />
           <Route path='/Comments/:postKey' element={<Comments/>} />
-
+          <Route path='/ChatList' element={<ChatList/>} />
+          <Route path='/ChatRoom' element={<ChatRoom/>} />
         </Routes>
       </MainBlock>
     </TodoProvider>

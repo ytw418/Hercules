@@ -17,9 +17,6 @@ const CreateUser = () => {
   const [isReactLoading, setIsReactLoading] = useState(false)
   const dispatch = useTodoDispatch();
   const state = useTodoState();
-
-
-
   const uid = useUID();
   
   const [attachment, setAttachment] = useState(state.User[uid].Profile.Userphoto);

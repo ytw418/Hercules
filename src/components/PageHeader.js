@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-function PageHeader({title,check}) {
+function PageHeader({title,check,checkstyle}) {
    const navigate = useNavigate();
 
    const goBack = () => {
@@ -18,7 +18,7 @@ function PageHeader({title,check}) {
       <PageHeaderBlock>
       <MdKeyboardBackspace className='MdKeyboardBackspace' onClick={goBack} />
       <p>{title}</p>
-      <MdCheck type='button' className='MdCheck' onClick={check}></MdCheck>
+      <MdCheck type='button' style={checkstyle} className='MdCheck' onClick={check}></MdCheck>
       </PageHeaderBlock>
    )
 }

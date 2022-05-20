@@ -19,6 +19,9 @@ const Block = styled.div`
     color: #e03c8f;
   }
   }
+  p{
+    margin: 0;
+  }
   
 
   position: relative; /* 추후 박스 하단에 추가 버튼을 위치시키기 위한 설정 */

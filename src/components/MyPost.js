@@ -207,6 +207,12 @@ function MyPost({ posts, profile }) {
                            <ProfileEdit onClick={() => postDelete(posts)} >삭제</ProfileEdit>
                         </>
                      )}
+                     {loginUID === "xjAOeGhwVPMt4tY8zGNUEtjxqLr2" && (
+                        <>
+                           <ProfileEdit onClick={() => postEditOpen(posts)} >수정</ProfileEdit>
+                           <ProfileEdit onClick={() => postDelete(posts)} >삭제</ProfileEdit>
+                        </>
+                     )}
                   </ProflieZone>
                   <PostImg src={posts.postPic} />
                   <div className='iconblock'>
