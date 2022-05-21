@@ -9,18 +9,20 @@ import { authService } from '../firebaseConfig';
 import { useSetUID, useTodoDispatch ,useTodoState} from '../ContextApi';
 import { firebase_db } from "../firebaseConfig";
 import { useNavigate ,useLocation} from 'react-router-dom';
-
+import Inner from '../components/Inner';
 const Home = () => {
 
   const { state } = useLocation();
   console.log('네비게이트' + state);
 
   return (
-    <>
+      <>
       <Header></Header>
+      <Inner>
       <Post></Post>
+      </Inner>
       <BottomTeb></BottomTeb>
-    </>
+      </>
 
   );
 };

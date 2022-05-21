@@ -12,8 +12,8 @@ const HeaderBlock = styled.header`
    padding: 0 15px 0 15px;
    background: #fff;
    border-bottom: 1px #d8d7d7 solid;
-   height: 60px;
-   position: fixed;
+   height: 8%;
+   //position: fixed;
    width: 100%;
    display: flex;
    left: 0;
@@ -82,7 +82,6 @@ function Header() {
 
    return (
       <>
-         <HeaderBlocknone></HeaderBlocknone>
          <HeaderBlock>
             <HeaderTitle>Reactstagram</HeaderTitle>
             <HeaderRigthZone>

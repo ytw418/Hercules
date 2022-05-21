@@ -29,9 +29,6 @@ const Block = styled.div`
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
 
   margin: 0 auto; /* 페이지 중앙에 나타나도록 설정 */
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 56px;
   /* padding-top: 60px; */
 
 
