@@ -13,6 +13,7 @@ import MyPost from '../components/MyPost'
 import { authService} from '../firebaseConfig.js';
 import { firebase_db } from "../firebaseConfig.js";
 import { useNavigate } from 'react-router-dom';
+import ScrollToTop from '../components/ScrollToTop';
 
 const ProfileZone = styled.div`
 width: 100%;
@@ -52,28 +53,6 @@ border: #aaa 1px solid;
 `
 
 const MyPage = () => {
-  // 페이지 마운트시 로그인 검사
-  // useEffect(() => {
-  //   authService.onAuthStateChanged(async (user) => {
-  //     console.log(user);
-  //     if (user) {
-  //       await firebase_db.ref(`/users/${user.uid}/`).once('value').then((snapshot) => {
-  //         console.log("로그인 검사 로그인회원 파이어베이스 유저데이터 조회 성공")
-  //         dispatch({
-  //           type: 'LOGIN_USER',
-  //           user: snapshot.val(),
-  //         })
-  //       });
-  //       setuid(user.uid);
-  //       console.log("user is signed in:" + user.uid)
-
-  //     } else {
-  //       navigate('/Login');
-  //       console.log("user is signed out")
-  //     }
-  //   });
-  // }, []);
-
   const [login, setLogin] =useState(false);
   const navigate = useNavigate();
   const state = useTodoState();
@@ -97,6 +76,7 @@ console.log(state)
 
   return ( state.User.default===null ? <div>404</div> :
     <>
+    <ScrollToTop></ScrollToTop>
     <Header></Header>
       <ProfileZone>
         <UserImg src={state.User[uid].Profile.Userphoto} />

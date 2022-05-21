@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import PageHeader from '../components/PageHeader'
 import { useNavigate, NavLink, useLocation } from 'react-router-dom';
 import useInputs from '../components/useInputs'
 import { useTodoState, useUID } from '../ContextApi';
 import { firebase_db } from "../firebaseConfig"
+
 
 
 function ChatRoom() {
@@ -15,11 +16,9 @@ function ChatRoom() {
    const { roomId, roomTitle, roomUserlist, roomUserName } = state;
    const [{ text }, onChange, reset,] = useInputs({ text: '' });
    const [messageList, setMessageList] = useState(null);
-   //const text = '';
+   const scrollRef = useRef();
 
    //기본설정 변수
-   const MAKEID_CHAR = '@make@';
-   const DATETIME_CHAR = '@time@';
    const SPLIT_CHAR = '@spl@';
    const ONE_VS_ONE = 'ONE_VS_ONE';
    const MULTI = 'MULTI';
@@ -27,8 +26,11 @@ function ChatRoom() {
    useEffect(() => {
       loadMessageList(roomId)
       console.log('리랜더링:useEffect')
-   }, [roomId,])
+     
+   
+   }, [roomId])
 
+  
 
    const loadMessageList = function (roomId) {
       console.log('리랜더링:loadMessageList 함수 ')
@@ -47,10 +49,11 @@ function ChatRoom() {
             })
             setMessageList(userdata);
             console.log('리랜더링:child_added ')
+            
+            
          });
-
-
       }
+    
    }
 
 
@@ -108,6 +111,7 @@ function ChatRoom() {
          firebase_db.ref().update(multiUpdates);
       }
       reset();
+    
    }
 
 
@@ -137,7 +141,8 @@ function ChatRoom() {
          convertHour = "오후 " + pad(hour - 12) + ":" + pad(minute);
       }
 
-      return convertDate + convertHour;
+      //convertDate
+      return convertHour;
    }
 
    /**
@@ -155,27 +160,27 @@ function ChatRoom() {
       }
    }
 
-
+   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
    return (
-      <>{console.log('컴포넌트 리랜더링')}
+      <>
          <PageHeader  title={roomTitle} checkstyle={{ display: 'none' }} ></PageHeader>
-         <ChatRoomListContainer>
+         <ChatRoomListContainer  ref={scrollRef} >
             <div className='chatRoomListBlock'>
                {messageList &&
                   Object.values(messageList).map((msg) => (
                      msg.sendUid === uid ?
-                        <NavLink key={msg.key} to={`/Home`} style={{ color: '#000' }}>
+                        <NavLink key={msg.key} to={`/${msg.sendUid}`} style={{ color: '#000' }}>
                            <div className='chatRoom'>
                               <ProflieZone reverse={false}>
                                  <ProflieImg src={msg.profileImg}></ProflieImg>
                                  <div>
                                     <Message>{msg.message}</Message>
                                  </div>
-                                 {/* <span>{msg.time}</span> */}
+                                 <span>{timestampToTime(msg.time)}</span>
                               </ProflieZone>
                            </div>
                         </NavLink> :
-                        <NavLink key={msg.key} to={`/Home`} style={{ color: '#000' }}>
+                        <NavLink    key={msg.key} to={`/${uid}`} style={{ color: '#000' }}>
                            <div className='chatRoom'>
                               <ProflieZone reverse={true}>
                                  <ProflieImg src={msg.profileImg}></ProflieImg>
@@ -183,18 +188,14 @@ function ChatRoom() {
                                     <ProflieName>{msg.userName}</ProflieName>
                                     <Message>{msg.message}</Message>
                                  </div>
-                                 {/* <span>{msg.time}</span> */}
+                                <span>{timestampToTime(msg.time)}</span>
                               </ProflieZone>
                            </div>
-                        </NavLink>
-
-
-
-
+                        </NavLink> 
                   ))
                }
             </div>
-            <InputComment>
+            <InputComment >
                <input autoFocus onKeyPress={onEnterKey}
                   placeholder={` ${userState.User[uid].Profile.Username} (으)로 메시지 전송 ...`}
                   name='text' onChange={onChange} value={text}></input>
@@ -208,7 +209,6 @@ function ChatRoom() {
 
 const ChatRoomListContainer = styled.div`
 padding-top: 65px;
-padding-bottom: 50px;
 `
 const ProflieZone = styled.div`
 display: flex;

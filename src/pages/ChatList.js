@@ -88,7 +88,6 @@ function ChatList() {
       return result;
    }
 
-
    /**
     *  10미만 숫자 앞에 0 붙이기
     */
@@ -96,33 +95,26 @@ function ChatList() {
       return n > 9 ? "" + n : "0" + n;
    }
 
+   const onUserRoomsClick = (room) => {
+      const roomUserlist = room.roomUserlist.split(SPLIT_CHAR)// 챗방 유저리스트
+      const roomId = room.roomId;
+      const roomTitle = room.roomTitle;
+      const roomUserName = room.roomUserName.split(SPLIT_CHAR) // 챗방 유저 이름
 
+      console.log('roomUserlist :>> ', roomUserlist);
+      console.log('roomUserName :>> ', roomUserName);
 
-
-
-
-
-
-
-
-
-
-
-   const onUserRoomsClick = () => {
-
+     navigate('/ChatRoom',{ state: {roomId,roomTitle,roomUserlist,roomUserName}})
    }
 
-
-
-
-
-   return (roomList &&
+   return (
       <>
          <PageHeader title={'채팅방 리스트'} ></PageHeader>
          <ChatRoomListContainer>
             <div className='chatRoomListBlock'>
-               {roomList.map((room) => (
-                  <div className='chatRoom' onClick={() => onUserRoomsClick()}>
+               
+               {roomList && roomList.map((room) => (
+                  <div className='chatRoom' onClick={ ()=> onUserRoomsClick(room)}>
                   <ProflieZone>
                      <ProflieImg src={room.profileImg}></ProflieImg>
                      <div>

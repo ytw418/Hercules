@@ -57,11 +57,10 @@ function UserLIst() {
       let targetUserName = user.Username
       const roomTitle = targetUserName + '님';
       const roomUserlist = [targetUserUid, uid]; // 챗방 유저리스트
-      const checkUserlist = roomUserlist.join(SPLIT_CHAR)
       const roomUserName = [targetUserName, state.User[uid].Profile.Username] // 챗방 유저 이름
       
 
-     // const UserRoomsRef = firebase_db.ref('UserRooms/'+ uid).orderByChild('roomUserlist').equalTo(checkUserlist)
+    
       const UserRoomsRef = firebase_db.ref('UserRooms/'+ uid).orderByChild('roomOneVSOneTarget').equalTo(targetUserUid)
       await UserRoomsRef.once('value').then((snapshot)=>{
          const val = snapshot.val();

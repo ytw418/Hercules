@@ -8,7 +8,7 @@ const Block = styled.div`
     
     }
   width: 100%;
-  height: 100%;
+  height: 100vh;
   box-sizing: border-box;
   text-decoration: none;
   white-space: pre-wrap;
