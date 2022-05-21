@@ -1,26 +1,138 @@
 import styled, { css } from 'styled-components';
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PageHeader from '../components/PageHeader'
-import { useNavigate,NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { firebase_db, authService } from "../firebaseConfig"
+import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
+
+
+
 
 function ChatList() {
-   return (
+   const navigate = useNavigate();
+   const [isReactLoading, setIsReactLoading] = useState(false)
+   const dispatch = useTodoDispatch();
+   const state = useTodoState();
+   const uid = useUID();
+   const [roomList, setRoomList] = useState()
+   const SPLIT_CHAR = '@spl@';
+
+
+   useEffect(() => {
+
+      loadRoomList()
+      console.log('roomList :>> ', roomList);
+
+   }, []);
+
+
+   const loadRoomList = function () {
+
+      const roomRef = firebase_db.ref('UserRooms/' + uid);
+      roomRef.orderByChild('timestamp').on('value', (snapshot) => {
+         const val = snapshot.val()
+         console.log('val :>> ', val);
+         console.log('val.key :>> ', snapshot.key);
+         console.log('val.data :>> ', val.data);
+
+
+         const cbDisplayRoomList = function (data) {
+            let val = data[1]
+            let arrRoomUserName = val.roomUserName.split(SPLIT_CHAR);
+            arrRoomUserName.splice(arrRoomUserName.indexOf(state.User[uid].Profile.Username), 1); // 방 제목 타이틀에서는 자신의 이름을 제외합니다.
+            const eachRoomTitle = arrRoomUserName.length > 1 ?
+               arrRoomUserName[0] + " 외 " + (arrRoomUserName.length - 1) + "명" : arrRoomUserName[0];
+
+            let arr = {
+               roomId: data[0],
+               lastMessage: val.lastMessage,
+               profileImg: val.profileImg, 
+               roomTitle: eachRoomTitle,
+               roomUserName: val.roomUserName,
+               roomUserlist: val.roomUserlist,
+               roomType: val.roomType, 
+               roomOneVSOneTarget: val.roomOneVSOneTarget,
+               datetime: timestampToTimeForRoomList(val.timestamp)
+            }
+
+            return arr;
+         }
+         let newList = [];
+         Object.entries(val).forEach((data) => newList.push(cbDisplayRoomList(data)))
+         console.log('newList :>> ', newList);
+         setRoomList(newList)
+
+      })
+   }
+
+   const timestampToTimeForRoomList = function (timestamp) {
+      var date = new Date(timestamp),
+         year = date.getFullYear(),
+         month = date.getMonth() + 1,
+         day = date.getDate(),
+         hour = date.getHours(),
+         minute = date.getMinutes();
+      var nowDate = new Date(),
+         nowYear = nowDate.getFullYear(),
+         nowMonth = nowDate.getMonth() + 1,
+         nowDay = nowDate.getDate(),
+         nowHour = nowDate.getHours(),
+         nowMinute = nowDate.getMinutes();
+      var result;
+      if (year === nowYear && month === nowMonth && day === nowDay) {
+         result = pad(hour) + ":" + pad(minute);
+      } else {
+         result = pad(year) + "-" + pad(month) + "-" + pad(day);
+      }
+
+      return result;
+   }
+
+
+   /**
+    *  10미만 숫자 앞에 0 붙이기
+    */
+   const pad = function (n) {
+      return n > 9 ? "" + n : "0" + n;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+   const onUserRoomsClick = () => {
+
+   }
+
+
+
+
+
+   return (roomList &&
       <>
-         <PageHeader title={'채팅'} ></PageHeader>
+         <PageHeader title={'채팅방 리스트'} ></PageHeader>
          <ChatRoomListContainer>
             <div className='chatRoomListBlock'>
-            <NavLink to={`/ChatRoom/asd`} style={{color:'#000'}}>
-               <div className='chatRoom'>
+               {roomList.map((room) => (
+                  <div className='chatRoom' onClick={() => onUserRoomsClick()}>
                   <ProflieZone>
-                     <ProflieImg src="https://t1.daumcdn.net/cfile/tistory/2438573358070C1535"></ProflieImg>
+                     <ProflieImg src={room.profileImg}></ProflieImg>
                      <div>
-                        <ProflieName>이름</ProflieName>
-                        <p>마지막 채팅 내용</p>
+                        <ProflieName>{room.roomTitle}</ProflieName>
+                        <p>{room.lastMessage}</p>
                      </div>
-                     <span>오후 7시50분</span>
+                     <span>{room.datetime}</span>
                   </ProflieZone>
                </div>
-               </NavLink>
+               ))}
             </div>
          </ChatRoomListContainer>
       </>

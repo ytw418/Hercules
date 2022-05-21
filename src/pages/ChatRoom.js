@@ -6,15 +6,16 @@ import useInputs from '../components/useInputs'
 import { useTodoState, useUID } from '../ContextApi';
 import { firebase_db } from "../firebaseConfig"
 
+
 function ChatRoom() {
+   console.log('리랜더링시작')
    const uid = useUID();
    const userState = useTodoState();
    const { state } = useLocation();
    const { roomId, roomTitle, roomUserlist, roomUserName } = state;
-   const [{text}, onChange, reset, setForm] = useInputs({text:''});
+   const [{ text }, onChange, reset,] = useInputs({ text: '' });
    const [messageList, setMessageList] = useState(null);
-   console.log('리랜더링')
-   console.log('text:' +text)
+   //const text = '';
 
    //기본설정 변수
    const MAKEID_CHAR = '@make@';
@@ -23,33 +24,34 @@ function ChatRoom() {
    const ONE_VS_ONE = 'ONE_VS_ONE';
    const MULTI = 'MULTI';
 
-useEffect(()=>{
-   loadMessageList(roomId)
-   console.log('리랜더링:useEffect')
-},[roomId])
+   useEffect(() => {
+      loadMessageList(roomId)
+      console.log('리랜더링:useEffect')
+   }, [roomId,])
 
 
-const loadMessageList = function (roomId) {
-   console.log('리랜더링:loadMessageList 함수 ')
-   let userdata = []
-   if (roomId) {
-      const messageRef = firebase_db.ref('Messages/' + roomId);
-      messageRef.limitToLast(50).on('child_added', (data)=>{
-         let val = data.val();
-         userdata = userdata.concat({
-            key: data.key
-            , profileImg: val.profileImg
-            , userName: val.userName
-            , time: val.timestamp
-            , message: val.message
-            , sendUid: val.uid
-         })
-         setMessageList(userdata);
-         console.log('리랜더링:child_added ')
-      });
+   const loadMessageList = function (roomId) {
+      console.log('리랜더링:loadMessageList 함수 ')
+      let userdata = []
+      if (roomId) {
+         const messageRef = firebase_db.ref('Messages/' + roomId);
+         messageRef.limitToLast(50).on('child_added', (data) => {
+            let val = data.val();
+            userdata = userdata.concat({
+               key: data.key
+               , profileImg: val.profileImg
+               , userName: val.userName
+               , time: val.timestamp
+               , message: val.message
+               , sendUid: val.uid
+            })
+            setMessageList(userdata);
+            console.log('리랜더링:child_added ')
+         });
 
+
+      }
    }
-}
 
 
 
@@ -69,7 +71,7 @@ const loadMessageList = function (roomId) {
             for (let i = 0; i < roomUserlistLength; i++) {
                multiUpdates['RoomUsers/' + roomId + '/' + roomUserlist[i]] = true;
             }
-            
+
 
          }
 
@@ -79,7 +81,7 @@ const loadMessageList = function (roomId) {
             uid: uid,
             userName: userState.User[uid].Profile.Username,
             message: text, // 태그 입력 방지
-            profileImg: userState.User[uid].Profile.Userphoto ,
+            profileImg: userState.User[uid].Profile.Userphoto,
             timestamp: Date.now() //서버시간 등록하기
          }
 
@@ -111,12 +113,12 @@ const loadMessageList = function (roomId) {
 
 
 
- 
+
 
    /**
     * timestamp를 날짜 시간 으로 변환
     */
-    const timestampToTime = function (timestamp) {
+   const timestampToTime = function (timestamp) {
       let date = new Date(timestamp),
          year = date.getFullYear(),
          month = date.getMonth() + 1,
@@ -128,11 +130,11 @@ const loadMessageList = function (roomId) {
       let convertDate = year + "년 " + month + "월 " + day + "일 (" + week[date.getDay()] + ") ";
       let convertHour = "";
       if (hour < 12) {
-         convertHour = "오전 " + pad(hour) + ":" +  pad(minute);
+         convertHour = "오전 " + pad(hour) + ":" + pad(minute);
       } else if (hour === 12) {
-         convertHour = "오후 " + pad(hour) + ":" +  pad(minute);
+         convertHour = "오후 " + pad(hour) + ":" + pad(minute);
       } else {
-         convertHour = "오후 " + pad(hour - 12) + ":" +  pad(minute);
+         convertHour = "오후 " + pad(hour - 12) + ":" + pad(minute);
       }
 
       return convertDate + convertHour;
@@ -146,42 +148,56 @@ const loadMessageList = function (roomId) {
    }
 
 
-   const onEnterKey = function(e){ 
-      if(e.key === 'Enter'){ 
-      //엔터키 키코드가 입력이 되면 
-      e.preventDefault(); saveMessages(); } }
+   const onEnterKey = function (e) {
+      if (e.key === 'Enter') {
+         //엔터키 키코드가 입력이 되면 
+         e.preventDefault(); saveMessages();
+      }
+   }
 
 
    return (
       <>{console.log('컴포넌트 리랜더링')}
-         <PageHeader title={roomTitle} checkstyle={{ display: 'none' }} ></PageHeader>
+         <PageHeader  title={roomTitle} checkstyle={{ display: 'none' }} ></PageHeader>
          <ChatRoomListContainer>
             <div className='chatRoomListBlock'>
-            {messageList &&
-            Object.values(messageList).map((msg)=>(
-               msg.sendUid === uid ?    
-            <NavLink key={msg.key} to={`/Home`} style={{ color: '#000' }}>
-               <div className='chatRoom'>
-                  <ProflieZone>
-                     <ProflieImg src={msg.profileImg}></ProflieImg>
-                     <div>
-                        <ProflieName>{msg.userName}</ProflieName>
-                        <p>{msg.message}</p>
-                     </div>
-                     <span>{msg.time}</span>
-                  </ProflieZone>
-               </div>
-            </NavLink> :  <p>{msg.message}</p>
-               
-               
-            
-            ))
-            }
+               {messageList &&
+                  Object.values(messageList).map((msg) => (
+                     msg.sendUid === uid ?
+                        <NavLink key={msg.key} to={`/Home`} style={{ color: '#000' }}>
+                           <div className='chatRoom'>
+                              <ProflieZone reverse={false}>
+                                 <ProflieImg src={msg.profileImg}></ProflieImg>
+                                 <div>
+                                    <Message>{msg.message}</Message>
+                                 </div>
+                                 {/* <span>{msg.time}</span> */}
+                              </ProflieZone>
+                           </div>
+                        </NavLink> :
+                        <NavLink key={msg.key} to={`/Home`} style={{ color: '#000' }}>
+                           <div className='chatRoom'>
+                              <ProflieZone reverse={true}>
+                                 <ProflieImg src={msg.profileImg}></ProflieImg>
+                                 <div>
+                                    <ProflieName>{msg.userName}</ProflieName>
+                                    <Message>{msg.message}</Message>
+                                 </div>
+                                 {/* <span>{msg.time}</span> */}
+                              </ProflieZone>
+                           </div>
+                        </NavLink>
+
+
+
+
+                  ))
+               }
             </div>
             <InputComment>
-               <input autoFocus onKeyPress={onEnterKey} 
-               placeholder={` ${userState.User[uid].Profile.Username} (으)로 메시지 전송 ...`} 
-               name='text' onChange={onChange} value={text}></input>
+               <input autoFocus onKeyPress={onEnterKey}
+                  placeholder={` ${userState.User[uid].Profile.Username} (으)로 메시지 전송 ...`}
+                  name='text' onChange={onChange} value={text}></input>
                <button onClick={saveMessages}>전송</button>
             </InputComment>
          </ChatRoomListContainer>
@@ -191,18 +207,21 @@ const loadMessageList = function (roomId) {
 
 
 const ChatRoomListContainer = styled.div`
-
+padding-top: 65px;
+padding-bottom: 50px;
 `
 const ProflieZone = styled.div`
 display: flex;
 padding: 10px 5px 10px 5px;
 align-items: center;
 position: relative;
+flex-direction: ${props => props.reverse ? 'row' : 'row-reverse'};
 div{
-padding-left: 15px;
-font-weight: bold;
+padding-left: 5px;
+padding-right: 5px;
+font-weight: 500;
 font-size: 14px;
-flex: 1;
+//text-align: ${props => props.reverse ? 'right' : 'none'};
 }
 span{
    font-size:13px;
@@ -210,24 +229,36 @@ span{
    }
 `;
 const ProflieImg = styled.img`
-width: 55px;
-height: 55px;
+width: 40px;
+height: 40px;
 border-radius: 50%;
 
 `;
+const Message = styled.p`
+   background: #eaeaeaf2;
+   padding: 8px;
+   border-radius: 18px;
+`;
+
 const ProflieName = styled.p`
 margin:0px;
-flex: 1;
-font-size: 16px;
+font-size: 13px;
+font-weight: 600;
 `;
 
 const InputComment = styled.div`
-   margin: 0px;
-   padding: 8px 8px;
-   font-size: 15px;
-   font-weight: 500;
-   border-top: 0.5px #acacac solid;
-   display: flex;
+width: 100%;
+    position: fixed;
+    text-align: center;
+    bottom: 0;
+    /* margin: 0 0 10px 0; */
+    /* padding: 8px 8px; */
+    height: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    border-top: 0.5px #acacac solid;
+    display: flex;
+    background: #fff;
    input{
       border:none;
       flex: 1;

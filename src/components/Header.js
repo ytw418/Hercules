@@ -75,6 +75,10 @@ function Header() {
       navigate("/Upload");
    }
 
+   const goChatList = () =>{
+      navigate("/ChatList");
+   }
+
 
    return (
       <>
@@ -84,7 +88,7 @@ function Header() {
             <HeaderRigthZone>
                <HeaderAdd><MdAddCircleOutline onClick={goUpload}></MdAddCircleOutline></HeaderAdd>
                <HeaderLike><MdFavoriteBorder></MdFavoriteBorder></HeaderLike>
-               <Headerchat><BiNavigation></BiNavigation></Headerchat>
+               <Headerchat><BiNavigation onClick={goChatList}></BiNavigation></Headerchat>
             </HeaderRigthZone>
          </HeaderBlock>
       </>
