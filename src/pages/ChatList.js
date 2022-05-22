@@ -4,14 +4,13 @@ import PageHeader from '../components/PageHeader'
 import { useNavigate, NavLink } from 'react-router-dom';
 import { firebase_db, authService } from "../firebaseConfig"
 import { useTodoState, useTodoDispatch, useUID } from '../ContextApi';
-
-
+import BottomTeb from '../components/BottomTeb';
+import Inner from '../components/Inner';
 
 
 function ChatList() {
    const navigate = useNavigate();
-   const [isReactLoading, setIsReactLoading] = useState(false)
-   const dispatch = useTodoDispatch();
+
    const state = useTodoState();
    const uid = useUID();
    const [roomList, setRoomList] = useState()
@@ -110,11 +109,11 @@ function ChatList() {
    return (
       <>
          <PageHeader title={'채팅방 리스트'} ></PageHeader>
+         <Inner>
          <ChatRoomListContainer>
             <div className='chatRoomListBlock'>
-               
                {roomList && roomList.map((room) => (
-                  <div className='chatRoom' onClick={ ()=> onUserRoomsClick(room)}>
+                  <div className='chatRoom' key={room.roomId} onClick={ ()=> onUserRoomsClick(room)}>
                   <ProflieZone>
                      <ProflieImg src={room.profileImg}></ProflieImg>
                      <div>
@@ -127,6 +126,8 @@ function ChatList() {
                ))}
             </div>
          </ChatRoomListContainer>
+         </Inner>
+         <BottomTeb></BottomTeb>
       </>
    )
 }

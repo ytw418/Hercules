@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import {MdPhotoCamera} from 'react-icons/md';
 import ReactLoading from 'react-loading';
 import PageHeader from '../components/PageHeader';
-
+import BottomTeb from '../components/BottomTeb';
+import Inner from '../components/Inner';
 
 const Loading = styled.div`
     position: fixed;
@@ -159,8 +160,10 @@ function Upload() {
         {isReactLoading && (<Loading>
         <ReactLoading className='ReactLoading' type={"spin"} />
         </Loading>)}
-        <UploadBlock>
+        
         <PageHeader title={'게시물 작성'} check={writeNewPost}></PageHeader>
+        <Inner>
+        <UploadBlock>
             <div className='imageBox'>
                 <form >
                     <label htmlFor="imageLoader" className="button"><MdPhotoCamera style={{ width: '40px', height: '40px' }} /></label>
@@ -181,6 +184,8 @@ function Upload() {
                 name='postContent' />
             <p className='uploadbtn'>작성 완료</p>
         </UploadBlock>
+        </Inner>
+        <BottomTeb></BottomTeb>
         </>
     )
 }
@@ -194,7 +199,7 @@ const UploadBlock = styled.div`
 
 textarea{
     width: 100%;
-    height: 150px;
+    height: 400px;
     padding: 20px;
     display: flex;
     border: none;

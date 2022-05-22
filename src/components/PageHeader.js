@@ -28,7 +28,7 @@ export default PageHeader
 
 const PageHeaderBlock = styled.div`
    display: flex;
-   height: 65px;
+   height: 8%;
    width: 100%;
    border-bottom: 1px #aaa solid;
    align-items: center;

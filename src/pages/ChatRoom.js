@@ -1,12 +1,11 @@
-import styled, { css } from 'styled-components';
-import React, { useCallback, useEffect, useState, useRef } from 'react'
+import styled from 'styled-components';
+import React, { useEffect, useState, useRef } from 'react'
 import PageHeader from '../components/PageHeader'
-import { useNavigate, NavLink, useLocation } from 'react-router-dom';
-import useInputs from '../components/useInputs'
+import { NavLink, useLocation } from 'react-router-dom';
 import { useTodoState, useUID } from '../ContextApi';
 import { firebase_db } from "../firebaseConfig"
-
-
+import Inner from '../components/Inner';
+import InputChat from '../components/InputChat';
 
 function ChatRoom() {
    console.log('리랜더링시작')
@@ -14,9 +13,9 @@ function ChatRoom() {
    const userState = useTodoState();
    const { state } = useLocation();
    const { roomId, roomTitle, roomUserlist, roomUserName } = state;
-   const [{ text }, onChange, reset,] = useInputs({ text: '' });
    const [messageList, setMessageList] = useState(null);
    const scrollRef = useRef();
+
 
    //기본설정 변수
    const SPLIT_CHAR = '@spl@';
@@ -26,18 +25,28 @@ function ChatRoom() {
    useEffect(() => {
       loadMessageList(roomId)
       console.log('리랜더링:useEffect')
-     
-   
+      console.log(messageList)
    }, [roomId])
 
-  
+   useEffect(() => {
+      scrollView()
+   },[messageList])
+
+   
+
+   // scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+   function scrollView() {
+      const mainRoot = document.getElementById("main-root");
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }
+
 
    const loadMessageList = function (roomId) {
       console.log('리랜더링:loadMessageList 함수 ')
       let userdata = []
       if (roomId) {
          const messageRef = firebase_db.ref('Messages/' + roomId);
-         messageRef.limitToLast(50).on('child_added', (data) => {
+         messageRef.limitToLast(20).on('child_added', (data) => {
             let val = data.val();
             userdata = userdata.concat({
                key: data.key
@@ -49,7 +58,7 @@ function ChatRoom() {
             })
             setMessageList(userdata);
             console.log('리랜더링:child_added ')
-            
+           
             
          });
       }
@@ -59,9 +68,8 @@ function ChatRoom() {
 
 
 
-   const saveMessages = function () {
+   const saveMessages = function (text) {
       console.log('리랜더링:saveMessages')
-
 
       if (text.length > 0) {
          let multiUpdates = {};
@@ -110,7 +118,7 @@ function ChatRoom() {
          console.log(multiUpdates)
          firebase_db.ref().update(multiUpdates);
       }
-      reset();
+      
     
    }
 
@@ -153,19 +161,14 @@ function ChatRoom() {
    }
 
 
-   const onEnterKey = function (e) {
-      if (e.key === 'Enter') {
-         //엔터키 키코드가 입력이 되면 
-         e.preventDefault(); saveMessages();
-      }
-   }
+  
 
-   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
    return (
       <>
          <PageHeader  title={roomTitle} checkstyle={{ display: 'none' }} ></PageHeader>
-         <ChatRoomListContainer  ref={scrollRef} >
-            <div className='chatRoomListBlock'>
+         <Inner  >
+         <ChatRoomListContainer  ref={scrollRef}  >
+            <div className='chatRoomListBlock' id='main-root'>
                {messageList &&
                   Object.values(messageList).map((msg) => (
                      msg.sendUid === uid ?
@@ -195,20 +198,21 @@ function ChatRoom() {
                   ))
                }
             </div>
-            <InputComment >
-               <input autoFocus onKeyPress={onEnterKey}
-                  placeholder={` ${userState.User[uid].Profile.Username} (으)로 메시지 전송 ...`}
-                  name='text' onChange={onChange} value={text}></input>
-               <button onClick={saveMessages}>전송</button>
-            </InputComment>
          </ChatRoomListContainer>
+            <InputChat 
+            Username={userState.User[uid].Profile.Username}
+            saveMessages={saveMessages}
+            >
+            </InputChat>
+         </Inner>
       </>
    )
 }
 
 
+
 const ChatRoomListContainer = styled.div`
-padding-top: 65px;
+
 `
 const ProflieZone = styled.div`
 display: flex;
@@ -246,31 +250,9 @@ font-size: 13px;
 font-weight: 600;
 `;
 
-const InputComment = styled.div`
-width: 100%;
-    position: fixed;
-    text-align: center;
-    bottom: 0;
-    /* margin: 0 0 10px 0; */
-    /* padding: 8px 8px; */
-    height: 50px;
-    font-size: 15px;
-    font-weight: 500;
-    border-top: 0.5px #acacac solid;
-    display: flex;
-    background: #fff;
-   input{
-      border:none;
-      flex: 1;
-   }
-   button{
-   background: #fff;
-   border: none;
-   color: #6683fe;
-   font-weight: bold;
-   font-size: 15px;
-   }
-`;
+
+export default ChatRoom;
 
 
-export default React.memo(ChatRoom);
+
+

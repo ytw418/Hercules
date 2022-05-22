@@ -11,6 +11,9 @@ const Inner = ({children}) => {
 export default Inner;
 
 const Main = styled.div`
-overflow: scroll;
+overflow-y: scroll;
 height: 84%;
+display: flex;
+flex-direction: column;
+
 `;

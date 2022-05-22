@@ -107,7 +107,6 @@ function UserLIst() {
    return (
 <>{
       userList && <UserLIstContainer >
-         <div><h1>UserList</h1></div>
          {userList.map((user) => (
                <ProflieZone key={user.Uid} onClick={()=> onUserListClick(user)}>
                   <ProflieImg src={user.Userphoto}></ProflieImg>
