@@ -12,7 +12,7 @@ export default Inner;
 
 const Main = styled.div`
 overflow-y: scroll;
-height: 84%;
+height: 84vh;
 display: flex;
 flex-direction: column;
 

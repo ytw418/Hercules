@@ -69,6 +69,7 @@ function ChatRoom() {
 
 
    const saveMessages = function (text) {
+      
       console.log('리랜더링:saveMessages')
 
       if (text.length > 0) {
@@ -199,12 +200,12 @@ function ChatRoom() {
                }
             </div>
          </ChatRoomListContainer>
-            <InputChat 
+         </Inner>
+         <InputChat 
             Username={userState.User[uid].Profile.Username}
             saveMessages={saveMessages}
             >
             </InputChat>
-         </Inner>
       </>
    )
 }

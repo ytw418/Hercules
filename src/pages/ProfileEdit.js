@@ -13,7 +13,7 @@ function ProfileEdit() {
   return (state.User.default===null ? <div>404</div> :
     <>
     <CreateUser></CreateUser>
-    <BottomTeb></BottomTeb>
+
     </>
   )
 }

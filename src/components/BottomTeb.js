@@ -9,7 +9,8 @@ z-index: 10;
 display:flex;
 background:#fff;
 width: 100%;
-height: 8%;
+height: 8vh;
+min-height: 60px;
 //position: fixed;
 position: absolute;
 bottom:0px;
@@ -25,15 +26,12 @@ justify-content: center;
 align-items: center;
 flex: 1;
 font-size:25px;
-&:hover{
-   color:#e03c8f;
-}
-color:#000;
-   ${props =>
+
+   /* ${props =>
       props.done &&
       css
          `color:#ced4da;
-         `}
+         `} */
 `;
 
 
@@ -42,10 +40,10 @@ function BottomTeb() {
    return (
       <>
       <BottomTebBlock>
-         <Text><NavLink to="/Home" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdHome></MdHome></NavLink></Text>
-         <Text><NavLink to="/About" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdSearch></MdSearch></NavLink></Text>
-         <Text><NavLink to="/ChatList" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdShoppingCart/></NavLink></Text>
-         <Text><NavLink to="/MyPage" style={({ isActive }) => ({ color: isActive ? '#e03c8f' : 'black' })}><MdAccountCircle/></NavLink></Text>
+         <Text><NavLink to="/Home" style={({ isActive }) => ({ color: isActive ? '#61dafb;' : '#0000005c' })}><MdHome></MdHome></NavLink></Text>
+         <Text><NavLink to="/About" style={({ isActive }) => ({ color: isActive ? '#61dafb;' : '#0000005c' })}><MdSearch></MdSearch></NavLink></Text>
+         <Text><NavLink to="/ChatList" style={({ isActive }) => ({ color: isActive ? '#61dafb;' : '#0000005c' })}><MdShoppingCart/></NavLink></Text>
+         <Text><NavLink to="/MyPage" style={({ isActive }) => ({ color: isActive ? '#61dafb;' : '#0000005c' })}><MdAccountCircle/></NavLink></Text>
       </BottomTebBlock>
          </>
    )

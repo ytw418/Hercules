@@ -8,6 +8,7 @@ const Block = styled.div`
     //align-items: center;
     
     }
+    body{overflow:hidden;}
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -16,9 +17,9 @@ const Block = styled.div`
   overflow: hidden;
   a{color: #000;
     text-decoration: none;
-    &:hover {
+    /* &:hover {
     color: #e03c8f;
-  }
+  } */
   }
   p{
     margin: 0;

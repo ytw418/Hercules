@@ -12,7 +12,8 @@ const HeaderBlock = styled.header`
    padding: 0 15px 0 15px;
    background: #fff;
    border-bottom: 1px #d8d7d7 solid;
-   height: 8%;
+   height: 8vh;
+   min-height: 60px;
    //position: fixed;
    width: 100%;
    display: flex;
@@ -83,7 +84,7 @@ function Header() {
    return (
       <>
          <HeaderBlock>
-            <HeaderTitle>Reactstagram</HeaderTitle>
+            <HeaderTitle>Breeder</HeaderTitle>
             <HeaderRigthZone>
                <HeaderAdd><MdAddCircleOutline onClick={goUpload}></MdAddCircleOutline></HeaderAdd>
                <HeaderLike><MdFavoriteBorder></MdFavoriteBorder></HeaderLike>
