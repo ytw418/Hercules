@@ -17,6 +17,17 @@ border-top: 1px #0000002e solid;
 
 `;
 
+const Bottom =  styled.div`
+display:flex;
+background:#fff;
+width: 100%;
+min-height: 60px;
+position: relative;
+bottom:0px;
+left: 0;
+
+`;
+
 const Text = styled.div`
 cursor: pointer;
 display: flex;
@@ -37,6 +48,7 @@ function BottomTeb() {
 
    return (
       <>
+      <Bottom></Bottom>
       <BottomTebBlock>
          <Text><NavLink to="/Home" style={({ isActive }) => ({ color: isActive ? '#61dafb;' : '#0000005c' })}><MdHome></MdHome></NavLink></Text>
          <Text><NavLink to="/About" style={({ isActive }) => ({ color: isActive ? '#61dafb;' : '#0000005c' })}><MdSearch></MdSearch></NavLink></Text>

@@ -90,7 +90,7 @@ const SetUIDContext = createContext();
 export function TodoProvider({ children }) {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
-  const nextId = useRef(5);
+  const nextId = useRef();
   const [UID, SetUID] = useState('유저데이터없음');
   useEffect(() => {
     if (state === initialTodos) {

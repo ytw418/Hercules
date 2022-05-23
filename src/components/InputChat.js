@@ -35,8 +35,8 @@ const InputBlock = styled.div`
     position: fixed;
     text-align: center;
     bottom: 0;
-    min-height: 30px;
-    max-height: 30px;
+    min-height: 60px;
+    max-height: 60px;
     font-size: 15px;
     font-weight: 500;
     border-top: 0.5px #acacac solid;
