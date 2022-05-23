@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Div100vh from 'react-div-100vh'
 
 const Block = styled.div`
   @media screen and (min-width: 800px) {
@@ -8,7 +9,7 @@ const Block = styled.div`
     
     }
   width: 100%;
-  height: 100vh;
+  height: 100%;
   box-sizing: border-box;
   text-decoration: none;
   white-space: pre-wrap;
@@ -37,7 +38,7 @@ const Block = styled.div`
 `;
 
 function MainBlock({ children }) {
-  return <Block>{children}</Block>;
+  return <Div100vh><Block>{children}</Block></Div100vh>;
 }
 
 export default MainBlock;
