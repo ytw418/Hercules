@@ -19,11 +19,11 @@ const InputChat = ({ Username, saveMessages }) => {
          <textarea rows={20}  onKeyPress={onEnterKey}
             placeholder={`${Username} (으)로 메시지 전송`}
             name='text' onChange={onChange} value={text}></textarea>
-         <button onClick={(e) => {
+         <p onClick={(e) => {
             e.preventDefault();
             saveMessages(text);
              reset();
-  }}>전송</button>
+  }}>전송</p>
       </InputBlock>
    );
 };
@@ -46,7 +46,7 @@ const InputBlock = styled.div`
       border:none;
       flex: 1;
    }
-   button{
+ p{
    background: #fff;
    border: none;
    color: #6683fe;
