@@ -79,7 +79,6 @@ console.log(state)
     <>
     <ScrollToTop></ScrollToTop>
     <Header></Header>
-    <Inner>
       <ProfileZone>
         <UserImg src={state.User[uid].Profile.Userphoto} />
         <UserDataSec>
@@ -96,7 +95,7 @@ console.log(state)
       <ProfileBtn onClick={goProfileEdit}>프로필 편집</ProfileBtn>
       <ProfileBtn onClick={signOut}>로그아웃</ProfileBtn>
       <MyPost posts={state.User[uid].UserPost} profile={state.User[uid].Profile}></MyPost>
-      </Inner>
+   
       <BottomTeb></BottomTeb>
     </>
     //  <button onClick={() => navigate('/')}>홈으로</button>

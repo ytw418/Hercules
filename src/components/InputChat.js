@@ -16,14 +16,14 @@ const InputChat = ({ Username, saveMessages }) => {
 
    return (
       <InputBlock >
-         <textarea rows={15} autoFocus onKeyPress={onEnterKey}
+         <textarea rows={20}  onKeyPress={onEnterKey}
             placeholder={`${Username} (으)로 메시지 전송`}
             name='text' onChange={onChange} value={text}></textarea>
-         <button onClick={useCallback((e) => {
+         <button onClick={(e) => {
             e.preventDefault();
-    saveMessages(text);
-    reset();
-  }, [text,reset,saveMessages])}>전송</button>
+            saveMessages(text);
+             reset();
+  }}>전송</button>
       </InputBlock>
    );
 };
@@ -32,13 +32,11 @@ const InputChat = ({ Username, saveMessages }) => {
 
 const InputBlock = styled.div`
    width: 100%;
-    position: absolute;
+    position: fixed;
     text-align: center;
     bottom: 0;
-    /* margin: 0 0 10px 0; */
-    /* padding: 8px 8px; */
-    height: 8vh;
     min-height: 30px;
+    max-height: 30px;
     font-size: 15px;
     font-weight: 500;
     border-top: 0.5px #acacac solid;

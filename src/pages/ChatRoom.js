@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled,{css} from 'styled-components';
 import React, { useEffect, useState, useRef } from 'react'
 import PageHeader from '../components/PageHeader'
 import { NavLink, useLocation } from 'react-router-dom';
@@ -165,11 +165,10 @@ function ChatRoom() {
   
 
    return (
-      <>
+         <ChatRoomListContainer   >
+         <div  className='asd' ref={scrollRef}>
          <PageHeader  title={roomTitle} checkstyle={{ display: 'none' }} ></PageHeader>
-         <Inner  >
-         <ChatRoomListContainer  ref={scrollRef}  >
-            <div className='chatRoomListBlock' id='main-root'>
+            <div className='chatRoomListBlock' id='main-root' >
                {messageList &&
                   Object.values(messageList).map((msg) => (
                      msg.sendUid === uid ?
@@ -199,21 +198,28 @@ function ChatRoom() {
                   ))
                }
             </div>
-         </ChatRoomListContainer>
-         </Inner>
-         <InputChat 
+            <InputChat 
             Username={userState.User[uid].Profile.Username}
-            saveMessages={saveMessages}
-            >
-            </InputChat>
-      </>
+            saveMessages={saveMessages}>
+         </InputChat>
+            </div>
+         </ChatRoomListContainer>
    )
 }
 
 
 
 const ChatRoomListContainer = styled.div`
+height: 100%;
+overflow-y: scroll;
+.asd{
 
+overflow-y: scroll;
+}
+
+.chatRoomListBlock{
+   margin-bottom: 60px;
+}
 `
 const ProflieZone = styled.div`
 display: flex;

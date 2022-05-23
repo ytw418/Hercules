@@ -18,9 +18,7 @@ const Home = () => {
   return (
       <>
       <Header></Header>
-      <Inner>
       <Post></Post>
-      </Inner>
       <BottomTeb></BottomTeb>
       </>
 

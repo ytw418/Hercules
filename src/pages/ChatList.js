@@ -109,7 +109,6 @@ function ChatList() {
    return (
       <>
          <PageHeader title={'채팅방 리스트'} ></PageHeader>
-         <Inner>
          <ChatRoomListContainer>
             <div className='chatRoomListBlock'>
                {roomList && roomList.map((room) => (
@@ -126,7 +125,6 @@ function ChatList() {
                ))}
             </div>
          </ChatRoomListContainer>
-         </Inner>
          <BottomTeb></BottomTeb>
       </>
    )

@@ -111,7 +111,6 @@ const CreateUser = () => {
     <>
     <FullLoading isReactLoading={isReactLoading} ></FullLoading>
     <PageHeader title={'프로필 편집'} check={profileEditBtn}></PageHeader>
-    <Inner>
     <ProfileEditBlock>
       <div className='imgBlock'>
         <img src={attachment} alt=""></img>
@@ -123,7 +122,6 @@ const CreateUser = () => {
       <p>소개</p>
       <textarea className='text' name="text" placeholder="text" onChange={onChange} value={text} />
     </ProfileEditBlock>
-    </Inner>
     </>
   );
 };

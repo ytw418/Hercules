@@ -6,11 +6,10 @@ const Block = styled.div`
   @media screen and (min-width: 800px) {
     width: 520px;
     //align-items: center;
-    
     }
-    body{overflow:hidden;}
   width: 100%;
   height: 100%;
+  padding: 60px 0 60px 0;
   box-sizing: border-box;
   text-decoration: none;
   white-space: pre-wrap;
@@ -39,7 +38,7 @@ const Block = styled.div`
 `;
 
 function MainBlock({ children }) {
-  return <Div100vh><Block>{children}</Block></Div100vh>;
+  return <Block>{children}</Block>;
 }
 
 export default MainBlock;

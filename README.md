@@ -3,7 +3,7 @@
 # 실행 : 깃 클론후 npm install 후 npm start 
 
 * 빌드 1. npm run build 
-*      2. firebase deploy 후 5분정도 기다리면 적용 또는 크롬 쿠키 삭제
+*      2. firebase deploy 후 1분정도 기다리면 적용 또는 크롬 쿠키 삭제
 
 # 추가시킬 기능
 

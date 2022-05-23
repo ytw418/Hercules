@@ -7,9 +7,7 @@ const About = () => {
   return (
       <>
       <PageHeader title={'유저리스트'}></PageHeader>
-      <Inner>
       <UserLIst></UserLIst>
-      </Inner>
       <BottomTeb></BottomTeb>
       </>
   );

@@ -9,12 +9,12 @@ const HeaderBlock = styled.header`
    z-index: 10;
    }
    z-index: 3;
+   top: 0;
    padding: 0 15px 0 15px;
    background: #fff;
    border-bottom: 1px #d8d7d7 solid;
-   height: 8vh;
    min-height: 60px;
-   //position: fixed;
+   position: fixed;
    width: 100%;
    display: flex;
    left: 0;
