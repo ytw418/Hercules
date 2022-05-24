@@ -17,10 +17,11 @@ const InputChat = ({ Username, saveMessages ,inputRef,scrollView }) => {
   // onFocus={null}
    return (
       <InputBlock >
-         <textarea ref={inputRef} rows={20}
+         <textarea ref={inputRef} rows={20} onFocus={scrollView()}
             placeholder={`${Username} (으)로 메시지 전송`}
             name='text' onChange={onChange} value={text}></textarea>
          <button onClick={(e) => {
+            inputRef.current.focus();
             saveMessages(text);
              reset();        
   }}>전송</button>

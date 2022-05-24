@@ -34,6 +34,7 @@ function ChatRoom() {
        scrollView()
       }
       inputfocus()
+      
       console.log('messageList 변경 재랜더링')
       window.addEventListener("resize",scrollView)
    },[messageList])
@@ -220,7 +221,6 @@ function ChatRoom() {
             scrollView={scrollView}
             saveMessages={saveMessages}
             inputRef={inputRef} >
-            
          </InputChat>
             </div>
          </ChatRoomListContainer>
@@ -278,7 +278,7 @@ font-weight: 600;
 `;
 
 
-export default React.memo(ChatRoom);
+export default ChatRoom;
 
 
 
