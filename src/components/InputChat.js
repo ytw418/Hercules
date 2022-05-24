@@ -1,8 +1,8 @@
-import React, { useCallback} from 'react'
+import React, { useCallback,useRef} from 'react'
 import useInputs from './useInputs';
 import styled from 'styled-components';
 
-const InputChat = ({ Username, saveMessages }) => {
+const InputChat = ({ Username, saveMessages ,inputRef }) => {
    const [{ text }, onChange, reset,] = useInputs({ text: '' });
 
 
@@ -16,14 +16,15 @@ const InputChat = ({ Username, saveMessages }) => {
 
    return (
       <InputBlock >
-         <textarea rows={20}  onKeyPress={onEnterKey}
+         <textarea ref={inputRef} rows={20}  onKeyPress={onEnterKey}
             placeholder={`${Username} (으)로 메시지 전송`}
             name='text' onChange={onChange} value={text}></textarea>
-         <p onClick={(e) => {
+         <button onClick={(e) => {
+            inputRef.current.focus();
             e.preventDefault();
             saveMessages(text);
              reset();
-  }}>전송</p>
+  }}>전송</button>
       </InputBlock>
    );
 };
@@ -46,7 +47,7 @@ const InputBlock = styled.div`
       border:none;
       flex: 1;
    }
- p{
+   button{
    background: #fff;
    border: none;
    color: #6683fe;

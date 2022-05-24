@@ -1,5 +1,5 @@
 import styled,{css} from 'styled-components';
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import PageHeader from '../components/PageHeader'
 import { NavLink, useLocation } from 'react-router-dom';
 import { useTodoState, useUID } from '../ContextApi';
@@ -15,7 +15,7 @@ function ChatRoom() {
    const { roomId, roomTitle, roomUserlist, roomUserName } = state;
    const [messageList, setMessageList] = useState(null);
    const scrollRef = useRef();
-
+   const inputRef = useRef(null);
 
    //기본설정 변수
    const SPLIT_CHAR = '@spl@';
@@ -29,16 +29,23 @@ function ChatRoom() {
    }, [roomId])
 
    useEffect(() => {
-      scrollView()
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
    },[messageList])
 
-   
+   useEffect(() => {
+      const scrollView = () => {
+         const mainRoot = document.getElementById("main-root");
+         scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+       }
+      window.addEventListener("resize",scrollView)
+      return ()=> window.removeEventListener("resize",scrollView)
+    }, []);
+
+
+
+
 
    // scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-   function scrollView() {
-      const mainRoot = document.getElementById("main-root");
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-    }
 
 
    const loadMessageList = function (roomId) {
@@ -200,7 +207,9 @@ function ChatRoom() {
             </div>
             <InputChat 
             Username={userState.User[uid].Profile.Username}
-            saveMessages={saveMessages}>
+            saveMessages={saveMessages}
+            inputRef={inputRef} >
+            
          </InputChat>
             </div>
          </ChatRoomListContainer>
@@ -258,7 +267,7 @@ font-weight: 600;
 `;
 
 
-export default ChatRoom;
+export default React.memo(ChatRoom);
 
 
 
