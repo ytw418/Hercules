@@ -2,7 +2,7 @@ import React, { useCallback,useRef} from 'react'
 import useInputs from './useInputs';
 import styled from 'styled-components';
 
-const InputChat = ({ Username, saveMessages ,inputRef }) => {
+const InputChat = ({ Username, saveMessages ,inputRef,scrollView }) => {
    const [{ text }, onChange, reset,] = useInputs({ text: '' });
 
 
@@ -13,17 +13,16 @@ const InputChat = ({ Username, saveMessages ,inputRef }) => {
       }
    }
 
-
+   
+  // onFocus={null}
    return (
       <InputBlock >
-         <textarea ref={inputRef} rows={20}  onKeyPress={onEnterKey}
+         <textarea ref={inputRef} rows={20}
             placeholder={`${Username} (으)로 메시지 전송`}
             name='text' onChange={onChange} value={text}></textarea>
          <button onClick={(e) => {
-            inputRef.current.focus();
-            e.preventDefault();
             saveMessages(text);
-             reset();
+             reset();        
   }}>전송</button>
       </InputBlock>
    );

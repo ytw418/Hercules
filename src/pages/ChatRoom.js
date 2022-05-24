@@ -6,9 +6,10 @@ import { useTodoState, useUID } from '../ContextApi';
 import { firebase_db } from "../firebaseConfig"
 import Inner from '../components/Inner';
 import InputChat from '../components/InputChat';
+import { async } from '@firebase/util';
 
 function ChatRoom() {
-   console.log('리랜더링시작')
+   console.log('리랜더링 시작')
    const uid = useUID();
    const userState = useTodoState();
    const { state } = useLocation();
@@ -24,32 +25,41 @@ function ChatRoom() {
 
    useEffect(() => {
       loadMessageList(roomId)
-      console.log('리랜더링:useEffect')
+      console.log('첫번째 리랜더링:useEffect 부분')
       console.log(messageList)
    }, [roomId])
 
    useEffect(() => {
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+      const inputfocus = async() =>{
+       scrollView()
+      }
+      inputfocus()
+      console.log('messageList 변경 재랜더링')
+      window.addEventListener("resize",scrollView)
    },[messageList])
 
    useEffect(() => {
-      const scrollView = () => {
-         const mainRoot = document.getElementById("main-root");
-         scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
-       }
-      window.addEventListener("resize",scrollView)
-      return ()=> window.removeEventListener("resize",scrollView)
+      // const scrollView = () => {
+      //    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+      //  }
+      //  window.addEventListener("resize",scrollView)
+      // return ()=> window.removeEventListener("resize",scrollView)
     }, []);
 
 
+    const scrollView = async() => {
+     
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+      console.log('=======스크롤 다운 ================')
 
+    }
 
 
    // scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
 
 
    const loadMessageList = function (roomId) {
-      console.log('리랜더링:loadMessageList 함수 ')
+      console.log('리랜더링:loadMessageList 메세지 로드 ')
       let userdata = []
       if (roomId) {
          const messageRef = firebase_db.ref('Messages/' + roomId);
@@ -65,6 +75,7 @@ function ChatRoom() {
             })
             setMessageList(userdata);
             console.log('리랜더링:child_added ')
+            
            
             
          });
@@ -123,7 +134,7 @@ function ChatRoom() {
                };
             }
          }
-         console.log(multiUpdates)
+   
          firebase_db.ref().update(multiUpdates);
       }
       
@@ -168,7 +179,6 @@ function ChatRoom() {
       return n > 9 ? "" + n : "0" + n;
    }
 
-
   
 
    return (
@@ -207,6 +217,7 @@ function ChatRoom() {
             </div>
             <InputChat 
             Username={userState.User[uid].Profile.Username}
+            scrollView={scrollView}
             saveMessages={saveMessages}
             inputRef={inputRef} >
             
