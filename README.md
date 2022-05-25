@@ -1,9 +1,22 @@
-# 인스타그램 클론코딩 프로젝트
+# breeder - 생물인을 위한 웹서비스 프로젝트
 
-# 실행 : 깃 클론후 npm install 후 npm start 
+# 실행
+* npm install
+* npm start
 
-* 빌드 1. npm run build 
-*      2. firebase deploy 후 1분정도 기다리면 적용 또는 크롬 쿠키 삭제
+# 빌드 
+* npm run build 
+
+# 배포
+* firebase deploy
+
+
+# 기능
+1. 이메일 회원가입 로그인, 구글인증 회원가입
+2. 프로필 편집(사진, 이름, 소개)
+3. 게시물 작성(사진과 내용) 및 수정 삭제
+4. 게시물에 댓글 작성 
+5. 선택한 유저와 1:1 채팅 기능
 
 # 추가시킬 기능
 
@@ -15,13 +28,3 @@
 
 
 
-회원가입 성공시 유니크 아이디를 받아서 데이터 베이스에 유저 데이터 생성
-
-파이어베이스 팁
-
-1.   firebase_db.ref(`posts`).orderByChild('date').equalTo(5).once('value').then((snapshot) => {
-         setPosts(snapshot.val());
-      })
-          //date 값이 넘버 5 인 객체 찾기
-
-2. 
