@@ -1,4 +1,4 @@
-import React, { useCallback,useRef} from 'react'
+import React, { useCallback,useRef,forwardRef} from 'react'
 import useInputs from './useInputs';
 import styled from 'styled-components';
 
@@ -12,16 +12,20 @@ const InputChat = ({ Username, saveMessages ,inputRef,scrollView }) => {
          e.preventDefault(); saveMessages(text);  reset(); 
       }
    }
-
+   console.log('inputRef.current.focus() :>> ', inputRef.current);
    
   // onFocus={null}
+  //onFocus={()=> setTimeout(() => scrollView(),500) }
+
+
    return (
       <InputBlock >
-         <textarea ref={inputRef} rows={20} onFocus={scrollView()}
+         <textarea ref={inputRef} rows={20} onFocus={()=> setTimeout(() => scrollView(),100) }
             placeholder={`${Username} (으)로 메시지 전송`}
             name='text' onChange={onChange} value={text}></textarea>
          <button onClick={(e) => {
-            inputRef.current.focus();
+           console.clear();
+           inputRef.current.focus();
             saveMessages(text);
              reset();        
   }}>전송</button>
@@ -32,6 +36,7 @@ const InputChat = ({ Username, saveMessages ,inputRef,scrollView }) => {
 
 
 const InputBlock = styled.div`
+   left: 0;
    width: 100%;
     position: fixed;
     text-align: center;

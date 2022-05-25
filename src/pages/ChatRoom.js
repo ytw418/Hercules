@@ -15,7 +15,7 @@ function ChatRoom() {
    const { state } = useLocation();
    const { roomId, roomTitle, roomUserlist, roomUserName } = state;
    const [messageList, setMessageList] = useState(null);
-   const scrollRef = useRef();
+   const scrollRef = useRef(null);
    const inputRef = useRef(null);
 
    //기본설정 변수
@@ -31,12 +31,19 @@ function ChatRoom() {
 
    useEffect(() => {
       const inputfocus = async() =>{
-       scrollView()
+      // await inputRef.current.focus();
+       await scrollView();
+       console.log('inputRef.current.height :>> ', scrollRef.current.clientHeight);
+       console.log('inputRef.scroll위치 :>> ', document.clientHeight);
+       console.log('inputRef.scroll위치 :>> ', inputRef.current.scrollTop);
+       
+      
       }
-      inputfocus()
+      inputfocus();
       
       console.log('messageList 변경 재랜더링')
-      window.addEventListener("resize",scrollView)
+     // window.addEventListener("resize",inputfocus)
+      
    },[messageList])
 
    useEffect(() => {
@@ -49,8 +56,8 @@ function ChatRoom() {
 
 
     const scrollView = async() => {
-     
-      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+      const mainroot =document.getElementById('main-root');
+      scrollRef.current.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
       console.log('=======스크롤 다운 ================')
 
     }
@@ -231,9 +238,7 @@ function ChatRoom() {
 
 const ChatRoomListContainer = styled.div`
 height: 100%;
-overflow-y: scroll;
 .asd{
-
 overflow-y: scroll;
 }
 

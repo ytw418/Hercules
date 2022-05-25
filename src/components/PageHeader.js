@@ -31,6 +31,7 @@ const PageHeaderBlock = styled.div`
    position: fixed;
    top: 0;
    z-index: 10;
+   left: 0;
    background: #fff;
    min-height: 60px;
    width: 100%;
