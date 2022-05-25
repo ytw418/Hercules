@@ -1,9 +1,14 @@
-# 인스타그램 클론코딩 프로젝트
+# breeder - 생물인을 위한 웹서비스 프로젝트
 
-# 실행 : 깃 클론후 npm install 후 npm start 
+# 실행
+* npm install
+* npm start
 
-* 빌드 1. npm run build 
-*      2. firebase deploy 후 1분정도 기다리면 적용 또는 크롬 쿠키 삭제
+# 빌드 
+* npm run build 
+* 
+# 배포
+* firebase deploy
 
 # 추가시킬 기능
 
