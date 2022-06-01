@@ -122,7 +122,7 @@ function Login({ setReady, ready }) {
    return (
       <Block>
          <FullLoading isReactLoading={isReactLoading}></FullLoading>
-         <HeaderTitle><title>breeder</title></HeaderTitle>
+         <HeaderTitle>Breeder</HeaderTitle>
          <div className='loginBlock'>
             <form onSubmit={onSubmit}>
                <p>이메일</p>
@@ -238,7 +238,7 @@ form p{
 }
 `;
 
-const HeaderTitle = styled.div`
+const HeaderTitle = styled.h1`
 cursor: pointer;
    font-size: 35px;
    font-weight: bold;
