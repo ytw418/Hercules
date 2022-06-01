@@ -122,7 +122,7 @@ function Login({ setReady, ready }) {
    return (
       <Block>
          <FullLoading isReactLoading={isReactLoading}></FullLoading>
-         <HeaderTitle>breeder</HeaderTitle>
+         <HeaderTitle><title>breeder</title></HeaderTitle>
          <div className='loginBlock'>
             <form onSubmit={onSubmit}>
                <p>이메일</p>
