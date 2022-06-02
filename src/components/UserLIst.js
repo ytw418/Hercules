@@ -28,28 +28,8 @@ function UserLIst() {
    }, []);
    console.log(userList)
 
-      const auth = authService;
-      const liGoogleBtn = document.getElementById('liGoogleBtn');
-      const liFacebookBtn = document.getElementById('liFacebookBtn');
-      const liEmailJoin = document.getElementById('liEmailJoin');
-      const dvLogin = document.getElementById('dvLogin');
-      const dvJoin = document.getElementById('dvJoin');
-      const liEmailJoinSubmit = document.getElementById('liEmailJoinSubmit');
-      const liEmailBtn = document.getElementById('liEmailBtn');
-      const dvAuth = document.getElementById('dvAuth');
-      const liLogOut = document.getElementById('liLogOut');
-      const INDEXDB_DB_NAME = "USER";
-      const INDEXDB_VERSION = 1;
-      const INDEXDB_STORE = "Users";
-      const ulUserList = document.getElementById('ulUserList');
-      const tabMessageList = document.getElementById('tabMessageList');
-      const aBackBtn = document.getElementById('aBackBtn');
-      const aInvite = document.getElementById('aInvite');
       const MAKEID_CHAR = '@make@';
       const DATETIME_CHAR = '@time@';
-      const spTitle = document.getElementById('spTitle');
-      const ulMessageList = document.getElementById('ulMessageList');
-      const SPLIT_CHAR = '@spl@';
 
    const onUserListClick = async(user) => {
       
@@ -59,8 +39,6 @@ function UserLIst() {
       const roomUserlist = [targetUserUid, uid]; // 챗방 유저리스트
       const roomUserName = [targetUserName, state.User[uid].Profile.Username] // 챗방 유저 이름
       
-
-    
       const UserRoomsRef = firebase_db.ref('UserRooms/'+ uid).orderByChild('roomOneVSOneTarget').equalTo(targetUserUid)
       await UserRoomsRef.once('value').then((snapshot)=>{
          const val = snapshot.val();

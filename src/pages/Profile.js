@@ -79,6 +79,7 @@ const Profile = () => {
       <div style={{whiteSpace:'pre'}}>{user.Profile.Introduce}</div>
 
     </UserZoen>
+    
     <MyPost posts={user.UserPost} profile={user.Profile}></MyPost>
     <BottomTeb></BottomTeb>
   </>
