@@ -5,6 +5,7 @@ import BottomTeb from '../components/BottomTeb'
 import styled from 'styled-components';
 import MyPost from '../components/MyPost';
 import Header from '../components/Header';
+import { useTodoState,useUID} from '../ContextApi';
 
 const ProfileZone = styled.div`
 width: 100%;
@@ -46,13 +47,15 @@ border: #aaa 1px solid;
 const Profile = () => {
 
   // 파라미터를 받아올 땐 match 안에 들어있는 params 값을 참조합니다.
-  const { uid } = useParams();
-  console.log(uid);
+  const uid = useUID();
+  const { targetUid } = useParams();
   const [user, setUser] = useState()
+  const navigate = useNavigate();
+  const state = useTodoState();
 
   useEffect(() => {
     const userCheck = async () => {
-      await firebase_db.ref(`/users/${uid}/`).on('value', (snapshot) => {
+      await firebase_db.ref(`/users/${targetUid}/`).on('value', (snapshot) => {
         console.log("로그인 검사 로그인회원 파이어베이스 유저데이터 조회 성공")
         setUser(snapshot.val())
       });
@@ -61,6 +64,57 @@ const Profile = () => {
     userCheck()
 
   }, [])
+
+  
+
+  const onUserListClick = async() => {
+  
+    
+    const MAKEID_CHAR = '@make@';
+    const DATETIME_CHAR = '@time@';
+    const targetUserUid = user.Profile.Uid;
+    const targetUserName = user.Profile.Username;
+    const roomTitle = targetUserName + '님';
+    const roomUserlist = [targetUserUid, uid]; // 챗방 유저리스트
+    const roomUserName = [targetUserName, state.User[uid].Profile.Username] // 챗방 유저 이름
+    
+    const UserRoomsRef = firebase_db.ref('UserRooms/'+ uid).orderByChild('roomOneVSOneTarget').equalTo(targetUserUid)
+    await UserRoomsRef.once('value').then((snapshot)=>{
+       const val = snapshot.val();
+       //console.log(snapshot.val().roomId)
+       console.log(val)
+       if(val ===null){
+          const roomId =  MAKEID_CHAR + uid + DATETIME_CHAR + yyyyMMddHHmmsss();
+        navigate('/ChatRoom',{ state: {roomId,roomTitle,roomUserlist,roomUserName}})
+         console.log('신규방'+roomId)
+       }else{
+          const roomId =  Object.values(val)[0].roomId;
+         navigate('/ChatRoom',{ state: {roomId,roomTitle,roomUserlist,roomUserName}})
+         console.log('기존방'+roomId)
+       }
+
+    })
+ }
+
+ 
+   /**
+    * 현재날짜 yyyyMMddHHmmsss형태로 반환
+    */
+    const yyyyMMddHHmmsss = function () {
+      let vDate = new Date();
+      let yyyy = vDate.getFullYear().toString();
+      let MM = (vDate.getMonth() + 1).toString();
+      let dd = vDate.getDate().toString();
+      let HH = vDate.getHours().toString();
+      let mm = vDate.getMinutes().toString();
+
+      let ss = vDate.getSeconds().toString();
+      let sss = vDate.getMilliseconds().toString();
+      return yyyy + (MM[1] ? MM : '0' + MM[0]) + (dd[1] ? dd : '0' + dd[0]) + (HH[1] ? HH : '0' + HH[0])
+         + (mm[1] ? mm : '0' + mm[0]) + (ss[1] ? ss : '0' + ss[0]) + sss;
+   };
+
+
 
 
   return (user &&
@@ -77,8 +131,8 @@ const Profile = () => {
     <UserZoen>
       <strong>{user.Profile.Username}</strong>
       <div style={{whiteSpace:'pre'}}>{user.Profile.Introduce}</div>
-
     </UserZoen>
+    <ProfileBtn onClick={()=> onUserListClick()}>메시지 보내기</ProfileBtn>
     
     <MyPost posts={user.UserPost} profile={user.Profile}></MyPost>
     <BottomTeb></BottomTeb>
