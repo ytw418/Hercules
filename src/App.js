@@ -28,7 +28,7 @@ const App = () => {
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/ProfileEdit" element={<ProfileEdit />} />
           <Route path='/*' element={<h1>이 페이지는 존재하지 않습니다. - </h1>} />
-          <Route path='/:uid' element={<Profile/>} />
+          <Route path='/:targetUid' element={<Profile/>} />
           <Route path='/Comments/:postKey' element={<Comments/>} />
           <Route path='/ChatList' element={<ChatList/>} />
           <Route path='/ChatRoom' element={<ChatRoom/>} />

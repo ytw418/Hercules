@@ -52,12 +52,14 @@ const Profile = () => {
   const [user, setUser] = useState()
   const navigate = useNavigate();
   const state = useTodoState();
-
+  console.log('targetUid :>> ', targetUid);
   useEffect(() => {
     const userCheck = async () => {
-      await firebase_db.ref(`/users/${targetUid}/`).on('value', (snapshot) => {
+        firebase_db.ref(`/users/${targetUid}/`).on('value', (snapshot) => {
         console.log("로그인 검사 로그인회원 파이어베이스 유저데이터 조회 성공")
         setUser(snapshot.val())
+        console.log('snapshot.val() :>> ', snapshot.val());
+        
       });
     }
 
@@ -83,7 +85,7 @@ const Profile = () => {
        const val = snapshot.val();
        //console.log(snapshot.val().roomId)
        console.log(val)
-       if(val ===null){
+       if(val === null){
           const roomId =  MAKEID_CHAR + uid + DATETIME_CHAR + yyyyMMddHHmmsss();
         navigate('/ChatRoom',{ state: {roomId,roomTitle,roomUserlist,roomUserName}})
          console.log('신규방'+roomId)
@@ -132,7 +134,7 @@ const Profile = () => {
       <strong>{user.Profile.Username}</strong>
       <div style={{whiteSpace:'pre'}}>{user.Profile.Introduce}</div>
     </UserZoen>
-    <ProfileBtn onClick={()=> onUserListClick()}>메시지 보내기</ProfileBtn>
+    <ProfileBtn onClick={()=> onUserListClick(user)}>메시지 보내기</ProfileBtn>
     
     <MyPost posts={user.UserPost} profile={user.Profile}></MyPost>
     <BottomTeb></BottomTeb>
